@@ -12,4 +12,6 @@ fork该项目，命名为 你的名字.github.io，例如 ra2web.github.io
 
 ### Vercel
 
-[![一键部署到Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/username/repository)
+[![一键部署到Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/ra2web/ra2web.github.io)
+
+
