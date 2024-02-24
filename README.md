@@ -14,4 +14,8 @@ fork该项目，命名为 你的名字.github.io，例如 ra2web.github.io
 
 [![一键部署到Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/ra2web/ra2web.github.io)
 
+### 腾讯云
+
+[![一键部署至腾讯云](https://cloudbase.net/deploy.svg)](https://console.cloud.tencent.com/webify/new?tpl=https://github.com/ra2web/ra2web.github.io)
+
 
