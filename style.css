@@ -1,0 +1,2172 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, .75);
+}
+
+html:-webkit-full-screen body {
+    background: black;
+}
+
+html:-moz-full-screen body {
+    background: black;
+}
+
+#ra2web-root .stats-layer canvas {
+    display: initial !important;
+    cursor: auto !important;
+}
+
+#ra2web-root, #ra2web-root input, #ra2web-root select, #ra2web-root .select, #ra2web-root button {
+    font-family: 'Fira Sans Condensed', Arial, sans-serif;
+    font-size: 13px;
+    color: yellow;
+    font-weight: 500;
+    border-radius: 0;
+}
+
+#ra2web-root select option {
+    background: black;
+}
+
+#ra2web-root a:link,
+#ra2web-root a:visited {
+    color: red;
+}
+
+#ra2web-root > * {
+    /* Removes whitespace from the bottom causing scrollbars to appear on fullscreen */
+    vertical-align: top;
+}
+
+#loader-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+}
+
+#loader-logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    background: url(res/img/cd-logo.png) no-repeat center center;
+}
+
+#loader {
+    display: block;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    width: 240px;
+    height: 240px;
+    margin: -120px 0 0 -120px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: #3498db;
+	animation: spin 2s linear infinite;
+    z-index: 1001;
+}
+
+#loader:before {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+   	border-top-color: #e74c3c;
+    animation: spin 3s linear infinite;
+}
+
+#loader:after {
+    content: "";
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: #f9c922;
+    animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+	0%   {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+.no-js #loader-wrapper {
+	display: none;
+}
+
+#ra2web-root video::-webkit-media-controls {
+    display: none;
+}
+
+#ra2web-root .video-wrapper,
+#ra2web-root .video-wrapper video {
+    width: 632px;
+    height: 570px;
+}
+
+#ra2web-root .video-wrapper .logo {
+    position: absolute;
+    left: 325px;
+    top: 355px;
+    width: 400px;
+    height: 44px;
+    transform: translateX(-50%) translateY(-50%);
+    background-image: var(--res-menu-logo);
+}
+
+#ra2web-root .message-box {
+    width: 451px;
+    height: 326px;
+    background-image: var(--res-dlg-bgn);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+}
+
+#ra2web-root .message-box-content {
+    padding: 50px;
+}
+
+#ra2web-root .message-box-footer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 20px;
+}
+
+#ra2web-root .toasts {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+}
+
+#ra2web-root .toasts .toast {
+    max-width: 600px;
+    width: fit-content;
+    padding: 8px;
+    background: rgba(0, 0, 0, .75);
+    border: 1px red solid;
+    animation: slideInFromLeft .4s;
+}
+
+#ra2web-root .toasts .toast + .toast {
+    margin-top: 8px;
+}
+
+@keyframes slideInFromLeft {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+#ra2web-root .menu-button {
+    cursor: default;
+    text-align: center;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#ra2web-root .menu-button.disabled {
+    color: black;
+}
+
+#ra2web-root .menu-version-string {
+    text-align: center;
+}
+
+#ra2web-root pre.menu-mp-slot-text {
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    padding: 10px 8px 0 8px;
+    box-sizing: border-box;
+    white-space: pre-line;
+    font-family: inherit;
+    font-size: 12px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-height: 71px;
+}
+
+#ra2web-root .sidebar-title {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: inherit;
+    text-align: center;
+    font-size: 12px;
+}
+
+#ra2web-root .menu-tooltip {
+    padding: 10px;
+    box-sizing: border-box;
+    width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#ra2web-root .menu-tooltip.anim {
+    transition: width .4s;
+    width: 100%;
+}
+
+#ra2web-root .login-wrapper {
+    width: 451px;
+    height: 500px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+}
+
+#ra2web-root .login-wrapper .title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#ra2web-root .login-wrapper .login-form {
+    padding: 0 20px;
+    margin: 24px 0;
+}
+
+#ra2web-root .login-wrapper .server-list {
+    display: inline-block;
+    width: 250px;
+}
+
+#ra2web-root .login-wrapper .server-list,
+#ra2web-root .login-wrapper .refresh-button {
+    vertical-align: top;
+    margin-top: -4px;
+}
+
+#ra2web-root .login-wrapper .refresh-button {
+    margin-left: 8px;
+}
+
+#ra2web-root .login-wrapper .server-list .list-item {
+    display: flex;
+}
+
+#ra2web-root .login-wrapper .server-list .list-item .label {
+    flex-grow: 1;
+}
+
+#ra2web-root .server-ping {
+    width: 70px;
+    justify-content: right;
+    display: flex;
+}
+
+#ra2web-root .server-ping .ping-text {
+    margin-right: 3px;
+}
+
+#ra2web-root .server-ping .ping-text.ping-good {
+    color: lawngreen;
+}
+
+#ra2web-root .server-ping .ping-text.ping-avg {
+    color: yellow;
+}
+
+#ra2web-root .server-ping .ping-text.ping-bad {
+    color: red;
+}
+
+#ra2web-root .list-item.selected .server-ping .ping-text.ping-bad {
+    color: orange;
+    text-shadow: 1px 1px black;
+}
+
+#ra2web-root .login-wrapper .server-list .list-item .offline-text {
+    color: red;
+    text-transform: uppercase;
+}
+
+#ra2web-root .login-wrapper .news {
+    box-sizing: border-box;
+    height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#ra2web-root .login-wrapper .news > div {
+    font-size: 14px;
+    color: white;
+    font-weight: normal;
+    font-family: Arial, sans-serif;
+}
+
+#ra2web-root .login-box .field {
+    margin-bottom: 10px;
+}
+#ra2web-root .login-box .field label {
+    margin-right: 10px;
+    text-align: right;
+    display: inline-block;
+    min-width: 100px;
+}
+
+#ra2web-root .login-box.new-account-box {
+    width: 500px;
+}
+
+#ra2web-root .login-box.new-account-box .field label {
+    min-width: 130px;
+}
+
+#ra2web-root .login-box.create-game-box .field input[name="enablepass"],
+#ra2web-root .login-box.create-game-box .field input[name="lobbypass"] {
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+#ra2web-root .prompt-box .field label {
+    display: block;
+}
+
+#ra2web-root .prompt-box .field input[type="text"] {
+    margin-top: 5px;
+}
+
+#ra2web-root .dialog-button {
+    width: 126px;
+    height: 25px;
+    border: none;
+    outline: none;
+    background-image: var(--res-mnbttn);
+    background-position: 0 0;
+    display: block;
+    margin-top: 10px;
+}
+
+#ra2web-root .dialog-button:hover:not(:disabled) {
+    background-position: -126px 0;
+}
+
+#ra2web-root .dialog-button:active:not(:disabled) {
+    background-position: -252px 0;
+}
+
+#ra2web-root .dialog-button:disabled {
+    color: black;
+}
+
+#ra2web-root .lobby-form,
+#ra2web-root .gamebrowser-wrapper,
+#ra2web-root .map-sel-form,
+#ra2web-root .replay-sel-form,
+#ra2web-root .mod-sel-form,
+#ra2web-root .qm-form,
+#ra2web-root .ladder {
+    width: 632px;
+}
+
+#ra2web-root .lobby-form,
+#ra2web-root .qm-form,
+#ra2web-root .ladder {
+    padding: 40px 40px;
+    box-sizing: border-box;
+}
+
+#ra2web-root .lobby-form {
+    padding: 40px 30px;
+}
+
+#ra2web-root .lobby-form.lobby-form-sp {
+    padding: 40px 59px;
+}
+
+#ra2web-root .lobby-form .player-slots,
+#ra2web-root .lobby-form .game-options,
+#ra2web-root .qm-form {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#ra2web-root input[type="checkbox"] {
+    background-image: var(--res-cue-i);
+    width: 18px;
+    height: 18px;
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+    border: 0;
+}
+
+#ra2web-root input[type="checkbox"]:checked {
+    background-image: var(--res-cce-i);
+}
+
+#ra2web-root input[type="checkbox"].semi-checked-left {
+    background-image: var(--res-cce-il);
+}
+
+#ra2web-root input[type="checkbox"].semi-checked-right {
+    background-image: var(--res-cce-ir);
+}
+
+#ra2web-root input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    margin: 0;
+    height: 24px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 0;
+    border: none;
+    height: 22px;
+    width: 12px;
+    background-color: red;
+    background-image: var(--res-icons-24);
+    background-position: -264px 0;
+}
+
+input[type="range"]::-moz-range-thumb {
+    -webkit-appearance: none;
+    border-radius: 0;
+    border: none;
+    height: 22px;
+    width: 12px;
+    background-color: red;
+    background-image: var(--res-icons-24);
+    background-position: -264px 0;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 24px;
+    background: transparent;
+    border: 1px red solid;
+}
+
+input[type="range"]::-moz-range-track {
+    width: 100%;
+    height: 24px;
+    background: transparent;
+    border: 1px red solid;
+}
+
+input[type="range"]:focus {
+    outline: none;
+}
+
+#ra2web-root input[type="text"],
+#ra2web-root input[type="password"],
+#ra2web-root select,
+#ra2web-root .select {
+    background: transparent;
+    border: 1px red solid;
+}
+
+#ra2web-root input[type="text"],
+#ra2web-root input[type="password"],
+#ra2web-root select,
+#ra2web-root .select {
+    height: 26px;
+    box-sizing: border-box;
+}
+
+#ra2web-root .dialog-button {
+    height: 25px;
+    box-sizing: border-box;
+}
+
+#ra2web-root input[type="text"],
+#ra2web-root input[type="password"] {
+    padding-left: 4px;
+}
+
+#ra2web-root input:focus,
+#ra2web-root select:focus {
+    outline: none;
+}
+
+#ra2web-root select:disabled,
+#ra2web-root .select.disabled,
+#ra2web-root input:disabled,
+#ra2web-root label input:disabled + span,
+#ra2web-root .lobby-form .all-disabled span,
+#ra2web-root .lobby-form .all-disabled input[type="text"]:disabled {
+    color: #9c0000;
+    border-color: #9c0000;
+}
+
+#ra2web-root input[type="checkbox"]:disabled,
+#ra2web-root input[type="range"]:disabled {
+    opacity: 0.7;
+}
+
+#ra2web-root input[type="range"] + input[type="text"]:disabled {
+    opacity: 1;
+}
+
+#ra2web-root .select {
+    position: relative;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+#ra2web-root .select .select-value {
+    padding: 4px 21px 4px 3px;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+#ra2web-root .select::before {
+    pointer-events: none;
+    content: "";
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    width: 18px;
+    height: 22px;
+    background-image: var(--res-icons-24);
+    background-position: -96px 0;
+}
+#ra2web-root .select::before:hover {
+    background-position: -120px 0;
+}
+
+#ra2web-root .select .select-layer {
+    z-index: 1;
+    position: absolute;
+    top: 26px;
+    left: 0;
+    width: 100%;
+    outline: 1px red solid;
+    background: rgba(0, 0, 0, .75);
+}
+
+#ra2web-root .select .select-layer .option {
+    padding: 4px 3px;
+    height: 24px;
+    box-sizing: border-box;
+}
+
+#ra2web-root .select .select-value > div,
+#ra2web-root .select .select-layer .option > div {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#ra2web-root .select .select-layer .option.selected {
+    background: red;
+}
+
+#ra2web-root .select .select-layer .option.disabled {
+    color: gray;
+}
+
+#ra2web-root .player-color-select.bg-color .select .select-value {
+    padding: 2px 21px 2px 2px;
+}
+
+#ra2web-root .player-color-select .select .select-layer .option.bg-color {
+    padding: 2px;
+}
+
+#ra2web-root .player-color-select.bg-color .select .select-value > div,
+#ra2web-root .player-color-select .select .select-layer .option.bg-color > div {
+    width: 100%;
+    height: 100%;
+}
+
+#ra2web-root .player-color-select.bg-color .select.disabled .select-value > div {
+    opacity: .75;
+}
+
+#ra2web-root .lobby-form .player-slots {
+    height: 263px; /* 27px * 9 slots + 20px header */
+}
+
+#ra2web-root .lobby-form .player-slot-header .player-header-players {
+    margin-left: 57px; /* 16px rank, 3px spacing, 16px ping, 3px spacing, 16px ready, 3px spacing */
+    width: 150px;
+}
+
+#ra2web-root .lobby-form.lobby-form-sp .player-slot-header .player-header-players {
+    margin-left: 0;
+}
+
+#ra2web-root .lobby-form .player-slot-header .player-header-side {
+    margin-left: 57px; /* 3px spacing, 47px icon, 7 px spacing */
+    width: 120px;
+}
+
+#ra2web-root .lobby-form .player-slot-header .player-header-color,
+#ra2web-root .lobby-form .player-slot-header .player-header-position,
+#ra2web-root .lobby-form .player-slot-header .player-header-team {
+    margin-left: 7px;
+    width: 55px;
+}
+
+#ra2web-root .lobby-form .player-slot {
+    height: 26px;
+}
+
+#ra2web-root .lobby-form .player-slot.player-slot-header {
+    height: 20px;
+}
+
+#ra2web-root .lobby-form .player-slot + .player-slot {
+    margin-top: 1px;
+}
+
+#ra2web-root .country-select {
+    display: inline-block;
+}
+
+#ra2web-root .lobby-form .player-slot .rank-indicator,
+#ra2web-root .lobby-form .player-slot .ping-indicator,
+#ra2web-root .lobby-form .player-slot .player-status,
+#ra2web-root .player-country-icon,
+#ra2web-root .lobby-form .player-slot .player-country-select,
+#ra2web-root .lobby-form .player-slot .player-color-select,
+#ra2web-root .lobby-form .player-slot .player-start-pos-select,
+#ra2web-root .lobby-form .player-slot .player-team-select,
+#ra2web-root .lobby-form .player-slot-header > div {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 3px;
+}
+
+#ra2web-root .lobby-form .player-slot .rank-indicator {
+    margin-left: 0;
+}
+
+#ra2web-root .rank-indicator,
+#ra2web-root .ping-indicator,
+#ra2web-root .lobby-form .player-slot .player-status {
+    width: 16px;
+    height: 16px;
+}
+
+#ra2web-root .lobby-form.lobby-form-sp .player-slot .rank-indicator,
+#ra2web-root .lobby-form.lobby-form-sp .player-slot .ping-indicator,
+#ra2web-root .lobby-form.lobby-form-sp .player-slot .player-status {
+    display: none;
+}
+
+#ra2web-root .player-country-icon {
+    width: 47px;
+    height: 23px;
+}
+
+#ra2web-root .lobby-form .player-slot .player-country-select,
+#ra2web-root .lobby-form .player-slot .player-color-select,
+#ra2web-root .lobby-form .player-slot .player-start-pos-select,
+#ra2web-root .lobby-form .player-slot .player-team-select {
+    margin-left: 7px;
+}
+
+#ra2web-root .lobby-form .player-slot .player-country-select .select,
+#ra2web-root .qm-form .player-country-select .select {
+    width: 120px;
+}
+
+#ra2web-root .lobby-form .player-slot .player-color-select .select,
+#ra2web-root .lobby-form .player-slot .player-start-pos-select .select,
+#ra2web-root .lobby-form .player-slot .player-team-select .select,
+#ra2web-root .qm-form .player-color-select {
+    width: 55px;
+}
+
+#ra2web-root .lobby-form .player-slot .player-name {
+    margin-left: 3px;
+    vertical-align: middle;
+    width: 150px;
+}
+
+#ra2web-root .lobby-form.lobby-form-sp .player-slot .player-name {
+    margin-left: 0;
+}
+
+#ra2web-root .lobby-form .game-options {
+    margin-top: 10px;
+}
+
+#ra2web-root .lobby-form .game-options-left {
+    margin-left: 57px; /* 18px x 3 icons + 3px player name margin */
+    width: 200px;
+    float: left;
+}
+
+#ra2web-root .lobby-form.lobby-form-sp .game-options-left {
+    margin-left: 0;
+}
+
+#ra2web-root .lobby-form .game-options-right {
+    float: left;
+}
+
+#ra2web-root .lobby-form .game-options-left > div {
+    margin-top: 4px;
+    margin-bottom: 5px;
+    overflow: hidden;
+}
+
+#ra2web-root .lobby-form.lobby-form-sp .game-options-left > div {
+    margin-bottom: 13px;
+}
+
+#ra2web-root .lobby-form .game-options label {
+    display: inline-block;
+    line-height: 18px;
+}
+
+#ra2web-root .lobby-form .game-options-left label {
+    white-space: nowrap;
+}
+
+#ra2web-root input[type="checkbox"] {
+    vertical-align: top;
+    margin-right: 3px;
+}
+
+#ra2web-root .lobby-form .game-options-right > div {
+    margin-bottom: 6px;
+    margin-left: 10px;
+}
+
+#ra2web-root .slider-item input[type="range"] {
+    width: 79px;
+    vertical-align: top;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+#ra2web-root .slider-item input[type="text"] {
+    width: 50px;
+    box-sizing: border-box;
+    text-align: center;
+    padding-left: 0;
+    border-color: red;
+    color: yellow;
+}
+
+#ra2web-root .slider-item span.label {
+    width: 100px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#ra2web-root .slider-item input[type="text"] {
+    height: 24px;
+    background: #5a0000;
+    box-shadow: inset 0 0 10px #000;
+}
+
+#ra2web-root .lobby-form .game-options-right .checkbox-item {
+    margin-top: 12px;
+}
+
+#ra2web-root .list {
+    border: 1px red solid;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#ra2web-root .list-title {
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+#ra2web-root .list-header,
+#ra2web-root .list .list-item {
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: default;
+    padding: 3px;
+}
+
+#ra2web-root .list .list-item.selected {
+    background: red;
+}
+
+#ra2web-root .list .list-item.disabled {
+    background: transparent;
+    color: gray;
+}
+
+#ra2web-root .gamebrowser-wrapper {
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+#ra2web-root .gamebrowser-wrapper .gamebrowser-top {
+    overflow: hidden;
+}
+
+#ra2web-root .gamebrowser-wrapper .gamebrowser-bottom {
+    display: flex;
+    align-items: stretch;
+    margin-top: 10px;
+}
+
+#ra2web-root .gamebrowser-wrapper .chat-wrapper {
+    width: 410px;
+}
+
+#ra2web-root .gamebrowser-wrapper .players-list {
+    height: 242px;
+    width: 180px;
+    margin-left: 10px;
+}
+
+#ra2web-root .gamebrowser-wrapper .games-header {
+    height: 24px;
+}
+
+#ra2web-root .icon-button {
+    width: 24px;
+    height: 24px;
+    background-image: var(--res-icons-24);
+    border: none;
+    outline: none;
+}
+
+#ra2web-root .gamebrowser-wrapper .refresh-button {
+    background-position: 0 0;
+    vertical-align: middle;
+}
+
+#ra2web-root .gamebrowser-wrapper .refresh-button:hover {
+    background-position: -24px 0;
+}
+
+#ra2web-root .gamebrowser-wrapper .chat-wrapper .messages {
+    height: 200px;
+}
+
+#ra2web-root .chat-wrapper .send-message-button {
+    background-position: -48px 0;
+}
+
+#ra2web-root .chat-wrapper .send-message-button:hover {
+    background-position: -72px 0;
+}
+
+#ra2web-root .gamebrowser-wrapper .games .game .game-flags span {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    margin-right: 3px;
+    vertical-align: middle;
+}
+
+#ra2web-root .gamebrowser-wrapper .games .game .game-map,
+#ra2web-root .gamebrowser-wrapper .games .game .game-name {
+    margin-right: 5px;
+    width: 150px;
+}
+
+#ra2web-root .gamebrowser-wrapper .games .game .game-players {
+    width: 30px;
+}
+
+#ra2web-root .gamebrowser-wrapper .games .game .game-map,
+#ra2web-root .gamebrowser-wrapper .games .game .game-name,
+#ra2web-root .gamebrowser-wrapper .games .game .game-players,
+#ra2web-root .gamebrowser-wrapper .games .game .game-host,
+#ra2web-root .gamebrowser-wrapper .games .game .game-ping {
+    display: inline-block;
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#ra2web-root .gamebrowser-wrapper .games .game .game-host .rank-indicator {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 3px;
+}
+
+#ra2web-root .gamebrowser-wrapper .games .game .game-flags img {
+    vertical-align: middle;
+}
+
+#ra2web-root .gamebrowser-wrapper .games .games-label {
+    margin-left: 3px;
+    vertical-align: middle;
+}
+
+#ra2web-root .gamebrowser-wrapper .games-list {
+    height: 235px;
+}
+
+#ra2web-root .gamebrowser-wrapper .players-list .player {
+    padding: 3px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+#ra2web-root .gamebrowser-wrapper .players-list .player.operator {
+    color: cyan;
+}
+
+#ra2web-root .gamebrowser-wrapper .players-list .player .channel-op-indicator {
+    display: inline-block;
+    vertical-align: middle;
+    width: 14px;
+    height: 14px;
+}
+
+#ra2web-root .gamebrowser-wrapper .players-list .player .rank-indicator {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 3px;
+}
+
+#ra2web-root .gamebrowser-wrapper .games .game .game-host {
+    width: 129px;
+}
+
+#ra2web-root .gamebrowser-wrapper .games .game .game-ping {
+    width: 30px;
+}
+
+#ra2web-root .gamebrowser-wrapper .games .game .game-ping meter {
+    width: 100%;
+    height: 11px;
+    position: relative;
+    top: -1px;
+
+    /* Needed for Firefox */
+    background: transparent;
+    border-width: 0;
+}
+
+#ra2web-root .gamebrowser-wrapper .games .game .game-ping meter::-webkit-meter-bar {
+    background: transparent;
+    border-radius: 0;
+    border-width: 0;
+    height: 11px;
+}
+
+#ra2web-root .gamebrowser-wrapper .games .game .game-ping meter::-moz-meter-bar {
+    background: transparent;
+    border-radius: 0;
+    border-width: 0;
+    height: 11px;
+    box-sizing: border-box;
+}
+
+#ra2web-root .gamebrowser-wrapper .games .game .game-ping meter::-webkit-meter-optimum-value {
+    background-blend-mode: multiply, screen, multiply;
+    background:
+        linear-gradient(90deg, #b0b0b0, #fff),
+        linear-gradient(180deg, #606060 20%, #000 21%),
+        linear-gradient(180deg, #fff 79%, #ccc 80%),
+        linear-gradient(limegreen, limegreen);
+}
+#ra2web-root .gamebrowser-wrapper .games .game .game-ping meter:-moz-meter-optimum::-moz-meter-bar {
+    background-blend-mode: multiply, screen, multiply;
+    background:
+        linear-gradient(90deg, #b0b0b0, #fff),
+        linear-gradient(180deg, #606060 20%, #000 21%),
+        linear-gradient(180deg, #fff 79%, #ccc 80%),
+        linear-gradient(limegreen, limegreen);
+}
+
+#ra2web-root .gamebrowser-wrapper .games .game .game-ping meter::-webkit-meter-suboptimum-value {
+    background-blend-mode: multiply, screen, multiply;
+    background:
+        linear-gradient(90deg, #b0b0b0, #fff),
+        linear-gradient(180deg, #606060 20%, #000 21%),
+        linear-gradient(180deg, #fff 79%, #ccc 80%),
+        linear-gradient(orange, orange);
+}
+#ra2web-root .gamebrowser-wrapper .games .game .game-ping meter:-moz-meter-sub-optimum::-moz-meter-bar {
+    background-blend-mode: multiply, screen, multiply;
+    background:
+        linear-gradient(90deg, #b0b0b0, #fff),
+        linear-gradient(180deg, #606060 20%, #000 21%),
+        linear-gradient(180deg, #fff 79%, #ccc 80%),
+        linear-gradient(orange, orange);
+}
+
+#ra2web-root .gamebrowser-wrapper .games .game .game-ping meter::-webkit-meter-even-less-good-value {
+    background-blend-mode: multiply, screen, multiply;
+    background:
+        linear-gradient(90deg, #808080, #fff),
+        linear-gradient(180deg, #606060 20%, #000 21%),
+        linear-gradient(180deg, #fff 79%, #ccc 80%),
+        linear-gradient(red, red);
+}
+#ra2web-root .gamebrowser-wrapper .games .game .game-ping meter:-moz-meter-sub-sub-optimum::-moz-meter-bar {
+    background-blend-mode: multiply, screen, multiply;
+    background:
+        linear-gradient(90deg, #808080, #fff),
+        linear-gradient(180deg, #606060 20%, #000 21%),
+        linear-gradient(180deg, #fff 79%, #ccc 80%),
+        linear-gradient(red, red);
+}
+
+#ra2web-root .lobby-form .chat-wrapper {
+    margin-top: 10px;
+    clear: both;
+}
+
+#ra2web-root .chat-wrapper .messages {
+    margin-bottom: 10px;
+    padding: 3px;
+    border: 1px red solid;
+    height: 125px;
+    overflow-y: auto;
+}
+
+#ra2web-root .lobby-form .messages {
+    height: 70px;
+}
+
+#ra2web-root .chat-wrapper .messages .message {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+#ra2web-root .chat-wrapper .messages .message.operator-message {
+    color: cyan !important;
+}
+
+#ra2web-root .chat-wrapper .messages .message.type-page {
+    color: white;
+}
+
+#ra2web-root .chat-wrapper .messages .message.type-whisper {
+    color: mediumpurple;
+}
+
+#ra2web-root .chat-wrapper .messages .message .user-link {
+    cursor: pointer;
+}
+
+#ra2web-root .chat-wrapper .new-message-wrapper {
+    padding-right: 27px; /** 3px margin + 24px icon */
+    position: relative;
+}
+
+#ra2web-root .chat-wrapper .new-message {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+#ra2web-root .chat-wrapper .new-message input {
+    flex-grow: 1;
+}
+
+#ra2web-root .chat-wrapper .new-message * + input {
+    margin-left: 8px;
+}
+
+#ra2web-root .chat-wrapper .new-message input::placeholder {
+    color: gray;
+}
+
+#ra2web-root .chat-wrapper .send-message-button {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+#ra2web-root .map-sel-form {
+    padding: 86px 86px;
+    box-sizing: border-box;
+}
+
+#ra2web-root .map-sel-form .map-sel-title {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+#ra2web-root .map-sel-form .map-sel-body {
+    display: flex;
+}
+#ra2web-root .map-sel-form .map-sel-body > * + * {
+    margin-left: 20px;
+}
+
+#ra2web-root .map-sel-form .map-sel-game-mode {
+    width: 150px;
+}
+
+#ra2web-root .map-sel-form .map-sel-game-mode .list-title {
+    line-height: 26px;
+}
+
+#ra2web-root .map-sel-form .map-sel-map {
+    width: 250px;
+}
+
+#ra2web-root .map-sel-form .game-mode-list,
+#ra2web-root .map-sel-form .map-list {
+    height: 300px;
+}
+
+#ra2web-root .map-sel-form .list-header,
+#ra2web-root .map-sel-form .map-list .list-item {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#ra2web-root .map-sel-form .map-list-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+}
+
+#ra2web-root .map-sel-form .map-list-sort label {
+    font-size: 16px;
+    vertical-align: middle;
+}
+
+#ra2web-root .map-sel-form .map-list-sort .map-list-sort-select {
+    margin-left: 5px;
+    min-width: 100px;
+}
+
+#ra2web-root .map-sel-form .map-sel-search {
+    margin-top: 10px;
+}
+
+#ra2web-root .map-sel-form .map-sel-search label {
+    display: flex;
+    align-items: center;
+}
+
+#ra2web-root .map-sel-form .map-sel-search label span {
+    margin-right: 5px;
+}
+
+#ra2web-root .map-sel-form .map-sel-search label input {
+    flex: 1 0;
+}
+
+#ra2web-root ::-webkit-scrollbar {
+    width: 19px;
+    height: 18px;
+}
+#ra2web-root ::-webkit-scrollbar,
+#ra2web-root ::-webkit-scrollbar-button:vertical,
+#ra2web-root ::-webkit-scrollbar-thumb:vertical {
+    border-left: 1px red solid;
+    border-right: 1px red solid;
+}
+#ra2web-root ::-webkit-scrollbar-button:vertical,
+#ra2web-root ::-webkit-scrollbar-thumb:vertical {
+    background-image: var(--res-icons-24);
+}
+#ra2web-root ::-webkit-scrollbar-thumb:vertical {
+    border-top: 1px solid #a20000;
+    border-bottom: 1px solid #a20000;
+}
+#ra2web-root ::-webkit-scrollbar-button:vertical:increment {
+    background-position: -96px 0;
+    width: 18px;
+    height: 22px;
+}
+#ra2web-root ::-webkit-scrollbar-button:vertical:increment:hover {
+    background-position: -120px 0;
+}
+#ra2web-root ::-webkit-scrollbar-button:vertical:decrement {
+    background-position: -144px 0;
+    width: 18px;
+    height: 22px;
+}
+#ra2web-root ::-webkit-scrollbar-button:vertical:decrement:hover {
+    background-position: -168px 0;
+}
+#ra2web-root ::-webkit-scrollbar-thumb:vertical {
+    background-position: -216px 0;
+    background-repeat: repeat-y;
+}
+
+#ra2web-root .loading-screen .special-unit-name {
+    position: absolute;
+    top: 94px;
+    left: 20px;
+    color: black;
+    text-transform: uppercase;
+}
+
+#ra2web-root .loading-screen .briefing-text {
+    position: absolute;
+    top: 170px;
+    left: 20px;
+    background: rgba(0, 0, 0, .5);
+    padding: 3px;
+    width: 400px;
+    font-weight: bold;
+}
+
+
+#ra2web-root .loading-screen .loading-text {
+    position: absolute;
+    top: 280px;
+    left: 20px;
+    background: rgba(0, 0, 0, .5);
+    padding: 3px;
+    font-weight: bold;
+}
+
+#ra2web-root .loading-screen .player-status-container {
+    position: absolute;
+    top: 300px;
+    left: 20px;
+    background: rgba(0, 0, 0, .5);
+    padding: 3px;
+    width: 400px;
+}
+
+#ra2web-root .loading-screen .player-status {
+    margin-top: 3px;
+}
+
+#ra2web-root progress {
+    background: transparent;
+    border-width: 1px;
+    border-style: solid;
+    border-color: currentColor;
+    padding: 2px;
+    height: 11px;
+    box-sizing: border-box;
+}
+
+#ra2web-root progress::-webkit-progress-bar {
+    background: transparent;
+}
+
+#ra2web-root progress::-webkit-progress-value {
+    background-blend-mode: multiply, screen, multiply;
+    background:
+        linear-gradient(90deg, #808080, #fff),
+        linear-gradient(180deg, #606060 20%, #000 21%),
+        linear-gradient(180deg, #fff 79%, #ccc 80%),
+        linear-gradient(currentColor, currentColor);
+}
+
+#ra2web-root progress::-moz-progress-bar {
+    background-blend-mode: multiply, screen, multiply;
+    background:
+        linear-gradient(90deg, #808080, #fff),
+        linear-gradient(180deg, #606060 20%, #000 21%),
+        linear-gradient(180deg, #fff 79%, #ccc 80%),
+        linear-gradient(currentColor, currentColor);
+}
+
+#ra2web-root .loading-screen .country-name {
+    position: absolute;
+    bottom: 30px;
+    right: 80px;
+    font-weight: bold;
+}
+
+#ra2web-root .loading-screen .map-name {
+    position: absolute;
+    bottom: 30px;
+    left: 20px;
+    padding: 3px;
+    background: rgba(0, 0, 0, .5);
+    font-weight: bold;
+}
+
+#ra2web-root .loading-screen .player-name {
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+#ra2web-root .loading-screen .player-country-icon {
+    margin-left: 10px;
+}
+
+#ra2web-root .opts {
+    padding: 86px;
+    box-sizing: border-box;
+}
+
+#ra2web-root .opts .slider-item,
+#ra2web-root .opts .item {
+    margin: 15px 0;
+}
+#ra2web-root .opts .item span.label {
+    width: 150px;
+    display: inline-block;
+    vertical-align: middle;
+}
+#ra2web-root .opts .slider-item {
+    text-align: center;
+}
+#ra2web-root .opts .item span.info {
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+#ra2web-root .opts .slider-item span.label,
+#ra2web-root .opts .item span.label {
+    width: 150px;
+    text-align: right;
+    margin-right: 10px;
+}
+
+#ra2web-root .opts.sound-opts input[type="range"] {
+    width: 200px;
+}
+
+#ra2web-root .opts.general-opts {
+    padding: 34px 86px;
+}
+
+#ra2web-root .opts.general-opts .slider-item {
+    text-align: left;
+}
+
+#ra2web-root .opts.general-opts .slider-item span {
+    width: 150px;
+}
+
+#ra2web-root .opts.general-opts input[type="range"] {
+    width: 150px;
+}
+
+#ra2web-root .opts.general-opts fieldset + fieldset {
+    margin-top: 20px;
+}
+
+#ra2web-root .opts.general-opts .select {
+    min-width: 100px;
+}
+
+#ra2web-root .opts.general-opts .resolution-select .select {
+    min-width: 150px;
+}
+
+#ra2web-root .opts.sound-opts {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    padding: 32px 0;
+    margin: 0 auto;
+    width: 410px;
+}
+
+#ra2web-root .opts.sound-opts .music-jukebox {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+#ra2web-root .opts.sound-opts .music-jukebox .jukebox-content {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    min-height: 0;
+}
+
+#ra2web-root .opts.sound-opts .music-jukebox .jukebox-content .controls {
+    width: 135px;
+    margin-left: 50px;
+}
+
+#ra2web-root .opts.sound-opts .music-jukebox .jukebox-content .controls > div {
+    margin-top: 16px;
+}
+
+#ra2web-root .opts.sound-opts .music-jukebox .jukebox-content .playlist {
+    width: 220px;
+    height: 100%;
+    max-height: 200px;
+    min-height: 0;
+}
+
+#ra2web-root .opts.sound-opts .music-jukebox .jukebox-footer {
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 50px;
+}
+
+#ra2web-root .key-opts {
+    margin: 0 auto;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#ra2web-root .key-opts .key-opts-list,
+#ra2web-root .key-opts .key-opts-cur-assign,
+#ra2web-root .key-opts .key-opts-ch-assign {
+    display: flex;
+}
+
+#ra2web-root .key-opts .key-opts-list {
+    height: 200px;
+    margin-bottom: 15px;
+}
+
+#ra2web-root .key-opts .key-opts-left,
+#ra2web-root .key-opts .key-opts-right {
+    margin: 0 20px;
+    width: 50%;
+}
+
+#ra2web-root .key-opts .key-opts-list .key-opts-left {
+    display: flex;
+    flex-direction: column;
+}
+
+#ra2web-root .key-opts .key-opts-list .key-opts-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#ra2web-root .key-opts .key-opts-list .key-opts-right .key-opts-desc-container {
+    height: 100px;
+    margin-bottom: 50px;
+}
+
+#ra2web-root .key-opts .key-opts-list .key-opts-right .key-opts-cur-assign {
+    height: 30px;
+    margin-top: 15px;
+}
+
+#ra2web-root .key-opts .key-opts-cur-assign {
+    margin-bottom: 15px;
+}
+
+#ra2web-root .key-opts .key-opts-cur-assign .key-opts-cur-assign-value {
+    min-height: 15px;
+}
+
+#ra2web-root .key-opts .key-opts-ch-assign input {
+    margin: 5px 0;
+    width: 100%;
+}
+
+#ra2web-root .key-opts .key-opts-ch-assign .key-opts-right {
+    margin-top: 10px;
+}
+
+#ra2web-root .key-opts .key-opts-ch-assign-warn {
+    margin: 15px 20px 0 20px;
+}
+
+#ra2web-root fieldset {
+    border: 1px red solid;
+}
+
+#ra2web-root .replay-sel-form {
+    padding: 46px;
+    box-sizing: border-box;
+}
+
+#ra2web-root .replay-sel-form .replay-list {
+    height: 300px;
+}
+
+#ra2web-root .replay-sel-form .replay-list .replay-name {
+    width: 70%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    margin-right: 5px;
+}
+
+#ra2web-root .replay-sel-form .replay-details {
+    border: 1px red solid;
+    padding: 3px;
+    margin-top: 16px;
+}
+
+#ra2web-root .replay-sel-form .storage-warning {
+    margin-top: 16px;
+    color: orange;
+}
+
+#ra2web-root .keep-replay-box input[type="text"] {
+    width: 100%;
+    margin-top: 8px;
+}
+
+#ra2web-root .mod-sel-form {
+    padding: 46px;
+    box-sizing: border-box;
+}
+
+#ra2web-root .mod-sel-form .mod-list {
+    height: 200px;
+}
+
+#ra2web-root .mod-sel-form .mod-list .mod-name {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+#ra2web-root .mod-sel-form .mod-details {
+    border: 1px red solid;
+    padding: 3px;
+    margin-top: 16px;
+}
+
+#ra2web-root .mod-sel-form .mod-details .mod-desc {
+    overflow: auto;
+    display: block;
+    max-height: 70px;
+}
+
+#ra2web-root .diplo-form {
+    padding: 34px 86px;
+}
+
+#ra2web-root .con-info-form {
+    padding: 86px 86px;
+}
+
+#ra2web-root .diplo-form,
+#ra2web-root .con-info-form {
+    box-sizing: border-box;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#ra2web-root .diplo-form .players {
+    overflow: auto;
+    min-height: 240px;
+}
+
+#ra2web-root .diplo-form table {
+    margin: 0 auto;
+}
+
+#ra2web-root .diplo-form thead {
+    color: yellow;
+    text-align: left;
+}
+
+#ra2web-root .diplo-form th {
+    font-weight: 500;
+}
+
+#ra2web-root .diplo-form th,
+#ra2web-root .diplo-form td {
+    width: 70px;
+    padding: 5px 0;
+}
+
+#ra2web-root .diplo-form th.player-country,
+#ra2web-root .diplo-form td.player-country {
+    width: 55px;
+}
+
+#ra2web-root .diplo-form th.player-ping,
+#ra2web-root .diplo-form td.player-ping {
+    width: 20px;
+    min-width: 20px;
+}
+
+#ra2web-root .diplo-form th.player-name,
+#ra2web-root .diplo-form td.player-name {
+    width: 200px;
+}
+
+#ra2web-root .diplo-form input[type="checkbox"]:disabled {
+    opacity: 0.5;
+}
+
+#ra2web-root .diplo-form-footer,
+#ra2web-root .con-info-form-footer {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 500px;
+}
+
+#ra2web-root .diplo-form-footer > *,
+#ra2web-root .con-info-form-footer > * {
+    margin-top: 10px;
+}
+
+#ra2web-root .diplo-form-footer > * + *,
+#ra2web-root .con-info-form-footer > * + * {
+    margin-top: 20px;
+}
+
+#ra2web-root .con-info-form .con-info-form-content {
+    flex-grow: 1;
+}
+
+#ra2web-root .con-info-form table {
+    margin: 0 auto;
+}
+
+#ra2web-root .con-info-form td {
+    width: 70px;
+    padding: 5px 0;
+}
+
+#ra2web-root .con-info-form td.player-name {
+    width: 150px;
+}
+
+#ra2web-root .con-info-form td.player-ping {
+    width: 300px;
+}
+
+#ra2web-root .con-info-form td.player-ping meter {
+    width: 100%;
+    height: 24px;
+
+    /* Needed for Firefox */
+    background: transparent;
+    border: 1px red solid;
+}
+
+#ra2web-root .player-ping meter::-webkit-meter-bar {
+    background: transparent;
+    border-radius: 0;
+    border: 1px red solid;
+    padding: 1px;
+    height: 24px;
+}
+#ra2web-root .player-ping meter::-moz-meter-bar {
+    background: transparent;
+    border-radius: 0;
+    margin: 1px;
+    height: 22px;
+    box-sizing: border-box;
+}
+
+#ra2web-root .player-ping meter::-webkit-meter-optimum-value {
+    background: limegreen;
+}
+#ra2web-root .player-ping meter:-moz-meter-optimum::-moz-meter-bar {
+    background: limegreen;
+}
+
+#ra2web-root .player-ping meter::-webkit-meter-suboptimum-value {
+    background: orange;
+}
+#ra2web-root .player-ping meter:-moz-meter-sub-optimum::-moz-meter-bar {
+    background: orange;
+}
+
+#ra2web-root .player-ping meter::-webkit-meter-even-less-good-value {
+    background: red;
+}
+#ra2web-root .player-ping meter:-moz-meter-sub-sub-optimum::-moz-meter-bar {
+    background: red;
+}
+
+#ra2web-root .prefetch-progress {
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+    color: red;
+}
+
+#ra2web-root .prefetch-progress > div {
+    padding: 0 5px;
+    background: rgba(0, 0, 0, .5);
+}
+
+#ra2web-root .prefetch-progress label {
+    margin-right: 10px;
+}
+
+#ra2web-root .prefetch-progress label,
+#ra2web-root .prefetch-progress progress {
+    vertical-align: middle;
+}
+
+#ra2web-root .game-res-box.message-box,
+#ra2web-root .basic-error-box.message-box {
+    background: rgba(255, 255, 255, .1);
+    border: 2px #8d8d8d outset;
+}
+
+#ra2web-root .game-res-box.message-box {
+    width: 640px;
+    height: 520px;
+    text-align: center;
+    /* Leave space for the disclaimer on low res */
+    margin-top: -30px;
+}
+
+#ra2web-root .game-res-box.message-box.game-res-box-no-dl {
+    height: 420px;
+}
+
+#ra2web-root .game-res-box.message-box .message-box-content {
+    padding: 30px;
+    padding-top: 5px;
+}
+
+#ra2web-root .game-res-box.message-box .message-box-content .title {
+    font-size: 15px;
+    text-align: center;
+    margin: 8px 0 15px 0;
+}
+
+#ra2web-root .game-res-box.message-box .close-button {
+    background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMjRweCIgaGVpZ2h0PSIyNHB4IiB2aWV3Qm94PSIwIDAgMjQgMjQiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8IS0tIEdlbmVyYXRvcjogU2tldGNoIDUyLjIgKDY3MTQ1KSAtIGh0dHA6Ly93d3cuYm9oZW1pYW5jb2RpbmcuY29tL3NrZXRjaCAtLT4KICAgIDx0aXRsZT5iYXNlbGluZS1jbG9zZS0yNHB4PC90aXRsZT4KICAgIDxkZXNjPkNyZWF0ZWQgd2l0aCBTa2V0Y2guPC9kZXNjPgogICAgPGcgaWQ9InJlQ3JlYXRlIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyBpZD0idHhWaWV3X2dyYXBocyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTExMzIuMDAwMDAwLCAtMTk4LjAwMDAwMCkiIGZpbGw9InllbGxvdyIgZmlsbC1ydWxlPSJub256ZXJvIj4KICAgICAgICAgICAgPGcgaWQ9Ikdyb3VwLTE0IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzMzAuMDAwMDAwLCAxNzYuMDAwMDAwKSI+CiAgICAgICAgICAgICAgICA8ZyBpZD0iR3JvdXAtMTAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDIyLjAwMDAwMCwgMTYuMDAwMDAwKSI+CiAgICAgICAgICAgICAgICAgICAgPGcgaWQ9ImJhc2VsaW5lLWNsb3NlLTI0cHgiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDc4MC4wMDAwMDAsIDYuMDAwMDAwKSI+CiAgICAgICAgICAgICAgICAgICAgICAgIDxwb2x5Z29uIGlkPSJTaGFwZSIgcG9pbnRzPSIxOSA2LjQxIDE3LjU5IDUgMTIgMTAuNTkgNi40MSA1IDUgNi40MSAxMC41OSAxMiA1IDE3LjU5IDYuNDEgMTkgMTIgMTMuNDEgMTcuNTkgMTkgMTkgMTcuNTkgMTMuNDEgMTIiPjwvcG9seWdvbj4KICAgICAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgIDwvZz4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPg==");
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    cursor: pointer;
+}
+
+#ra2web-root .game-res-box.message-box .message-box-content .drop-container {
+    border: 2px dashed #353535;
+    background-repeat: no-repeat;
+    background-image: url(res/img/download-arrow.png);
+    background-position: 50% 170px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#ra2web-root .game-res-box.message-box .message-box-content .drop-container.dropzone-active {
+    background: rgba(255, 255, 255, .2);
+}
+
+#ra2web-root .game-res-box.message-box .message-box-content .drop-container .drop-figures {
+    color: white;
+    font-size: 16px;
+    height: 153px;
+    margin-bottom: 40px;
+    pointer-events: none;
+}
+
+#ra2web-root .game-res-box.message-box .message-box-content .drop-container .drop-figures * {
+    vertical-align: middle;
+    margin: 0 10px 0 15px;
+    display: inline-block;
+}
+
+#ra2web-root .game-res-box.message-box .message-box-content .drop-container .desc {
+    color: #777;
+    font-size: 14px;
+}
+
+#ra2web-root .game-res-box.message-box .message-box-content .browse-buttons {
+    text-align: center;
+}
+
+#ra2web-root .game-res-box.message-box .message-box-content .browse-buttons .dialog-button:first-child {
+    margin-right: 10px;
+}
+
+#ra2web-root .game-res-box.message-box .message-box-content .dialog-button,
+#ra2web-root .basic-error-box.message-box .message-box-footer .dialog-button {
+    display: inline-block;
+    margin: 0;
+    background: darkred;
+    border: 1px red outset;
+}
+
+#ra2web-root .game-res-box.message-box .message-box-content .dialog-button:hover,
+#ra2web-root .basic-error-box.message-box .message-box-footer .dialog-button:hover {
+    background: orangered;
+}
+
+#ra2web-root .game-res-box.message-box .message-box-content .link-container {
+    text-align: center;
+}
+
+#ra2web-root .game-res-box.message-box .message-box-content .browse-container .archive-formats {
+    text-align: center;
+}
+
+#ra2web-root .game-res-box.message-box .message-box-content em {
+    font-size: 11px;
+}
+
+#ra2web-root .score-wrapper {
+    margin: 86px;
+    padding: 8px;
+    box-sizing: border-box;
+    background-color: rgba(0, 0, 0, .65);
+}
+
+#ra2web-root .score-wrapper .score-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+#ra2web-root .score-wrapper table {
+    margin: 0 auto;
+}
+
+#ra2web-root .score-wrapper thead {
+    color: yellow;
+    text-align: left;
+}
+
+#ra2web-root .score-wrapper th {
+    font-weight: 500;
+}
+
+#ra2web-root .score-wrapper th,
+#ra2web-root .score-wrapper td {
+    width: 70px;
+    padding: 5px 0;
+}
+
+#ra2web-root .score-wrapper .number {
+    text-align: right;
+}
+
+#ra2web-root .score-wrapper th.player-rank,
+#ra2web-root .score-wrapper td.player-rank {
+    width: 20px;
+    min-width: 20px;
+}
+
+#ra2web-root .score-wrapper th.player-name,
+#ra2web-root .score-wrapper td.player-name {
+    width: 200px;
+}
+
+#ra2web-root .patch-notes,
+#ra2web-root .ladder-rules {
+    padding: 5px;
+    box-sizing: border-box;
+    border: 0;
+    height: 100%;
+    width: 100%;
+}
+
+#ra2web-root .credits-container {
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin: 7px;
+    height: calc(100% - 11px);
+    width: calc(100% - 12px);
+}
+
+#ra2web-root .credits-container .credits {
+    padding: 32px;
+    text-align: center;
+}
+
+#ra2web-root .credits-container .credits .def {
+    display: flex;
+    margin: 0 auto;
+    width: 75%;
+}
+
+#ra2web-root .credits-container .credits .def .filler {
+    flex-grow: 1;
+}
+
+#ra2web-root .storage-explorer {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 8px;
+}
+
+#ra2web-root .storage-explorer .fe_fileexplorer_wrap {
+	font-size: 16px !important;
+	color: #000 !important;
+}
+
+#ra2web-root .storage-explorer .fe_fileexplorer_wrap .fe_fileexplorer_path_segments_scroll_wrap::-webkit-scrollbar,
+#ra2web-root .storage-explorer .fe_fileexplorer_wrap .fe_fileexplorer_folder_tools_scroll_wrap::-webkit-scrollbar,
+#ra2web-root .storage-explorer .fe_fileexplorer_wrap .fe_fileexplorer_items_clipboard_overlay::-webkit-scrollbar,
+#ra2web-root .storage-explorer .fe_fileexplorer_wrap .fe_fileexplorer_textarea::-webkit-scrollbar {
+	border: 0 !important;
+	width: 0 !important;
+	height: 0 !important;
+}
+
+#ra2web-root .storage-explorer .fe_fileexplorer_wrap button,
+#ra2web-root .storage-explorer .fe_fileexplorer_wrap input,
+#ra2web-root .storage-explorer .fe_fileexplorer_wrap select {
+	color: inherit !important;
+}
+
+#ra2web-root .storage-explorer .fe_fileexplorer_wrap .fe_fileexplorer_popup_wrap {
+	color: inherit !important;
+}
+
+#ra2web-root .storage-explorer .fe_fileexplorer_wrap .fe_fileexplorer_items_wrap {
+	padding-right: 2px;
+}
+
+#ra2web-root .qm-form .qm-game-type {
+    display: inline-block;
+    vertical-align: top;
+    margin-top: -5px;
+}
+
+#ra2web-root .qm-form .qm-game-type .button-select {
+    display: block;
+}
+
+#ra2web-root .qm-form .qm-game-type > .button-select + .button-select {
+    margin-top: 8px;
+}
+
+#ra2web-root .button-select {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#ra2web-root .button-select div {
+    display: inline-block;
+}
+
+#ra2web-root .button-select .option {
+    border: 1px red solid;
+    font-size: 14px;
+    padding: 4px 8px 3px 8px;
+    background: rgba(0, 0, 0, .75);
+}
+
+#ra2web-root .button-select .option:hover,
+#ra2web-root .button-select .option.selected {
+    border-color: orange;
+}
+
+#ra2web-root .button-select .option.disabled {
+    color: gray;
+    border-color: gray;
+}
+
+#ra2web-root .button-select > div + div {
+    margin-left: 8px;
+}
+
+#ra2web-root .qm-form .country-select {
+    display: inline-flex;
+    flex-direction: row-reverse;
+}
+
+#ra2web-root .qm-form .qm-profile {
+    margin-top: 48px;
+}
+
+#ra2web-root .qm-form .qm-profile .value {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#ra2web-root .qm-form .qm-profile .rank-indicator {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 3px;
+}
+
+#ra2web-root .ladder table {
+    border: 1px red solid;
+    border-collapse: collapse;
+    width: 450px;
+    margin: 0 auto;
+}
+
+#ra2web-root .ladder table th,
+#ra2web-root .ladder table td {
+    font-size: 13px;
+    padding: 3px 8px;
+}
+
+#ra2web-root .ladder table thead th {
+    border-bottom: 1px red solid;
+    text-align: left;
+}
+
+#ra2web-root .ladder table thead th.player-rank-icon {
+    width: 20px;
+}
+
+#ra2web-root .ladder table thead th.player-name {
+    width: 200px;
+}
+
+#ra2web-root .ladder .player-rank-icon .rank-indicator {
+    display: inline-block;
+    vertical-align: top;
+}
+
+#ra2web-root .ladder table tr:nth-child(2n) {
+    background-color: rgba(21, 21, 21, .75);
+}
+
+#ra2web-root .ladder table tr:nth-child(2n+1) {
+    background-color: rgba(55, 55, 55, .75);
+}
+
+#ra2web-root .ladder table tr.selected {
+    background-color: red;
+}
+
+#ra2web-root .ladder table tr.disabled {
+    color: gray;
+}
+
+#ra2web-root .ladder .pagination {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+}
+
+#ra2web-root .ladder .pagination button {
+    appearance: none;
+    border: 1px red solid;
+    background-color: #480000;
+    padding: 4px 8px 3px 8px;
+}
+
+#ra2web-root .ladder .pagination * + button {
+    margin-left: 5px;
+}
+
+#ra2web-root .ladder .pagination button:hover:not(:disabled) {
+    background-color: orangered;
+}
+
+#ra2web-root .ladder .pagination button:disabled {
+    color: gray;
+}
+
+#ra2web-root .ladder .ladder-select {
+    width: 130px;
+}
+
+#ra2web-root .pagination .player-search {
+    display: flex;
+}
+
+#ra2web-root .pagination .player-search .player {
+    margin: 0 5px;
+    width: 100px;
+}
+
+#ra2web-root .game-chat-input {
+    width: 400px;
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    padding: 0 4px;
+    background: rgba(0, 0, 0, .75)
+}
+
+#ra2web-root .game-chat-input input {
+    flex-grow: 1;
+    border: 0;
+    height: 20px;
+    font-size: 13px;
+}
+
+#joystick-container {
+    position: absolute;
+    left: 30px;
+    bottom: 30px;
+    width: 210px;
+    height: 210px;
+}
+
+#toolbox-container {
+    position: absolute;
+    left: 30px;
+    bottom: 30px;
+    width: 220px;
+    height: 220px;
+    background-color: transparent;
+}
+
+#toolbox-container .active {
+    color: red;
+    text-shadow: -1px -1px 0 yellow, 1px -1px 0 yellow, -1px 1px 0 yellow, 1px 1px 0 yellow;
+}
+
+.static-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: rgba(255, 0, 0, 0.3);
+    transform-origin: top left;
+    color: yellow;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.static-bottom .bottom-inner-text {
+    display: inline-block;
+}
+
+.joystick-message {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: yellow;
+    font-weight: bold;
+    padding: 10px;
+    z-index: 1000;
+}

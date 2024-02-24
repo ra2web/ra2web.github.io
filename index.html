@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=0.4">
+  <meta name="description" content="An unofficial remake of the classic &quot;Command &amp; Conquer: Red Alert 2&quot; RTS game, playable online in the web browser." />
+  <title>网页红井-单机测试版</title>
+  <meta name="description" content="在网页上就能玩经典的红色井界游戏，无需下载安装，随时随地在手机、电脑、平板甚至手表上畅玩。提供多种游戏模式和地图，与全球玩家实时对战。">
+  <meta name="keywords"
+    content="红色警戒下载, 如何玩红警, webra2, 苹果如何玩红警, 平板上如何玩红警, 手机上如何玩红警, win7如何玩红警, win10如何玩红警, win11如何玩红警, 红警, 红警2, 红色警戒2, 网页红警, 云红警, 在线游戏, 游戏平台，对战平台，战网, 红色警戒3, 红警3, RA2, RA2WEB">
+  <script type="text/javascript" src="lib/local-trans.js"></script>
+  <script type="text/javascript" src="lib/nipplejs.js"></script>
+  <script type="text/javascript">
+    var browserSupported = true;
+    try {
+      eval("'use strict'; class C { async test(...args) { let spread = {...({a: 2})} }}");
+      var canvas = document.createElement('canvas');
+      browserSupported = !!(
+        window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')) &&
+        new Blob(["test"], { type: "text/plain" }).arrayBuffer
+      );
+    } catch (e) {
+      browserSupported = false;
+    }
+    if (!browserSupported) {
+      alert("浏览器WebGL异常，请关注微信公众号 思牛逼 获取解决方案");
+    }
+  </script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NT498QGSGZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-NT498QGSGZ');
+  </script>
+
+  <link href="res/fonts/fonts.css" rel="stylesheet"></link>
+  <link rel="stylesheet" href="style.css?v=0.57.2" type="text/css"></link>
+  <style type="text/css">
+  #ra2web-root {
+    position: relative;
+  }
+  </style>
+</head>
+<body class="no-js">
+  <div id="loader-wrapper" style="display: none;">
+    <div id="loader"></div>
+    <div id="loader-logo"></div>
+  </div>
+
+  <div id="ra2web-root"></div>
+  <div id="joystick-message" class="joystick-message">摇杆操作中，禁止其他操作</div>
+  <div id="joystick-container" style="width: 20px;height: 30px;">
+
+  <script type="text/javascript">
+    if (browserSupported) {
+      document.body.classList.remove("no-js");
+      setTimeout(() => {
+        let loader = document.getElementById("loader-wrapper");
+        if (loader) {
+          loader.style.display = "";
+        }
+      }, 2000);
+    }
+  </script>
+  <script type="text/javascript" src="lib/system.js"></script>
+  <script type="text/javascript" src="lib/three.min.js?v0.94"></script>
+  <script type="text/javascript" src="lib/three/three.shader-patch.js?v=2"></script>
+  <script type="text/javascript" src="lib/three/three.octree.js?v=2"></script>
+  <script type="text/javascript" src="lib/three/SimplexNoise.js"></script>
+  <script type="text/javascript" src="lib/three/LightningStrike.js"></script>
+  <script type="text/javascript" src="lib/three/TrailRenderer.js"></script>
+  <script type="text/javascript" src="lib/three/SPE.min.js"></script>
+  <script type="text/javascript" src="lib/three/SPE.patch.js"></script>
+  <script type="text/javascript" src="lib/growingpacker.js"></script>
+  <script type="text/javascript" src="lib/lzo1x.js"></script>
+  <script type="text/javascript" src="lib/fullscreen-api-polyfill.min.js"></script>
+  <script type="text/javascript" src="dist/ra2web.min.js?v=0.57.2"></script>
+  <script type="text/javascript" src="dist/vendor.bundle.min.js?v=0.57.2"></script>
+  <script type="text/javascript" src="dist/workerHost.min.js?v=0.57.2"></script>
+  <script type="text/javascript">
+  SystemJS.config({
+    packages: {
+      "@puzzl": {
+        defaultExtension: "js"
+      },
+      "@puzzl/core/lib/async/cancellation": {
+        main: "index.js"
+      },
+      "@babel/runtime": {
+        defaultExtension: "js"
+      },
+      "@babel/runtime/regenerator": {
+        main: "index.js"
+      },
+      "regenerator-runtime": {
+        main: "runtime.js"
+      }
+    },
+    meta: {
+      "web-audio-polyfill.js": {
+        scriptLoad: true
+      },
+      "dist/7zz.js": {
+        scriptLoad: true
+      },
+      "dist/fsalib.min.js": {
+        scriptLoad: true
+      },
+      "dist/spbots.min.js": {
+        scriptLoad: true
+      }
+    },
+    paths: {
+      "web-audio-polyfill.js": "dist/web-audio-polyfill.min.js",
+      "7z-wasm": "dist/7zz.js",
+      "@ffmpeg/ffmpeg": "dist/ffmpeg.min.js",
+      "file-system-access": "dist/fsalib.min.js?v=1.0.4",
+      "@chronodivide/sp-bots": "dist/spbots.min.js?v=1.0.0",
+      "@chronodivide/game-api": "game/api/index",
+    }
+  })
+  System.registerDynamic('three', [], false, function(require, exports, module) {
+      module.exports = window.THREE;
+  });
+  if (browserSupported) {
+    SystemJS.import("main");
+    document.body.removeChild(document.getElementById("loader-wrapper"));
+  }
+  </script>
+</body>
+</html>
