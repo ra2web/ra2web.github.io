@@ -1651,17 +1651,29 @@ input[type="range"]:focus {
     margin: 0 auto;
 }
 
-#ra2web-root .con-info-form td {
-    width: 70px;
-    padding: 5px 0;
+#ra2web-root .con-info-form th.player-name {
+    text-align: left;
 }
 
+#ra2web-root .con-info-form td {
+    width: 70px;
+    padding: 3px 0;
+}
+
+#ra2web-root .con-info-form th.player-name,
 #ra2web-root .con-info-form td.player-name {
     width: 150px;
 }
 
+#ra2web-root .con-info-form th.player-ping,
 #ra2web-root .con-info-form td.player-ping {
-    width: 300px;
+    width: 250px;
+}
+
+#ra2web-root .con-info-form th.player-time,
+#ra2web-root .con-info-form td.player-time {
+    width: 50px;
+    text-align: right;
 }
 
 #ra2web-root .con-info-form td.player-ping meter {
@@ -2113,60 +2125,4 @@ input[type="range"]:focus {
     border: 0;
     height: 20px;
     font-size: 13px;
-}
-
-#joystick-container {
-    position: absolute;
-    left: 30px;
-    bottom: 30px;
-    width: 210px;
-    height: 210px;
-}
-
-#toolbox-container {
-    position: absolute;
-    left: 30px;
-    bottom: 30px;
-    width: 220px;
-    height: 220px;
-    background-color: transparent;
-}
-
-#toolbox-container .active {
-    color: red;
-    text-shadow: -1px -1px 0 yellow, 1px -1px 0 yellow, -1px 1px 0 yellow, 1px 1px 0 yellow;
-}
-
-.static-bottom {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: rgba(255, 0, 0, 0.3);
-    transform-origin: top left;
-    color: yellow;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-}
-
-.static-bottom .bottom-inner-text {
-    display: inline-block;
-}
-
-.joystick-message {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    color: yellow;
-    font-weight: bold;
-    padding: 10px;
-    z-index: 1000;
 }

@@ -1,15 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=0.4">
-  <meta name="description" content="An unofficial remake of the classic &quot;Command &amp; Conquer: Red Alert 2&quot; RTS game, playable online in the web browser." />
-  <title>网页红井-单机测试版</title>
-  <meta name="description" content="在网页上就能玩经典的红色井界游戏，无需下载安装，随时随地在手机、电脑、平板甚至手表上畅玩。提供多种游戏模式和地图，与全球玩家实时对战。">
-  <meta name="keywords"
-    content="红色警戒下载, 如何玩红警, webra2, 苹果如何玩红警, 平板上如何玩红警, 手机上如何玩红警, win7如何玩红警, win10如何玩红警, win11如何玩红警, 红警, 红警2, 红色警戒2, 网页红警, 云红警, 在线游戏, 游戏平台，对战平台，战网, 红色警戒3, 红警3, RA2, RA2WEB">
-  <script type="text/javascript" src="lib/local-trans.js"></script>
-  <script type="text/javascript" src="lib/nipplejs.js"></script>
+<!DOCTYPE html><html><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=0.46875"/>
+  
+  <title>网页红井-联机对战平台</title><meta name="keywords" content="红色警戒下载, 如何玩红警, webra2, 苹果如何玩红警, 平板上如何玩红警, 手机上如何玩红警, win7如何玩红警, win10如何玩红警, win11如何玩红警, 红警, 红警2, 红色警戒2, 网页红警, 云红警, 在线游戏, 游戏平台，对战平台，战网, 红色警戒3, 红警3, RA2, RA2WEB"/><meta name="description" content="在网页上就能玩经典的红色井界游戏，无需下载安装，随时随地在手机、电脑、平板甚至手表上畅玩。提供多种游戏模式和地图，与全球玩家实时对战。"/><script type="text/javascript" src="lib/nipplejs.js"></script><script type="text/javascript" src="lib/local-trans.js"></script>
   <script type="text/javascript">
     var browserSupported = true;
     try {
@@ -23,12 +16,12 @@
       browserSupported = false;
     }
     if (!browserSupported) {
-      alert("浏览器WebGL异常，请关注微信公众号 思牛逼 获取解决方案");
+      alert("Browser not supported.\n\nPlease download the latest Google Chrome, Mozilla Firefox or Microsoft Edge.");
     }
   </script>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NT498QGSGZ"></script>
+  
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -37,8 +30,8 @@
     gtag('config', 'G-NT498QGSGZ');
   </script>
 
-  <link href="res/fonts/fonts.css" rel="stylesheet"></link>
-  <link rel="stylesheet" href="style.css?v=0.57.2" type="text/css"></link>
+  <link href="res/fonts/fonts.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css?v=0.59.3" type="text/css"/>
   <style type="text/css">
   #ra2web-root {
     position: relative;
@@ -52,8 +45,6 @@
   </div>
 
   <div id="ra2web-root"></div>
-  <div id="joystick-message" class="joystick-message">摇杆操作中，禁止其他操作</div>
-  <div id="joystick-container" style="width: 20px;height: 30px;">
 
   <script type="text/javascript">
     if (browserSupported) {
@@ -78,9 +69,9 @@
   <script type="text/javascript" src="lib/growingpacker.js"></script>
   <script type="text/javascript" src="lib/lzo1x.js"></script>
   <script type="text/javascript" src="lib/fullscreen-api-polyfill.min.js"></script>
-  <script type="text/javascript" src="dist/ra2web.min.js?v=0.57.2"></script>
-  <script type="text/javascript" src="dist/vendor.bundle.min.js?v=0.57.2"></script>
-  <script type="text/javascript" src="dist/workerHost.min.js?v=0.57.2"></script>
+  <script type="text/javascript" src="dist/ra2web.min.js?v=0.59.3"></script>
+  <script type="text/javascript" src="dist/vendor.bundle.min.js?v=0.59.3"></script>
+  <script type="text/javascript" src="dist/workerHost.min.js?v=0.59.3"></script>
   <script type="text/javascript">
   SystemJS.config({
     packages: {
@@ -119,7 +110,7 @@
       "7z-wasm": "dist/7zz.js",
       "@ffmpeg/ffmpeg": "dist/ffmpeg.min.js",
       "file-system-access": "dist/fsalib.min.js?v=1.0.4",
-      "@chronodivide/sp-bots": "dist/spbots.min.js?v=1.0.0",
+      "@chronodivide/sp-bots": "dist/spbots.min.js?v=2",
       "@chronodivide/game-api": "game/api/index",
     }
   })
@@ -131,5 +122,6 @@
     document.body.removeChild(document.getElementById("loader-wrapper"));
   }
   </script>
-</body>
-</html>
+
+
+</body></html>
