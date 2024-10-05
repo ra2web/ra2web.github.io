@@ -493,6 +493,7 @@ input[type="range"]:focus {
 }
 
 #ra2web-root input[type="text"],
+#ra2web-root input[type="url"],
 #ra2web-root input[type="password"],
 #ra2web-root select,
 #ra2web-root .select {
@@ -501,6 +502,7 @@ input[type="range"]:focus {
 }
 
 #ra2web-root input[type="text"],
+#ra2web-root input[type="url"],
 #ra2web-root input[type="password"],
 #ra2web-root select,
 #ra2web-root .select {
@@ -514,6 +516,7 @@ input[type="range"]:focus {
 }
 
 #ra2web-root input[type="text"],
+#ra2web-root input[type="url"],
 #ra2web-root input[type="password"] {
     padding-left: 4px;
 }
@@ -1756,10 +1759,6 @@ input[type="range"]:focus {
     margin-top: -30px;
 }
 
-#ra2web-root .game-res-box.message-box.game-res-box-no-dl {
-    height: 420px;
-}
-
 #ra2web-root .game-res-box.message-box .message-box-content {
     padding: 30px;
     padding-top: 5px;
@@ -1831,12 +1830,26 @@ input[type="range"]:focus {
     border: 1px red outset;
 }
 
-#ra2web-root .game-res-box.message-box .message-box-content .dialog-button:hover,
-#ra2web-root .basic-error-box.message-box .message-box-footer .dialog-button:hover {
+#ra2web-root .game-res-box.message-box .message-box-content .dialog-button:hover:not(:disabled),
+#ra2web-root .basic-error-box.message-box .message-box-footer .dialog-button:hover:not(:disabled) {
     background: orangered;
 }
 
-#ra2web-root .game-res-box.message-box .message-box-content .link-container {
+#ra2web-root .game-res-box.message-box .message-box-content .link-container .link-field {
+    display: flex;
+    align-items: baseline;
+}
+
+#ra2web-root .game-res-box.message-box .message-box-content .link-container .link-field input {
+    margin-left: 8px;
+    flex-grow: 1;
+    display: block;
+    background: rgba(255, 255, 255, .1);
+    border-color: #ccc;
+    border-style: inset;
+}
+
+#ra2web-root .game-res-box.message-box .message-box-content .link-container .download-button {
     text-align: center;
 }
 
