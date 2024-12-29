@@ -1,6 +1,6 @@
 # 网页红井测试版一键部署
 
-网页红井（网页版“红警”/Chronodivide）预览版测试站点，帮助各类爱好者一键搭建自己的网页版“红警”站点，助力营销和知识分享
+网页红警一键部署包/chronodivide asssets。网页红井（网页版“红警”/Chronodivide）预览版测试站点，帮助各类爱好者一键搭建自己的网页版“红警”站点，助力营销和知识分享
 
 ## 一键部署
 
@@ -14,8 +14,5 @@ fork该项目，命名为 你的名字.github.io，例如 ra2web.github.io
 
 [![一键部署到Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/ra2web/ra2web.github.io)
 
-### 腾讯云
-
-[![一键部署至腾讯云](https://cloudbase.net/deploy.svg)](https://console.cloud.tencent.com/webify/new?tpl=https://github.com/ra2web/ra2web.github.io)
 
 
