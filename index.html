@@ -29,7 +29,7 @@
   </script>
 
   <link href="res/fonts/fonts.css" rel="stylesheet"/>
-  <link rel="stylesheet" href="style.css?v=0.62.1" type="text/css"/>
+  <link rel="stylesheet" href="style.css?v=0.65.1" type="text/css"/>
   <style type="text/css">
   #ra2web-root {
     position: relative;
@@ -67,9 +67,9 @@
   <script type="text/javascript" src="lib/growingpacker.js"></script>
   <script type="text/javascript" src="lib/lzo1x.js"></script>
   <script type="text/javascript" src="lib/fullscreen-api-polyfill.min.js"></script>
-  <script type="text/javascript" src="dist/ra2web.min.js?v=0.62.1"></script>
-  <script type="text/javascript" src="dist/vendor.bundle.min.js?v=0.62.1"></script>
-  <script type="text/javascript" src="dist/workerHost.min.js?v=0.62.1"></script>
+  <script type="text/javascript" src="dist/ra2web.min.js?v=0.65.1"></script>
+  <script type="text/javascript" src="dist/vendor.bundle.min.js?v=0.65.1"></script>
+  <script type="text/javascript" src="dist/workerHost.min.js?v=0.65.1"></script>
   <script type="text/javascript" src="lib/poll.js?v=2"></script>
   <script type="text/javascript">
   SystemJS.config({
@@ -109,7 +109,7 @@
       "7z-wasm": "dist/7zz.js",
       "@ffmpeg/ffmpeg": "dist/ffmpeg.min.js",
       "file-system-access": "dist/fsalib.min.js?v=1.0.4",
-      "@chronodivide/sp-bots": "dist/spbots.min.js?v=0.62.1",
+      "@chronodivide/sp-bots": "dist/spbots.min.js?v=0.65.1",
       "@chronodivide/game-api": "game/api/index",
     }
   })
@@ -117,7 +117,7 @@
       module.exports = window.THREE;
   });
   if (browserSupported) {
-    let pollId = "QrgewPABLyp";
+    let pollId = "";
     (pollId ? initPoll(pollId) : Promise.resolve()).then(() => SystemJS.import("main"));
     document.body.removeChild(document.getElementById("loader-wrapper"));
   }

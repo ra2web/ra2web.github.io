@@ -206,6 +206,10 @@ html:-moz-full-screen body {
     text-align: center;
 }
 
+#ra2web-root .menu-mp-slot {
+    position: relative;
+}
+
 #ra2web-root pre.menu-mp-slot-text {
     width: 100%;
     text-align: center;
@@ -218,6 +222,12 @@ html:-moz-full-screen body {
     text-overflow: ellipsis;
     overflow: hidden;
     max-height: 71px;
+}
+
+#ra2web-root .menu-mp-slot-icon {
+    position: absolute;
+    top: 10px;
+    left: 7px;
 }
 
 #ra2web-root .sidebar-title {
@@ -318,6 +328,11 @@ html:-moz-full-screen body {
     text-transform: uppercase;
 }
 
+#ra2web-root .login-wrapper .server-list .list-item .online-text {
+    color: lawngreen;
+    text-transform: uppercase;
+}
+
 #ra2web-root .login-wrapper .news {
     box-sizing: border-box;
     height: 200px;
@@ -346,7 +361,7 @@ html:-moz-full-screen body {
     width: 500px;
 }
 
-#ra2web-root .login-box.new-account-box .field label {
+#ra2web-root .new-account-box .login-box .field label {
     min-width: 130px;
 }
 
@@ -405,7 +420,22 @@ html:-moz-full-screen body {
 }
 
 #ra2web-root .lobby-form {
-    padding: 40px 30px;
+    padding: 30px 30px;
+}
+
+#ra2web-root .lobby-form.lobby-form-server-sel {
+    padding: 15px 30px;
+}
+
+#ra2web-root .lobby-form .game-server {
+    margin-bottom: 8px;
+    text-align: right;
+    padding-right: 2px;
+}
+
+#ra2web-root .lobby-form .game-server span.label {
+    margin-right: 10px;
+    vertical-align: middle;
 }
 
 #ra2web-root .lobby-form.lobby-form-sp {
