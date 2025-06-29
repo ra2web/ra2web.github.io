@@ -2,6 +2,12 @@
 
 网页红警一键部署包/chronodivide asssets。网页红井（网页版“红警”/Chronodivide）预览版测试站点，帮助各类爱好者一键搭建自己的网页版“红警”站点，助力营销和知识分享
 
+## 赞助商
+
+本项目的CDN加速和安全防护由腾讯EdgeOne赞助
+
+[![最佳亚洲 CDN、Edge 和安全解决方案 - 腾讯 EdgeOne](https://edgeone.ai/media/34fe3a45-492d-4ea4-ae5d-ea1087ca7b4b.png)](https://edgeone.ai/?from=github)
+
 ## 一键部署
 
 ### Github托管页面
