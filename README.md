@@ -16,6 +16,12 @@ fork该项目，命名为 你的名字.github.io，例如 ra2web.github.io
 
 正如你所见，这个项目的名字就符合这个域名规则。那么，此时的你可以访问 https://ra2web.github.io 来游玩网页红井拉
 
+当前本项目同样可以通过github pages访问，地址就是 https://ra2web.github.io
+
+### 腾讯云EdgeOne Pages
+
+[![使用 EdgeOne Pages 部署](https://cdnstatic.tencentcs.com/edgeone/pages/deploy.svg)](https://edgeone.ai/pages/new?repository-url=https%3A%2F%2Fgithub.com%2Fra2web%2Fra2web.github.io)
+
 ### Vercel
 
 [![一键部署到Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/ra2web/ra2web.github.io)
