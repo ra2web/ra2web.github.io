@@ -444,7 +444,7 @@ html:-moz-full-screen body {
 
 #ra2web-root .lobby-form .player-slots,
 #ra2web-root .lobby-form .game-options,
-#ra2web-root .qm-form {
+#ra2web-root .qm-form .qm-top .opts {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -762,27 +762,30 @@ input[type="range"]:focus {
 }
 
 #ra2web-root .lobby-form .game-options-left {
-    margin-left: 57px; /* 18px x 3 icons + 3px player name margin */
-    width: 200px;
+    margin-left: 0;
     float: left;
+    height: 114px;
+    column-count: 2;
+    column-gap: 10px;
+    column-fill: auto;
 }
 
 #ra2web-root .lobby-form.lobby-form-sp .game-options-left {
-    margin-left: 0;
+    column-gap: 0;
+    width: 250px;
+    padding-top: 4px;
 }
 
 #ra2web-root .lobby-form .game-options-right {
-    float: left;
+    float: right;
 }
 
 #ra2web-root .lobby-form .game-options-left > div {
-    margin-top: 4px;
     margin-bottom: 5px;
-    overflow: hidden;
 }
 
 #ra2web-root .lobby-form.lobby-form-sp .game-options-left > div {
-    margin-bottom: 13px;
+    margin-bottom: 12px;
 }
 
 #ra2web-root .lobby-form .game-options label {
@@ -971,7 +974,7 @@ input[type="range"]:focus {
     height: 235px;
 }
 
-#ra2web-root .gamebrowser-wrapper .players-list .player {
+#ra2web-root .players-list .player {
     padding: 3px;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -979,18 +982,18 @@ input[type="range"]:focus {
     cursor: pointer;
 }
 
-#ra2web-root .gamebrowser-wrapper .players-list .player.operator {
+#ra2web-root .players-list .player.operator {
     color: cyan;
 }
 
-#ra2web-root .gamebrowser-wrapper .players-list .player .channel-op-indicator {
+#ra2web-root .players-list .player .channel-op-indicator {
     display: inline-block;
     vertical-align: middle;
     width: 14px;
     height: 14px;
 }
 
-#ra2web-root .gamebrowser-wrapper .players-list .player .rank-indicator {
+#ra2web-root .players-list .player .rank-indicator {
     display: inline-block;
     vertical-align: top;
     margin-right: 3px;
@@ -1301,6 +1304,8 @@ input[type="range"]:focus {
 
 #ra2web-root .loading-screen .player-status {
     margin-top: 3px;
+    display: flex;
+    align-items: center;
 }
 
 #ra2web-root progress {
@@ -1349,6 +1354,12 @@ input[type="range"]:focus {
     padding: 3px;
     background: rgba(0, 0, 0, .5);
     font-weight: bold;
+}
+
+#ra2web-root .loading-screen .player-team {
+    margin-right: 10px;
+    min-width: 40px;
+    color: white;
 }
 
 #ra2web-root .loading-screen .player-name {
@@ -1776,12 +1787,14 @@ input[type="range"]:focus {
 }
 
 #ra2web-root .game-res-box.message-box,
+#ra2web-root .patch-notes-box.message-box,
 #ra2web-root .basic-error-box.message-box {
     background: rgba(255, 255, 255, .1);
     border: 2px #8d8d8d outset;
 }
 
-#ra2web-root .game-res-box.message-box {
+#ra2web-root .game-res-box.message-box,
+#ra2web-root .patch-notes-box.message-box {
     width: 640px;
     height: 520px;
     text-align: center;
@@ -1891,11 +1904,44 @@ input[type="range"]:focus {
     font-size: 11px;
 }
 
+#ra2web-root .patch-notes-box.message-box .message-box-content {
+    height: calc(100% - 65px);
+    padding: 0;
+    border-bottom: 1px darkgray solid;
+}
+
+#ra2web-root .patch-notes-box.message-box .message-box-content iframe {
+    padding: 0;
+}
+
 #ra2web-root .score-wrapper {
     margin: 86px;
     padding: 8px;
     box-sizing: border-box;
     background-color: rgba(0, 0, 0, .65);
+}
+
+#ra2web-root .score-wrapper .score-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 19px;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+    border-bottom: 1px red solid;
+}
+
+#ra2web-root .score-wrapper .score-title .game-result {
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+#ra2web-root .score-wrapper .score-title .points-gain-value {
+    color: orangered;
+}
+
+#ra2web-root .score-wrapper .score-title .points-gain-value.positive {
+    color: lime;
 }
 
 #ra2web-root .score-wrapper .score-header {
@@ -1917,6 +1963,10 @@ input[type="range"]:focus {
     font-weight: 500;
 }
 
+#ra2web-root .score-wrapper td {
+    text-shadow: 1px 1px black;
+}
+
 #ra2web-root .score-wrapper th,
 #ra2web-root .score-wrapper td {
     width: 70px;
@@ -1936,6 +1986,19 @@ input[type="range"]:focus {
 #ra2web-root .score-wrapper th.player-name,
 #ra2web-root .score-wrapper td.player-name {
     width: 200px;
+}
+
+#ra2web-root .score-wrapper th.player-mmr,
+#ra2web-root .score-wrapper td.player-mmr {
+    width: 100px;
+}
+
+#ra2web-root .score-wrapper td.player-mmr .mmr-gain.positive {
+    color: lime;
+}
+
+#ra2web-root .score-wrapper td.player-mmr .mmr-gain {
+    color: orangered;
 }
 
 #ra2web-root .patch-notes,
@@ -2005,6 +2068,45 @@ input[type="range"]:focus {
 	padding-right: 2px;
 }
 
+#ra2web-root .qm-form {
+    padding: 16px;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+#ra2web-root .qm-form .qm-top {
+    min-height: 275px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#ra2web-root .qm-form .opts {
+    flex-grow: 1;
+    margin-top: 9px;
+    margin-right: 10px;
+    border: 1px red solid;
+    padding: 20px 0 0 0;
+}
+
+#ra2web-root .qm-form .opts .item {
+    margin: 0;
+}
+
+#ra2web-root .qm-form .opts .item + .item {
+    margin-top: 15px;
+}
+
+#ra2web-root .qm-form .opts .item span.label {
+    width: 140px;
+}
+
+#ra2web-root .qm-form .item.qm-game-type-item {
+    margin-top: 5px;
+}
+
 #ra2web-root .qm-form .qm-game-type {
     display: inline-block;
     vertical-align: top;
@@ -2054,13 +2156,49 @@ input[type="range"]:focus {
     flex-direction: row-reverse;
 }
 
-#ra2web-root .qm-form .qm-profile {
-    margin-top: 48px;
+#ra2web-root .qm-form fieldset.qm-profile {
+    width: 170px;
+    margin-inline: 0;
+}
+
+#ra2web-root .qm-form .qm-profile legend {
+    font-size: 16px;
+}
+
+#ra2web-root .qm-form .qm-profile .placement {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0;
+    margin-top: 0 !important;
+    text-align: center;
+}
+
+#ra2web-root .qm-form .qm-profile .player-rank {
+    margin-bottom: 16px;
+}
+
+#ra2web-root .qm-form .qm-profile .player-rank .rank-indicator {
+    vertical-align: middle;
+    margin-left: 0;
+}
+
+#ra2web-root .qm-form .qm-profile .player-rank .rank-name {
+    font-size: 16px;
+}
+
+#ra2web-root .qm-form .qm-profile .player-rank .rank-number {
+    margin-left: 20px;
+    margin-top: 3px;
+    color: cyan;
+}
+
+#ra2web-root .qm-form .qm-profile * + .item {
+    margin-top: 15px;
 }
 
 #ra2web-root .qm-form .qm-profile .value {
-    display: inline-block;
-    vertical-align: middle;
+    float: right;
 }
 
 #ra2web-root .qm-form .qm-profile .rank-indicator {
@@ -2069,11 +2207,142 @@ input[type="range"]:focus {
     margin-left: 3px;
 }
 
+#ra2web-root .qm-form .qm-profile .promo-progress span.label {
+    display: block;
+}
+
+#ra2web-root .qm-form .qm-profile .promo-progress .value {
+    display: block;
+    width: 100%;
+    text-align: left;
+    margin-top: 8px;
+    float: none;
+}
+
+#ra2web-root .qm-form .qm-profile .promo-progress.demotion .value {
+    color: orangered;
+}
+
+#ra2web-root .qm-form .qm-profile .promo-progress .next-rank .promotion-indicator {
+    color: lime;
+
+}
+
+#ra2web-root .qm-form .qm-profile .promo-progress .next-rank .demotion-indicator {
+    text-shadow: 0px 0px 5px orange;
+}
+
+#ra2web-root .qm-form .qm-profile .promo-progress progress {
+    width: 100%;
+}
+
+#ra2web-root .qm-form .qm-profile hr {
+    border-top: 1px solid;
+    border-bottom: 0;
+    border-color: dimgray;
+    margin: 15px 0 8px 0;
+}
+
+#ra2web-root .qm-form .qm-profile .info {
+    vertical-align: top;
+    margin-left: 3px;
+}
+
+#ra2web-root .qm-form .qm-bottom {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    overflow-y: auto;
+    flex: 1;
+}
+
+#ra2web-root .qm-form .qm-bottom .chat-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    flex-basis: min-content;
+}
+
+#ra2web-root .qm-form .qm-bottom .chat-wrapper .messages {
+    height: auto;
+    flex-grow: 1;
+}
+
+#ra2web-root .qm-form .qm-bottom .players-list {
+    height: auto;
+    width: 190px;
+    box-sizing: border-box;
+    margin-left: 10px;
+}
+
+#ra2web-root .ladder {
+    padding: 20px;
+}
+
+#ra2web-root .ladder .toolbar {
+    margin-bottom: 10px;
+    display: flex;
+    /* justify-content: center; */
+}
+
+#ra2web-root .ladder .ladder-content {
+    display: flex;
+    align-items: flex-start;
+    margin: 0 auto;
+}
+
+#ra2web-root .ladder .ladder-content .ladder-types {
+    margin-right: 10px;
+    width: 130px;
+    box-sizing: border-box;
+}
+
+#ra2web-root .ladder .ladder-content .list.ladder-types {
+    border: 0px;
+}
+
+#ra2web-root .ladder .ladder-content .list.ladder-types .list-item {
+    border: 1px red solid;
+    padding: 4px 8px 3px 8px;
+}
+
+#ra2web-root .ladder .ladder-content .list.ladder-types .list-item:not(.selected) {
+    background-color: #480000;
+}
+
+#ra2web-root .ladder .ladder-content .list.ladder-types .list-item:hover {
+    background-color: red;
+}
+
+#ra2web-root .ladder .ladder-content .list.ladder-types .list-item + .list-item {
+    margin-top: 8px;
+}
+
+#ra2web-root .ladder .ladder-content .season-info {
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+#ra2web-root .ladder .ladder-content .season-info .item {
+    margin-top: 16px;
+}
+
+#ra2web-root .ladder .ladder-content .season-info header + .item {
+    margin-top: 32px;
+}
+
+#ra2web-root .ladder .ladder-content .season-info h2 {
+    margin-top: 0;
+}
+
+#ra2web-root .ladder .season-info,
 #ra2web-root .ladder table {
     border: 1px red solid;
-    border-collapse: collapse;
     width: 450px;
-    margin: 0 auto;
+}
+
+#ra2web-root .ladder table {
+    border-collapse: collapse;
 }
 
 #ra2web-root .ladder table th,
@@ -2117,40 +2386,57 @@ input[type="range"]:focus {
 }
 
 #ra2web-root .ladder .pagination {
-    margin-top: 24px;
+    margin-top: 10px;
     display: flex;
     justify-content: center;
 }
 
-#ra2web-root .ladder .pagination button {
+#ra2web-root .ladder button {
     appearance: none;
     border: 1px red solid;
     background-color: #480000;
     padding: 4px 8px 3px 8px;
 }
 
-#ra2web-root .ladder .pagination * + button {
+#ra2web-root .ladder * + button {
     margin-left: 5px;
 }
 
-#ra2web-root .ladder .pagination button:hover:not(:disabled) {
+#ra2web-root .ladder button:hover:not(:disabled) {
     background-color: orangered;
 }
 
-#ra2web-root .ladder .pagination button:disabled {
+#ra2web-root .ladder button:disabled {
     color: gray;
 }
 
-#ra2web-root .ladder .ladder-select {
-    width: 130px;
+#ra2web-root .ladder .toolbar.no-season-select {
+    padding-left: 140px;
+    min-height: 26px;
 }
 
-#ra2web-root .pagination .player-search {
+#ra2web-root .ladder .season-select,
+#ra2web-root .ladder .ladder-select {
+    width: 130px;
+    margin-right: 10px;
+}
+
+#ra2web-root .ladder .ladder-select {
+    width: auto;
+    min-width: 200px;
+}
+
+#ra2web-root .ladder .ladder-select .select-layer {
+    max-height: 320px;
+    overflow-y: auto;
+}
+
+#ra2web-root .ladder .player-search {
     display: flex;
 }
 
-#ra2web-root .pagination .player-search .player {
-    margin: 0 5px;
+#ra2web-root .ladder .player-search .player {
+    margin-right: 5px;
     width: 100px;
 }
 
