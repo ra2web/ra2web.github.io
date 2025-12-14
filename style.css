@@ -379,6 +379,16 @@ html:-moz-full-screen body {
     margin-top: 5px;
 }
 
+#ra2web-root .options-inline-button {
+    width: 126px;
+    height: 25px;
+    border: none;
+    outline: none;
+    background-image: var(--res-mnbttn);
+    background-position: 0 0;
+    display: block;
+}
+
 #ra2web-root .dialog-button {
     width: 126px;
     height: 25px;
@@ -1378,7 +1388,7 @@ input[type="range"]:focus {
 
 #ra2web-root .opts .slider-item,
 #ra2web-root .opts .item {
-    margin: 15px 0;
+    margin: 5px 0;
 }
 #ra2web-root .opts .item span.label {
     width: 150px;
@@ -2084,7 +2094,7 @@ input[type="range"]:focus {
 }
 
 #ra2web-root .qm-form .opts {
-    flex-grow: 1;
+    width: 400px;
     margin-top: 9px;
     margin-right: 10px;
     border: 1px red solid;
@@ -2157,7 +2167,8 @@ input[type="range"]:focus {
 }
 
 #ra2web-root .qm-form fieldset.qm-profile {
-    width: 170px;
+    width: 190px;
+    box-sizing: border-box;
     margin-inline: 0;
 }
 
@@ -2257,10 +2268,9 @@ input[type="range"]:focus {
 }
 
 #ra2web-root .qm-form .qm-bottom .chat-wrapper {
+    width: 400px;
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
-    flex-basis: min-content;
 }
 
 #ra2web-root .qm-form .qm-bottom .chat-wrapper .messages {
