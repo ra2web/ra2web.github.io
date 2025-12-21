@@ -996,6 +996,12 @@ input[type="range"]:focus {
     color: cyan;
 }
 
+#ra2web-root .players-list .player.disabled {
+    color: #888;
+    opacity: 0.75;
+    cursor: default;
+}
+
 #ra2web-root .players-list .player .channel-op-indicator {
     display: inline-block;
     vertical-align: middle;
