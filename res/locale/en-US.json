@@ -125,7 +125,8 @@
     "gui:demo": "Demo Mode",
     "stt:demo": "Play a singleplayer match against a training dummy",
     "gui:aidummy": "Training Dummy",
-    "gui:aieasybeta": "Easy Enemy (BETA)",
+    "gui:aieasybeta": "Easy Enemy Land (BETA)",
+    "gui:aisealand": "Easy Enemy Sea/Land (BETA)",
 
     "gui:gameresultwaiting": "Waiting for server results...",
     "gui:gameresultvictory": "Victory!",

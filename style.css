@@ -2094,7 +2094,7 @@ input[type="range"]:focus {
 }
 
 #ra2web-root .qm-form .opts {
-    width: 400px;
+    flex-grow: 1;
     margin-top: 9px;
     margin-right: 10px;
     border: 1px red solid;
@@ -2167,8 +2167,7 @@ input[type="range"]:focus {
 }
 
 #ra2web-root .qm-form fieldset.qm-profile {
-    width: 190px;
-    box-sizing: border-box;
+    width: 170px;
     margin-inline: 0;
 }
 
@@ -2268,9 +2267,10 @@ input[type="range"]:focus {
 }
 
 #ra2web-root .qm-form .qm-bottom .chat-wrapper {
-    width: 400px;
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
+    flex-basis: min-content;
 }
 
 #ra2web-root .qm-form .qm-bottom .chat-wrapper .messages {
