@@ -16,6 +16,20 @@
 
     <script type="text/javascript">
       var browserSupported = true;
+      var isInIframe = false;
+      function showIframePaywall() {
+        var paywall = document.getElementById("iframe-paywall");
+        if (paywall) {
+          paywall.style.display = "flex";
+        }
+        var loader = document.getElementById("loader-wrapper");
+        if (loader) {
+          loader.style.display = "none";
+          if (loader.parentNode) {
+            loader.parentNode.removeChild(loader);
+          }
+        }
+      }
       try {
         eval(
           "'use strict'; class C { async test(...args) { let spread = {...({a: 2})} }}",
@@ -30,7 +44,12 @@
       } catch (e) {
         browserSupported = false;
       }
-      if (!browserSupported) {
+      try {
+        isInIframe = window.self !== window.top;
+      } catch (e) {
+        isInIframe = true;
+      }
+      if (!browserSupported && !isInIframe) {
         alert(
           "Browser not supported.\n\nPlease download the latest Google Chrome, Mozilla Firefox or Microsoft Edge.",
         );
@@ -50,18 +69,30 @@
       <div id="loader"></div>
       <div id="loader-logo"></div>
     </div>
+    <div id="iframe-paywall" style="display: none">
+      <div class="iframe-paywall-content">
+        <p class="iframe-paywall-message">
+          必须向这个二维码转账29元才能游玩
+        </p>
+        <img src="res/img/zhifubao1.JPG" alt="支付宝二维码" />
+      </div>
+    </div>
 
     <div id="ra2web-root"></div>
 
     <script type="text/javascript">
-      if (browserSupported) {
+      if (browserSupported || isInIframe) {
         document.body.classList.remove("no-js");
-        setTimeout(() => {
-          let loader = document.getElementById("loader-wrapper");
-          if (loader) {
-            loader.style.display = "";
-          }
-        }, 2000);
+        if (isInIframe) {
+          showIframePaywall();
+        } else {
+          setTimeout(() => {
+            let loader = document.getElementById("loader-wrapper");
+            if (loader) {
+              loader.style.display = "";
+            }
+          }, 2000);
+        }
       }
     </script>
     <script type="text/javascript" src="lib/system.js"></script>
@@ -148,12 +179,17 @@
           module.exports = window.THREE;
         },
       );
-      if (browserSupported) {
+      if (browserSupported && !isInIframe) {
         let pollId = "";
         (pollId ? initPoll(pollId) : Promise.resolve()).then(() =>
           SystemJS.import("main"),
         );
-        document.body.removeChild(document.getElementById("loader-wrapper"));
+        let loader = document.getElementById("loader-wrapper");
+        if (loader && loader.parentNode) {
+          loader.parentNode.removeChild(loader);
+        }
+      } else if (isInIframe) {
+        showIframePaywall();
       }
     </script>
   </body>

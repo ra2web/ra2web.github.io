@@ -60,6 +60,40 @@ html:-moz-full-screen body {
   z-index: 1000;
 }
 
+#iframe-paywall {
+  position: fixed;
+  inset: 0;
+  z-index: 20001;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.95);
+}
+
+#iframe-paywall .iframe-paywall-content {
+  width: 100%;
+  max-width: 560px;
+  text-align: center;
+}
+
+#iframe-paywall .iframe-paywall-message {
+  margin: 0 0 16px;
+  font-size: 32px;
+  line-height: 1.3;
+  color: #fff;
+  font-weight: 700;
+}
+
+#iframe-paywall img {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+}
+
 #loader-logo {
   position: absolute;
   top: 0;
