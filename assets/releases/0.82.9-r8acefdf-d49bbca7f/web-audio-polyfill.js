@@ -1,0 +1,1 @@
+import{l as t}from"./werhd.min.js";const o=globalThis;await t("/runtime/releases/0.82.9-r8acefdf-d49bbca7f/web-audio-polyfill.min.js",()=>!!o.AudioContext);const i=o.AudioContext||o.webkitAudioContext,e={AudioContext:i};export{i as AudioContext,e as default};
