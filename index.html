@@ -3,6 +3,10 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=0.46875" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="王二火大" />
     <title>王二火大-联机对战平台</title>
     <meta
       name="keywords"
@@ -12,6 +16,9 @@
       name="description"
       content="王二火大支持在网页上游玩经典的红色井界游戏，无需下载安装，随时随地在手机、电脑、平板甚至手表上畅玩。提供多种游戏模式和地图，与全球玩家实时对战。"
     />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/res/pwa/icon-192.png" />
     <script>
       var browserSupported = true;
       try {
@@ -29,8 +36,8 @@
         alert('Browser not supported.\n\nPlease download the latest Google Chrome, Mozilla Firefox or Microsoft Edge.');
       }
     </script>
-    <link href="/res/fonts/fonts.css?v=0.82.9-r72c2333" rel="stylesheet" />
-    <link rel="stylesheet" href="/style.css?v=0.82.9-r72c2333" type="text/css" />
+    <link href="/res/fonts/fonts.css?v=0.82.9-r8acefdf" rel="stylesheet" />
+    <link rel="stylesheet" href="/style.css?v=0.82.9-r8acefdf" type="text/css" />
     <style>
       #ra2web-root {
         position: relative;
@@ -44,7 +51,7 @@
     <script>
       window.__ra2webTransportMode = 'websocket-only';
     </script>
-    <script type="module" crossorigin src="/assets/releases/0.82.9-r72c2333/werhd.min.js"></script>
+    <script type="module" crossorigin src="/assets/releases/0.82.9-r8acefdf/werhd.min.js"></script>
   </head>
   <body class="no-js">
     <div id="loader-wrapper" style="display: none">
@@ -61,18 +68,18 @@
         }, 2000);
       }
     </script>
-    <script src="/runtime/releases/0.82.9-r72c2333/ra2web-helpers.js"></script>
-    <script src="/lib/three.min.js?v=0.82.9-r72c2333"></script>
-    <script src="/lib/three/three.shader-patch.js?v=0.82.9-r72c2333"></script>
-    <script src="/lib/three/three.octree.js?v=0.82.9-r72c2333"></script>
-    <script src="/lib/three/SimplexNoise.js?v=0.82.9-r72c2333"></script>
-    <script src="/lib/three/LightningStrike.js?v=0.82.9-r72c2333"></script>
-    <script src="/lib/three/TrailRenderer.js?v=0.82.9-r72c2333"></script>
-    <script src="/lib/three/SPE.min.js?v=0.82.9-r72c2333"></script>
-    <script src="/lib/three/SPE.patch.js?v=0.82.9-r72c2333"></script>
-    <script src="/lib/growingpacker.js?v=0.82.9-r72c2333"></script>
-    <script src="/lib/lzo1x.js?v=0.82.9-r72c2333"></script>
-    <script src="/lib/fullscreen-api-polyfill.min.js?v=0.82.9-r72c2333"></script>
+    <script src="/runtime/releases/0.82.9-r8acefdf/ra2web-helpers.js"></script>
+    <script src="/lib/three.min.js?v=0.82.9-r8acefdf"></script>
+    <script src="/lib/three/three.shader-patch.js?v=0.82.9-r8acefdf"></script>
+    <script src="/lib/three/three.octree.js?v=0.82.9-r8acefdf"></script>
+    <script src="/lib/three/SimplexNoise.js?v=0.82.9-r8acefdf"></script>
+    <script src="/lib/three/LightningStrike.js?v=0.82.9-r8acefdf"></script>
+    <script src="/lib/three/TrailRenderer.js?v=0.82.9-r8acefdf"></script>
+    <script src="/lib/three/SPE.min.js?v=0.82.9-r8acefdf"></script>
+    <script src="/lib/three/SPE.patch.js?v=0.82.9-r8acefdf"></script>
+    <script src="/lib/growingpacker.js?v=0.82.9-r8acefdf"></script>
+    <script src="/lib/lzo1x.js?v=0.82.9-r8acefdf"></script>
+    <script src="/lib/fullscreen-api-polyfill.min.js?v=0.82.9-r8acefdf"></script>
     <script>
       if (browserSupported) {
         let loader = document.getElementById('loader-wrapper');
