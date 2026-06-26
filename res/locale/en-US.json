@@ -370,6 +370,10 @@
     "gui:newfolderexists": "An entry with that name already exists.",
     "gui:newfolderinvalidname": "Invalid folder name.",
 
+    "GUI:ConnectingToPlayers": "Connecting to players",
+    "GUI:MapTransfer": "Transferring map",
+    "GUI:HostMapTransfer": "%s is downloading map %s.",
+    "GUI:JoinerMapTransfer": "Downloading map %s from host.",
     "GUI:InviteToTeam": "Invite to party",
     "GUI:PlayerMenuMessage": "Message",
     "GUI:PlayerMenuInvite": "Invite",
