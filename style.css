@@ -1477,7 +1477,12 @@ input[type="range"]:focus {
 }
 
 #ra2web-root .opts.general-opts {
-    padding: 34px 86px;
+    height: 100%;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    padding: 34px 86px 96px;
+    scrollbar-color: #c40000 #111;
 }
 
 #ra2web-root .opts.general-opts .slider-item {
