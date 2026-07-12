@@ -1,0 +1,1 @@
+import{l as F}from"./werhd.min.js";const e=globalThis;await F("/runtime/releases/0.83.0-r61b13ca/ffmpeg.min.js",()=>!!e.FFmpeg?.createFFmpeg);if(!e.FFmpeg?.createFFmpeg)throw new Error("FFmpeg UMD bundle did not initialize globalThis.FFmpeg.");const m=e.FFmpeg.createFFmpeg,g=e.FFmpeg.fetchFile,p=e.FFmpeg;export{m as createFFmpeg,p as default,g as fetchFile};
