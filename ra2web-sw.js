@@ -1,7 +1,7 @@
-const RA2WEB_SW_VERSION = "0.83.0-r8edf8e7-ddaa166eb";
+const RA2WEB_SW_VERSION = "0.83.0-rb932c9b-d6f40ed1a";
 const RA2WEB_APP_CACHE = "ra2web-app-" + RA2WEB_SW_VERSION;
 const RA2WEB_GAMERES_CACHE = "ra2web-gameres-" + RA2WEB_SW_VERSION;
-const RA2WEB_IMMUTABLE_PREFIXES = ["/assets/releases/","/runtime/releases/","/res/werhd/releases/","/assets/releases/0.83.0-r8edf8e7-ddaa166eb/","/runtime/releases/0.83.0-r8edf8e7-ddaa166eb/"];
+const RA2WEB_IMMUTABLE_PREFIXES = ["/assets/releases/","/runtime/releases/","/res/werhd/releases/","/assets/releases/0.83.0-rb932c9b-d6f40ed1a/","/runtime/releases/0.83.0-rb932c9b-d6f40ed1a/"];
 const RA2WEB_STATIC_PREFIXES = ["/lib/","/res/fonts/"];
 const RA2WEB_UPDATE_SENSITIVE_PATHS = new Set(["/","/index.html","/config.ini","/servers.ini","/mods.ini","/res/mods.ini","/old/versions.json","/res/werhd/versions.json"]);
 const RA2WEB_GAMERES_PREFIXES = ["/v2/","/map/","/mod/","/music/"];
