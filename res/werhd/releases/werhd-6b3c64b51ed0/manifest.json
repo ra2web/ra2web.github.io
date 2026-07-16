@@ -1,0 +1,27 @@
+{
+  "entries": [
+    "ra2.csf",
+    "art.ini",
+    "modcd.ini",
+    "rules.ini",
+    "Ecache99.mix",
+    "Ecache01.mix",
+    "aim1.mix",
+    "expand01.mix",
+    "expand02.mix"
+  ],
+  "audioBags": [
+    "audio.bag"
+  ],
+  "checksums": {
+    "ra2.csf": 3771269777,
+    "art.ini": 3850829420,
+    "modcd.ini": 2492488508,
+    "rules.ini": 3307879844,
+    "Ecache01.mix": 2407072292,
+    "aim1.mix": 3212585237,
+    "expand01.mix": 2957695945,
+    "expand02.mix": 2655328304,
+    "Ecache99.mix": 3256410084
+  }
+}

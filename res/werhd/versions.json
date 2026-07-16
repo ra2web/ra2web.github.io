@@ -1,8 +1,9 @@
 {
-  "current": "werhd-9a8a94b35e73",
+  "current": "werhd-6b3c64b51ed0",
   "byAppVersion": {
     "0.82.8": "werhd-9a8a94b35e73",
     "0.82.9": "werhd-9a8a94b35e73",
-    "0.83.0": "werhd-9a8a94b35e73"
+    "0.83.0": "werhd-9a8a94b35e73",
+    "0.83.1": "werhd-6b3c64b51ed0"
   }
 }
