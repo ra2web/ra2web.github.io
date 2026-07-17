@@ -2583,3 +2583,456 @@ input[type="range"]:focus {
     height: 20px;
     font-size: 13px;
 }
+
+/* Victory Shop deliberately reuses the shell palette: black glass, red borders,
+   yellow copy, square controls and the same condensed menu font. */
+#ra2web-root .victory-shop {
+    width: 632px;
+    height: 570px;
+    box-sizing: border-box;
+    padding: 14px;
+    background: rgba(0, 0, 0, .62);
+    overflow: hidden;
+}
+
+#ra2web-root .victory-shop h1,
+#ra2web-root .victory-shop h2,
+#ra2web-root .victory-shop h3,
+#ra2web-root .victory-shop p {
+    margin-top: 0;
+}
+
+#ra2web-root .victory-header {
+    height: 57px;
+    box-sizing: border-box;
+    border-bottom: 1px red solid;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8px 8px;
+}
+
+#ra2web-root .victory-header h1,
+#ra2web-root .victory-login h1 {
+    margin: 0;
+    color: yellow;
+    font-size: 24px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+#ra2web-root .victory-kicker {
+    color: red;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+#ra2web-root .victory-balance {
+    min-width: 132px;
+    height: 42px;
+    padding: 5px 10px;
+    box-sizing: border-box;
+    background: rgba(72, 0, 0, .8);
+    border: 1px red solid;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#ra2web-root .victory-balance span {
+    color: orange;
+}
+
+#ra2web-root .victory-balance strong {
+    color: cyan;
+    font-size: 23px;
+}
+
+#ra2web-root .victory-layout {
+    display: flex;
+    height: calc(100% - 57px);
+    padding-top: 10px;
+    box-sizing: border-box;
+}
+
+#ra2web-root .victory-nav {
+    width: 128px;
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+#ra2web-root .victory-nav button,
+#ra2web-root .victory-shop .victory-main button,
+#ra2web-root .victory-login button {
+    appearance: none;
+    border: 1px red solid;
+    background: #480000;
+    min-height: 26px;
+    padding: 4px 8px 3px;
+    box-sizing: border-box;
+    cursor: default;
+}
+
+#ra2web-root .victory-nav button + button {
+    margin-top: 7px;
+}
+
+#ra2web-root .victory-nav button:hover:not(:disabled),
+#ra2web-root .victory-shop .victory-main button:hover:not(:disabled),
+#ra2web-root .victory-login button:hover:not(:disabled),
+#ra2web-root .victory-nav button.selected {
+    background: orangered;
+}
+
+#ra2web-root .victory-nav button.selected {
+    color: black;
+}
+
+#ra2web-root .victory-nav-spacer {
+    flex: 1;
+}
+
+#ra2web-root .victory-main {
+    width: calc(100% - 128px);
+    height: 100%;
+    overflow-y: auto;
+    padding-right: 3px;
+    box-sizing: border-box;
+}
+
+#ra2web-root .victory-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+}
+
+#ra2web-root .victory-notice {
+    border: 1px red solid;
+    background: rgba(72, 0, 0, .85);
+    padding: 7px 9px;
+    margin-bottom: 8px;
+    line-height: 1.35;
+}
+
+#ra2web-root .victory-notice.ok { border-color: lime; color: lime; }
+#ra2web-root .victory-notice.info { border-color: cyan; color: cyan; }
+#ra2web-root .victory-notice.warn { border-color: orange; color: orange; }
+#ra2web-root .victory-notice.error { border-color: orangered; color: orangered; }
+
+#ra2web-root .victory-dev-badge {
+    color: cyan;
+    font-size: 11px;
+    margin: 0 0 7px;
+}
+
+#ra2web-root .victory-account-strip {
+    min-height: 36px;
+    padding: 5px 7px;
+    margin-bottom: 8px;
+    box-sizing: border-box;
+    border: 1px red solid;
+    background: rgba(21, 21, 21, .85);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#ra2web-root .victory-account-strip label span {
+    margin-right: 8px;
+    color: orange;
+}
+
+#ra2web-root .victory-account-strip select {
+    min-width: 150px;
+}
+
+#ra2web-root .victory-verified {
+    color: lime;
+    font-size: 11px;
+}
+
+#ra2web-root .victory-empty {
+    border: 1px orange solid;
+    color: orange;
+    padding: 12px;
+    margin-bottom: 8px;
+}
+
+#ra2web-root .victory-products {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+#ra2web-root .victory-product {
+    min-height: 177px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px red solid;
+    background: rgba(21, 21, 21, .88);
+    display: flex;
+    flex-direction: column;
+}
+
+#ra2web-root .victory-product:last-child {
+    grid-column: span 2;
+    min-height: 142px;
+}
+
+#ra2web-root .victory-product-title {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 1px #7d0000 solid;
+    padding-bottom: 6px;
+    margin-bottom: 7px;
+}
+
+#ra2web-root .victory-product-title h2 {
+    margin: 0;
+    font-size: 16px;
+}
+
+#ra2web-root .victory-product-title strong {
+    color: cyan;
+    font-size: 18px;
+}
+
+#ra2web-root .victory-product-title small {
+    color: yellow;
+    font-size: 10px;
+}
+
+#ra2web-root .victory-product p {
+    margin-bottom: 5px;
+    line-height: 1.35;
+}
+
+#ra2web-root .victory-product .victory-product-notice {
+    color: #ff9a2e;
+    font-size: 11px;
+}
+
+#ra2web-root .victory-product-footer {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+#ra2web-root .victory-product-footer > span {
+    flex: 1;
+}
+
+#ra2web-root .victory-product-footer b {
+    color: cyan;
+}
+
+#ra2web-root .victory-product-footer em {
+    color: lime;
+    font-size: 10px;
+    font-style: normal;
+    margin-left: 6px;
+}
+
+#ra2web-root .victory-product-footer select {
+    width: 60px;
+}
+
+#ra2web-root .victory-product-footer button.danger {
+    background: red;
+    color: black;
+}
+
+#ra2web-root .victory-shop button:disabled {
+    color: #8d3b00;
+    border-color: #7d0000;
+    background: rgba(45, 0, 0, .5);
+}
+
+#ra2web-root .victory-earning > p {
+    color: orange;
+    line-height: 1.45;
+}
+
+#ra2web-root .victory-earning section {
+    border: 1px red solid;
+    background: rgba(21, 21, 21, .82);
+    padding: 10px;
+    margin-bottom: 8px;
+}
+
+#ra2web-root .victory-earning section > div {
+    display: flex;
+    justify-content: space-between;
+}
+
+#ra2web-root .victory-earning h2,
+#ra2web-root .victory-gift-view h2,
+#ra2web-root .victory-account-view h2 {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+#ra2web-root .victory-earning h3 {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+#ra2web-root .victory-earning section span { color: cyan; }
+#ra2web-root .victory-earning section p { margin: 0; }
+
+#ra2web-root .victory-ledger {
+    border: 1px red solid;
+}
+
+#ra2web-root .victory-ledger > div {
+    display: grid;
+    grid-template-columns: 1fr 150px 45px;
+    gap: 8px;
+    padding: 5px 8px;
+}
+
+#ra2web-root .victory-ledger > div:nth-child(2n) { background: rgba(55, 55, 55, .75); }
+#ra2web-root .victory-ledger time { color: #ff9a2e; font-size: 11px; }
+#ra2web-root .victory-ledger b { text-align: right; }
+#ra2web-root .victory-ledger b.positive { color: lime; }
+#ra2web-root .victory-ledger b.negative { color: orangered; }
+
+#ra2web-root .victory-feedback-user {
+    border: 1px red solid;
+    padding: 8px;
+    margin-bottom: 14px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#ra2web-root .victory-feedback-user span { color: lime; }
+#ra2web-root .victory-feedback-user strong { color: cyan; }
+
+#ra2web-root .victory-link-list {
+    margin-bottom: 14px;
+}
+
+#ra2web-root .victory-link-list > button {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+}
+
+#ra2web-root .victory-link-list > button + button { margin-top: 5px; }
+#ra2web-root .victory-link-list > button.selected { background: red; color: black; }
+#ra2web-root .victory-link-list > button span { font-size: 11px; }
+
+#ra2web-root .victory-bind-form {
+    border: 1px red solid;
+    padding: 12px;
+}
+
+#ra2web-root .victory-gift-view > p {
+    color: orange;
+    line-height: 1.45;
+}
+
+#ra2web-root .victory-gift-balance {
+    border: 1px red solid;
+    background: rgba(21, 21, 21, .85);
+    padding: 10px 12px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#ra2web-root .victory-gift-balance span { color: orange; }
+#ra2web-root .victory-gift-balance strong { color: cyan; }
+
+#ra2web-root .victory-gift-form {
+    border: 1px red solid;
+    padding: 14px 12px;
+}
+
+#ra2web-root .victory-gift-form label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+#ra2web-root .victory-gift-form label > span {
+    width: 96px;
+    color: orange;
+}
+
+#ra2web-root .victory-gift-form label > input { flex: 1; }
+#ra2web-root .victory-gift-form > p { color: #ff9a2e; font-size: 11px; line-height: 1.45; }
+#ra2web-root .victory-gift-form > button { float: right; }
+#ra2web-root .victory-gift-form > button.danger { background: red; color: black; }
+
+#ra2web-root .victory-bind-form > p {
+    color: orange;
+    font-size: 11px;
+}
+
+#ra2web-root .victory-bind-form label,
+#ra2web-root .victory-login form label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+#ra2web-root .victory-bind-form label > span,
+#ra2web-root .victory-login form label > span {
+    width: 88px;
+    color: orange;
+}
+
+#ra2web-root .victory-bind-form label > input,
+#ra2web-root .victory-login form label > input {
+    flex: 1;
+}
+
+#ra2web-root .victory-bind-form > button {
+    float: right;
+}
+
+#ra2web-root .victory-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#ra2web-root .victory-login-panel {
+    width: 440px;
+    min-height: 330px;
+    box-sizing: border-box;
+    border: 1px red solid;
+    background: rgba(0, 0, 0, .88);
+    padding: 32px;
+}
+
+#ra2web-root .victory-login-panel > p {
+    color: orange;
+    line-height: 1.5;
+    margin: 12px 0 18px;
+}
+
+#ra2web-root .victory-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+#ra2web-root .victory-login-panel .victory-security {
+    color: #ff9a2e;
+    font-size: 10px;
+    margin: 18px 0 0;
+}
+
+#ra2web-root .victory-turnstile {
+    min-height: 65px;
+    margin: 6px 0;
+}
