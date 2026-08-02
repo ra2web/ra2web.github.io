@@ -2079,12 +2079,18 @@ input[type="range"]:focus {
 }
 
 #ra2web-root .patch-notes,
-#ra2web-root .ladder-rules {
+#ra2web-root .ladder-rules,
+#ra2web-root .victory-shop-frame {
     padding: 5px;
     box-sizing: border-box;
     border: 0;
     height: 100%;
     width: 100%;
+}
+
+#ra2web-root .victory-shop-frame {
+    padding: 0;
+    background: rgba(0, 0, 0, .75);
 }
 
 #ra2web-root .credits-container {
@@ -3032,7 +3038,23 @@ input[type="range"]:focus {
     margin: 18px 0 0;
 }
 
-#ra2web-root .victory-turnstile {
-    min-height: 65px;
-    margin: 6px 0;
+#ra2web-root .victory-captcha {
+    min-height: 32px;
+    margin: 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#ra2web-root .victory-captcha span {
+    color: orange;
+    font-size: 11px;
+}
+
+#ra2web-root .victory-captcha.verified span {
+    color: lime;
+}
+
+#ra2web-root .victory-captcha.error span {
+    color: orangered;
 }
