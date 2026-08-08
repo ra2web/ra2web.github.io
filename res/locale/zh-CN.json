@@ -395,5 +395,6 @@
   "stt:delayedoils": "中立油田在工程师进入后需要一段时间才能完全占领。",
   "ts:gameres_locate_title_expansion": "请点击下方 自动导入 导入尤里的复仇文件",
   "ts:gameres_import_desc_expansion": "如果你有自己的尤里的复仇文件，也可以拖入下方的方框中",
-  "ts:gameres_drop_desc_expansion": "将所需的尤里的复仇文件拖放到此处"
+  "ts:gameres_drop_desc_expansion": "将所需的尤里的复仇文件拖放到此处",
+  "gui:hostidleroomclosed": "可能是大家对你的房间没有兴趣，请优先加入他人开的房间，有任何疑问请微信公众号关注 王二火大"
 }
