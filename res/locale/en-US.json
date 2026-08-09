@@ -121,7 +121,7 @@
   "gui:aidummy": "Training Dummy",
   "gui:aieasybeta": "Easy Enemy (BETA)",
   "gui:aisealand": "Sea/Land Enemy",
-  "gui:aiadvanced": "AI-老牧师",
+  "gui:aiadvanced": "Advanced AI",
   "gui:gameresultwaiting": "Waiting for server results...",
   "gui:gameresultvictory": "Victory!",
   "gui:gameresultdefeat": "Defeat!",
