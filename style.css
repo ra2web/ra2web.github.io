@@ -2469,12 +2469,6 @@ input[type="range"]:focus {
   white-space: nowrap;
 }
 
-#ra2web-root .campaign-mission-index-columns button > em {
-  color: #ffb42b;
-  font-size: 8px;
-  font-style: normal;
-}
-
 #ra2web-root .campaign-loading-screen {
   --campaign-loading-text-color: #102fad;
   position: absolute;
