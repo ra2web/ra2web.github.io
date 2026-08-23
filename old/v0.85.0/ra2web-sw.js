@@ -1,0 +1,124 @@
+const RA2WEB_SW_VERSION = "0.85.0-r2e3b64c-d489299c2";
+const RA2WEB_APP_CACHE = "ra2web-app-" + RA2WEB_SW_VERSION;
+const RA2WEB_GAMERES_CACHE = "ra2web-gameres-" + RA2WEB_SW_VERSION;
+const RA2WEB_PRECACHE_URLS = ["/","/index.html","/manifest.webmanifest","/old/v0.85.0/js/app.js?v=0.85.0-r2e3b64c-d489299c2","/old/v0.85.0/js/vendor.js?v=0.85.0-r2e3b64c-d489299c2","/res/werhdexp.mix?v=0.85.0-r2e3b64c-d489299c2","/config.ini?v=0.85.0-r2e3b64c-d489299c2","/res/overlay/art.ini","/res/overlay/modcd.ini","/res/overlay/mpbattle.ini","/res/overlay/mpcoop.ini","/res/overlay/mpduel.ini","/res/overlay/mpfreeforallmd.ini","/res/overlay/mpmeat.ini","/res/overlay/mpmodes.ini","/res/overlay/mpmw.ini","/res/overlay/mpnaval.ini","/res/overlay/mpteammd.ini","/res/overlay/mpunholy.ini","/res/overlay/nodogengikills.ini","/res/overlay/ra2.csf","/res/overlay/rules.ini","/res/overlay/soundcd.ini","/res/overlay/ui.ini"];
+const RA2WEB_IMMUTABLE_PREFIXES = ["/old/v0.85.0/js/"];
+const RA2WEB_STATIC_PREFIXES = ["/res/fonts/"];
+const RA2WEB_UPDATE_SENSITIVE_PATHS = new Set(["/config.ini","/servers.ini","/mods.ini","/res/mods.ini","/official-map-redirect.json","/old/versions.json","/version.json"]);
+const RA2WEB_GAMERES_PREFIXES = ["/v2/","/map/","/mod/","/music/"];
+
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches.open(RA2WEB_APP_CACHE).then((cache) =>
+      cache.addAll(RA2WEB_PRECACHE_URLS.map((url) => new Request(url, { cache: "reload" }))),
+    ).then(() => self.skipWaiting()),
+  );
+});
+
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    Promise.all([
+      self.clients.claim(),
+      notifyClients({ type: "RA2WEB_SW_UPDATE_READY", version: RA2WEB_SW_VERSION }),
+    ]),
+  );
+});
+
+self.addEventListener("message", (event) => {
+  if (event.data?.type === "RA2WEB_SKIP_WAITING") {
+    self.skipWaiting();
+    return;
+  }
+  if (event.data?.type === "RA2WEB_GET_VERSION") {
+    event.ports[0]?.postMessage({ type: "RA2WEB_SW_VERSION", version: RA2WEB_SW_VERSION });
+    return;
+  }
+  if (event.data?.type === "RA2WEB_GENERATION_BOOTED") {
+    event.waitUntil(cleanupOldCaches());
+  }
+});
+
+self.addEventListener("fetch", (event) => {
+  const request = event.request;
+  if (request.method !== "GET") return;
+
+  const url = new URL(request.url);
+  if (url.origin !== self.location.origin) return;
+  if (url.pathname.startsWith("/old/")) return;
+
+  if (request.mode === "navigate") {
+    event.respondWith(networkFirst(request, RA2WEB_APP_CACHE));
+    return;
+  }
+
+  if (url.pathname.startsWith("/res/overlay/") || RA2WEB_UPDATE_SENSITIVE_PATHS.has(url.pathname)) {
+    event.respondWith(networkFirst(request, RA2WEB_APP_CACHE));
+    return;
+  }
+
+  if (startsWithAny(url.pathname, RA2WEB_IMMUTABLE_PREFIXES) && isVersionedResource(url)) {
+    event.respondWith(cacheFirst(request, RA2WEB_APP_CACHE));
+    return;
+  }
+
+  if (startsWithAny(url.pathname, RA2WEB_GAMERES_PREFIXES) && isVersionedResource(url)) {
+    event.respondWith(cacheFirst(request, RA2WEB_GAMERES_CACHE));
+    return;
+  }
+
+  if (startsWithAny(url.pathname, RA2WEB_STATIC_PREFIXES) || isVersionedResource(url)) {
+    event.respondWith(cacheFirst(request, RA2WEB_APP_CACHE));
+  }
+});
+
+async function cleanupOldCaches() {
+  const keys = await caches.keys();
+  await Promise.all(
+    keys
+      .filter((key) => key.startsWith("ra2web-") && key !== RA2WEB_APP_CACHE && key !== RA2WEB_GAMERES_CACHE)
+      .map((key) => caches.delete(key)),
+  );
+}
+
+async function notifyClients(message) {
+  const clients = await self.clients.matchAll({ includeUncontrolled: true, type: "window" });
+  for (const client of clients) client.postMessage(message);
+}
+
+async function networkFirst(request, cacheName) {
+  const cache = await caches.open(cacheName);
+  try {
+    const response = await fetch(request);
+    if (isCacheable(response)) await cache.put(request, response.clone());
+    return response;
+  } catch (error) {
+    const cached = await cache.match(request);
+    if (cached) return cached;
+    if (request.mode === "navigate") {
+      const fallback = await cache.match("/index.html");
+      if (fallback) return fallback;
+    }
+    throw error;
+  }
+}
+
+async function cacheFirst(request, cacheName) {
+  const cache = await caches.open(cacheName);
+  const cached = await cache.match(request);
+  if (cached) return cached;
+  const response = await fetch(request);
+  if (isCacheable(response)) await cache.put(request, response.clone());
+  return response;
+}
+
+function isCacheable(response) {
+  return response && response.ok && (response.type === "basic" || response.type === "cors");
+}
+
+function startsWithAny(pathname, prefixes) {
+  return prefixes.some((prefix) => pathname.startsWith(prefix));
+}
+
+function isVersionedResource(url) {
+  return url.searchParams.has("h") || url.searchParams.has("v");
+}

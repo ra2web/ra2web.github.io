@@ -1,0 +1,4 @@
+{
+  "comment": "按游戏显示名子串匹配。includeOp/excludeOp 为 and 或 or。改此文件立刻生效，不必重新打包。",
+  "rules": []
+}

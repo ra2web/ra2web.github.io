@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>加入王二火大QQ交流群</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        background: #111;
+        color: #ffe566;
+        font: 16px/1.6 'Fira Sans Condensed', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      }
+      main {
+        max-width: 640px;
+        margin: 12vh auto 0;
+        padding: 0 24px;
+      }
+      a {
+        color: #7ec8ff;
+      }
+    </style>
+    <script>
+      // 把 QQ 群「分享 / 复制链接」得到的跳转地址贴到下一行。
+      // 例：https://qm.qq.com/q/xxxx  或  http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=...&group_code=333566518
+      var QQ_GROUP_URL = '';
+      var QQ_GROUP_ID = '333566518';
+
+      var joinUrl =
+        QQ_GROUP_URL ||
+        'https://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=&authKey=&noverify=0&group_code=' +
+          encodeURIComponent(QQ_GROUP_ID);
+
+      if (QQ_GROUP_URL) {
+        location.replace(QQ_GROUP_URL);
+      }
+    </script>
+  </head>
+  <body>
+    <main>
+      <h1>王二火大 QQ 交流群</h1>
+      <p>群号：<strong id="group-id">333566518</strong></p>
+      <p>
+        <a id="join-link" target="_blank" rel="noopener noreferrer" href="https://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=&authKey=&noverify=0&group_code=333566518"
+          >点击加入QQ交流群</a
+        >
+      </p>
+      <p>如果没有自动打开 QQ，请在手机或电脑 QQ 中搜索群号加入。</p>
+    </main>
+    <script>
+      document.getElementById('group-id').textContent = QQ_GROUP_ID;
+      document.getElementById('join-link').href = joinUrl;
+    </script>
+  </body>
+</html>
