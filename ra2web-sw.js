@@ -1,24 +1,23 @@
-const RA2WEB_SW_VERSION = "0.84.3-r31d223e-dce70d0a9";
+const RA2WEB_SW_VERSION = "0.85.0-r2e3b64c";
 const RA2WEB_APP_CACHE = "ra2web-app-" + RA2WEB_SW_VERSION;
 const RA2WEB_GAMERES_CACHE = "ra2web-gameres-" + RA2WEB_SW_VERSION;
-const RA2WEB_IMMUTABLE_PREFIXES = ["/assets/releases/","/runtime/releases/","/res/werhd/releases/","/assets/releases/0.84.3-r31d223e-dce70d0a9/","/runtime/releases/0.84.3-r31d223e-dce70d0a9/"];
-const RA2WEB_STATIC_PREFIXES = ["/lib/","/res/fonts/"];
-const RA2WEB_UPDATE_SENSITIVE_PATHS = new Set(["/","/index.html","/config.ini","/servers.ini","/mods.ini","/res/mods.ini","/old/versions.json","/res/werhd/versions.json"]);
+const RA2WEB_PRECACHE_URLS = ["/","/index.html","/manifest.webmanifest","/js/app.js?v=0.85.0-r2e3b64c","/js/vendor.js?v=0.85.0-r2e3b64c","/res/werhdexp.mix?v=0.85.0-r2e3b64c","/config.ini?v=0.85.0-r2e3b64c","/res/overlay/art.ini","/res/overlay/modcd.ini","/res/overlay/mpbattle.ini","/res/overlay/mpcoop.ini","/res/overlay/mpduel.ini","/res/overlay/mpfreeforallmd.ini","/res/overlay/mpmeat.ini","/res/overlay/mpmodes.ini","/res/overlay/mpmw.ini","/res/overlay/mpnaval.ini","/res/overlay/mpteammd.ini","/res/overlay/mpunholy.ini","/res/overlay/nodogengikills.ini","/res/overlay/ra2.csf","/res/overlay/rules.ini","/res/overlay/soundcd.ini","/res/overlay/ui.ini"];
+const RA2WEB_IMMUTABLE_PREFIXES = ["/js/"];
+const RA2WEB_STATIC_PREFIXES = ["/res/fonts/"];
+const RA2WEB_UPDATE_SENSITIVE_PATHS = new Set(["/config.ini","/servers.ini","/mods.ini","/res/mods.ini","/official-map-redirect.json","/old/versions.json","/version.json"]);
 const RA2WEB_GAMERES_PREFIXES = ["/v2/","/map/","/mod/","/music/"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches
-      .open(RA2WEB_APP_CACHE)
-      .then((cache) => cache.add(new Request("/manifest.webmanifest", { cache: "reload" })))
-      .catch(() => undefined),
+    caches.open(RA2WEB_APP_CACHE).then((cache) =>
+      cache.addAll(RA2WEB_PRECACHE_URLS.map((url) => new Request(url, { cache: "reload" }))),
+    ).then(() => self.skipWaiting()),
   );
 });
 
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     Promise.all([
-      cleanupOldCaches(),
       self.clients.claim(),
       notifyClients({ type: "RA2WEB_SW_UPDATE_READY", version: RA2WEB_SW_VERSION }),
     ]),
@@ -28,6 +27,14 @@ self.addEventListener("activate", (event) => {
 self.addEventListener("message", (event) => {
   if (event.data?.type === "RA2WEB_SKIP_WAITING") {
     self.skipWaiting();
+    return;
+  }
+  if (event.data?.type === "RA2WEB_GET_VERSION") {
+    event.ports[0]?.postMessage({ type: "RA2WEB_SW_VERSION", version: RA2WEB_SW_VERSION });
+    return;
+  }
+  if (event.data?.type === "RA2WEB_GENERATION_BOOTED") {
+    event.waitUntil(cleanupOldCaches());
   }
 });
 
@@ -37,18 +44,19 @@ self.addEventListener("fetch", (event) => {
 
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
+  if (url.pathname.startsWith("/old/")) return;
 
   if (request.mode === "navigate") {
     event.respondWith(networkFirst(request, RA2WEB_APP_CACHE));
     return;
   }
 
-  if (RA2WEB_UPDATE_SENSITIVE_PATHS.has(url.pathname)) {
+  if (url.pathname.startsWith("/res/overlay/") || RA2WEB_UPDATE_SENSITIVE_PATHS.has(url.pathname)) {
     event.respondWith(networkFirst(request, RA2WEB_APP_CACHE));
     return;
   }
 
-  if (startsWithAny(url.pathname, RA2WEB_IMMUTABLE_PREFIXES)) {
+  if (startsWithAny(url.pathname, RA2WEB_IMMUTABLE_PREFIXES) && isVersionedResource(url)) {
     event.respondWith(cacheFirst(request, RA2WEB_APP_CACHE));
     return;
   }
@@ -112,5 +120,5 @@ function startsWithAny(pathname, prefixes) {
 }
 
 function isVersionedResource(url) {
-  return url.searchParams.has("h") || url.searchParams.has("v") || /\/releases\//.test(url.pathname);
+  return url.searchParams.has("h") || url.searchParams.has("v");
 }
