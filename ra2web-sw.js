@@ -1,7 +1,7 @@
-const RA2WEB_SW_VERSION = "0.85.0-r2e3b64c";
+const RA2WEB_SW_VERSION = "0.85.0-r2e3b64c-d489299c2";
 const RA2WEB_APP_CACHE = "ra2web-app-" + RA2WEB_SW_VERSION;
 const RA2WEB_GAMERES_CACHE = "ra2web-gameres-" + RA2WEB_SW_VERSION;
-const RA2WEB_PRECACHE_URLS = ["/","/index.html","/manifest.webmanifest","/js/app.js?v=0.85.0-r2e3b64c","/js/vendor.js?v=0.85.0-r2e3b64c","/res/werhdexp.mix?v=0.85.0-r2e3b64c","/config.ini?v=0.85.0-r2e3b64c","/res/overlay/art.ini","/res/overlay/modcd.ini","/res/overlay/mpbattle.ini","/res/overlay/mpcoop.ini","/res/overlay/mpduel.ini","/res/overlay/mpfreeforallmd.ini","/res/overlay/mpmeat.ini","/res/overlay/mpmodes.ini","/res/overlay/mpmw.ini","/res/overlay/mpnaval.ini","/res/overlay/mpteammd.ini","/res/overlay/mpunholy.ini","/res/overlay/nodogengikills.ini","/res/overlay/ra2.csf","/res/overlay/rules.ini","/res/overlay/soundcd.ini","/res/overlay/ui.ini"];
+const RA2WEB_PRECACHE_URLS = ["/","/index.html","/manifest.webmanifest","/js/app.js?v=0.85.0-r2e3b64c-d489299c2","/js/vendor.js?v=0.85.0-r2e3b64c-d489299c2","/res/werhdexp.mix?v=0.85.0-r2e3b64c-d489299c2","/config.ini?v=0.85.0-r2e3b64c-d489299c2","/res/overlay/art.ini","/res/overlay/modcd.ini","/res/overlay/mpbattle.ini","/res/overlay/mpcoop.ini","/res/overlay/mpduel.ini","/res/overlay/mpfreeforallmd.ini","/res/overlay/mpmeat.ini","/res/overlay/mpmodes.ini","/res/overlay/mpmw.ini","/res/overlay/mpnaval.ini","/res/overlay/mpteammd.ini","/res/overlay/mpunholy.ini","/res/overlay/nodogengikills.ini","/res/overlay/ra2.csf","/res/overlay/rules.ini","/res/overlay/soundcd.ini","/res/overlay/ui.ini"];
 const RA2WEB_IMMUTABLE_PREFIXES = ["/js/"];
 const RA2WEB_STATIC_PREFIXES = ["/res/fonts/"];
 const RA2WEB_UPDATE_SENSITIVE_PATHS = new Set(["/config.ini","/servers.ini","/mods.ini","/res/mods.ini","/official-map-redirect.json","/old/versions.json","/version.json"]);
