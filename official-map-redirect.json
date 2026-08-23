@@ -28,6 +28,13 @@
       "exclude": [],
       "excludeOp": "or",
       "officialMap": "ra2web_highland_crates_classic.map"
+    },
+    {
+      "include": ["一块小高原无高科技","4-4"],
+      "includeOp": "and",
+      "exclude": [],
+      "excludeOp": "or",
+      "officialMap": "ra2web_highland_crates_classic.map"
     }
   ]
 }
