@@ -1,4 +1,26 @@
 {
   "comment": "按游戏显示名子串匹配。includeOp/excludeOp 为 and 或 or。改此文件立刻生效，不必重新打包。",
-  "rules": []
+  "rules": [
+    {
+      "include": ["xkd you kuang ban"],
+      "includeOp": "or",
+      "exclude": [],
+      "excludeOp": "or",
+      "officialMap": "ra2web_one_land_ore.map"
+    },
+    {
+      "include": ["yikuai xiaogaoyuan wugaokeji"],
+      "includeOp": "or",
+      "exclude": ["4v4"],
+      "excludeOp": "or",
+      "officialMap": "ra2web_highland_crates_compact.map"
+    },
+    {
+      "include": ["yikuai xiaogaoyuan"],
+      "includeOp": "or",
+      "exclude": [],
+      "excludeOp": "or",
+      "officialMap": "ra2web_highland_crates_classic.map"
+    }
+  ]
 }
