@@ -1,5 +1,14 @@
 html, body {
     height: 100%;
+    touch-action: none;
+}
+
+#ra2web-root {
+    touch-action: manipulation;
+}
+
+#ra2web-root canvas {
+    touch-action: none;
 }
 
 body {
@@ -362,6 +371,7 @@ html:-moz-full-screen body {
     height: 200px;
     overflow-y: auto;
     overflow-x: hidden;
+    touch-action: pan-y;
 }
 
 #ra2web-root .login-wrapper .news > div {
@@ -866,6 +876,7 @@ input[type="range"]:focus {
     border: 1px red solid;
     overflow-y: auto;
     overflow-x: hidden;
+    touch-action: pan-y;
 }
 
 #ra2web-root .list-title {
@@ -1167,6 +1178,7 @@ input[type="range"]:focus {
     border: 1px red solid;
     height: 125px;
     overflow-y: auto;
+    touch-action: pan-y;
 }
 
 #ra2web-root .lobby-form .messages {
@@ -1479,6 +1491,7 @@ input[type="range"]:focus {
 #ra2web-root .opts.general-opts {
     height: 100%;
     overflow-y: auto;
+    touch-action: pan-y;
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
     padding: 34px 86px 96px;
@@ -2711,6 +2724,7 @@ input[type="range"]:focus {
 #ra2web-root .credits-container {
     overflow-y: auto;
     overflow-x: hidden;
+    touch-action: pan-y;
     margin: 7px;
     height: calc(100% - 11px);
     width: calc(100% - 12px);
@@ -2999,6 +3013,7 @@ input[type="range"]:focus {
     display: flex;
     flex-direction: row;
     overflow-y: auto;
+    touch-action: pan-y;
     flex: 1;
 }
 
@@ -3178,6 +3193,7 @@ input[type="range"]:focus {
 #ra2web-root .ladder .ladder-select .select-layer {
     max-height: 320px;
     overflow-y: auto;
+    touch-action: pan-y;
 }
 
 #ra2web-root .ladder .player-search {
@@ -3319,6 +3335,7 @@ input[type="range"]:focus {
     width: calc(100% - 128px);
     height: 100%;
     overflow-y: auto;
+    touch-action: pan-y;
     padding-right: 3px;
     box-sizing: border-box;
 }
