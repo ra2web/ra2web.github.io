@@ -35,6 +35,13 @@
       "exclude": [],
       "excludeOp": "or",
       "officialMap": "ra2web_highland_crates_classic.map"
+    },
+    {
+      "include": ["tankwar2 nuclear"],
+      "includeOp": "or",
+      "exclude": [],
+      "excludeOp": "or",
+      "officialMap": "ra2web_rhino_nuclear_2.map"
     }
   ]
 }
