@@ -16,6 +16,13 @@
       "officialMap": "ra2web_highland_crates_compact.map"
     },
     {
+      "include": ["yikuai xiaogaoyuan wu ta"],
+      "includeOp": "or",
+      "exclude": ["4v4"],
+      "excludeOp": "or",
+      "officialMap": "ra2web_highland_crates_compact.map"
+    },
+    {
       "include": ["yikuai xiaogaoyuan"],
       "includeOp": "or",
       "exclude": [],
