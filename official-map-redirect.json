@@ -13,14 +13,21 @@
       "includeOp": "or",
       "exclude": ["4v4"],
       "excludeOp": "or",
-      "officialMap": "ra2web_highland_crates_compact.map"
+      "officialMap": "ra2web_one_land_highland.map"
     },
     {
-      "include": ["yikuai xiaogaoyuan wu ta","yikuaixiaogaoyuan_normal"],
+      "include": ["yikuai xiaogaoyuan wu ta", "yikuaixiaogaoyuan_normal"],
       "includeOp": "or",
       "exclude": ["4v4"],
       "excludeOp": "or",
-      "officialMap": "ra2web_highland_crates_compact.map"
+      "officialMap": "ra2web_one_land_highland.map"
+    },
+    {
+      "include": ["一块地小高原无高科技", "一块小高原无高科技"],
+      "includeOp": "or",
+      "exclude": ["4v4", "4-4"],
+      "excludeOp": "or",
+      "officialMap": "ra2web_one_land_highland.map"
     },
     {
       "include": ["yikuai xiaogaoyuan"],
@@ -30,7 +37,7 @@
       "officialMap": "ra2web_highland_crates_classic.map"
     },
     {
-      "include": ["一块小高原无高科技","4-4"],
+      "include": ["一块小高原无高科技", "4-4"],
       "includeOp": "and",
       "exclude": [],
       "excludeOp": "or",
