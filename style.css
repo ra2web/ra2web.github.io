@@ -794,9 +794,11 @@ input[type="range"]:focus {
     margin-left: 0;
     float: left;
     height: 114px;
-    column-count: 2;
-    column-gap: 10px;
-    column-fill: auto;
+    width: 320px;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(5, auto);
+    grid-template-columns: repeat(2, 1fr);
 }
 
 #ra2web-root .lobby-form.lobby-form-sp .game-options-left {
