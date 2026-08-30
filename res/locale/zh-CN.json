@@ -152,6 +152,8 @@
   "gui:demo": "单机模式",
   "stt:demo": "游玩战役或与AI进行遭遇战",
   "gui:skirmishgame": "遭遇战",
+  "gui:specialmission": "特别任务",
+  "stt:modespecialmission": "带 specialmission 标志的单图任务",
   "gui:quickmatch": "排位赛",
   "gui:custommatch": "联机大厅",
   "Name:Confederation": "中国",

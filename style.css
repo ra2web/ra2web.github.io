@@ -2518,6 +2518,9 @@ input[type="range"]:focus {
   left: 10px;
   top: 10px;
   width: 780px;
+  box-sizing: border-box;
+  padding: 2px 8px;
+  background: rgba(0, 0, 0, 0.55);
   color: var(--campaign-loading-text-color);
   font-size: 14px;
   line-height: 18px;
@@ -2529,6 +2532,9 @@ input[type="range"]:focus {
   left: 20px;
   top: 62px;
   width: 750px;
+  box-sizing: border-box;
+  padding: 6px 10px;
+  background: rgba(0, 0, 0, 0.55);
   color: var(--campaign-loading-text-color);
   font-size: 14px;
   line-height: 18px;

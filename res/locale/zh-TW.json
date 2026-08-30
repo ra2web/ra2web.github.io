@@ -152,6 +152,8 @@
   "gui:demo": "单机模式",
   "stt:demo": "遊玩戰役或與AI進行遭遇戰",
   "gui:skirmishgame": "遭遇戰",
+  "gui:specialmission": "特別任務",
+  "stt:modespecialmission": "帶 specialmission 標誌的單圖任務",
   "gui:aidummy": "AI-弱智",
   "gui:aieasybeta": "AI-简单",
   "gui:aisealand": "AI-简单海陆",

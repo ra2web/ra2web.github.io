@@ -124,6 +124,8 @@
   "gui:demo": "Single Player",
   "stt:demo": "Play campaign missions or skirmish matches against AI",
   "gui:skirmishgame": "Skirmish",
+  "gui:specialmission": "Special Mission",
+  "stt:modespecialmission": "Single-map missions marked specialmission",
   "gui:aidummy": "Training Dummy",
   "gui:aieasybeta": "Easy Enemy (BETA)",
   "gui:aisealand": "Sea/Land Enemy",
