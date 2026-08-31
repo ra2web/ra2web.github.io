@@ -56,6 +56,13 @@
       "exclude": [],
       "excludeOp": "or",
       "officialMap": "ra2web_rhino_nuclear_2.map"
+    },
+    {
+      "include": ["yao sai shou wei", "要塞守卫"],
+      "includeOp": "or",
+      "exclude": [],
+      "excludeOp": "or",
+      "officialMap": "ra2web_fortress_guard.map"
     }
   ]
 }
