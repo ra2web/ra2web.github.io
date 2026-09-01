@@ -17,15 +17,15 @@
       "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
     },
     {
-      "source": "/config.ini",
+      "source": "/config.json",
       "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
     },
     {
-      "source": "/servers.ini",
+      "source": "/servers.json",
       "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
     },
     {
-      "source": "/mods.ini",
+      "source": "/mods.json",
       "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
     },
     {

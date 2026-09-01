@@ -1,10 +1,10 @@
-const RA2WEB_SW_VERSION = "0.86.4-rbd84169-d28b9b6ac";
+const RA2WEB_SW_VERSION = "0.86.4-rbd84169-dd498a095";
 const RA2WEB_APP_CACHE = "ra2web-app-" + RA2WEB_SW_VERSION;
 const RA2WEB_GAMERES_CACHE = "ra2web-gameres-" + RA2WEB_SW_VERSION;
-const RA2WEB_PRECACHE_URLS = ["/","/index.html","/manifest.webmanifest","/js/app.js?v=0.86.4-rbd84169-d28b9b6ac","/js/vendor.js?v=0.86.4-rbd84169-d28b9b6ac","/res/werhdexp.mix?v=0.86.4-rbd84169-d28b9b6ac","/config.ini?v=0.86.4-rbd84169-d28b9b6ac","/res/overlay/art.ini?v=0.86.4","/res/overlay/modcd.ini?v=0.86.4","/res/overlay/mpbattle.ini?v=0.86.4","/res/overlay/mpcoop.ini?v=0.86.4","/res/overlay/mpduel.ini?v=0.86.4","/res/overlay/mpfreeforallmd.ini?v=0.86.4","/res/overlay/mpmeat.ini?v=0.86.4","/res/overlay/mpmodes.ini?v=0.86.4","/res/overlay/mpmw.ini?v=0.86.4","/res/overlay/mpnaval.ini?v=0.86.4","/res/overlay/mpspecial.ini?v=0.86.4","/res/overlay/mpteammd.ini?v=0.86.4","/res/overlay/mpunholy.ini?v=0.86.4","/res/overlay/nodogengikills.ini?v=0.86.4","/res/overlay/ra2.csf?v=0.86.4","/res/overlay/rules.ini?v=0.86.4","/res/overlay/soundcd.ini?v=0.86.4","/res/overlay/ui.ini?v=0.86.4"];
+const RA2WEB_PRECACHE_URLS = ["/","/index.html","/manifest.webmanifest","/js/app.js?v=0.86.4-rbd84169-dd498a095","/js/vendor.js?v=0.86.4-rbd84169-dd498a095","/res/werhdexp.mix?v=0.86.4-rbd84169-dd498a095","/config.json?v=0.86.4-rbd84169-dd498a095","/res/overlay/art.ini?v=0.86.4","/res/overlay/modcd.ini?v=0.86.4","/res/overlay/mpbattle.ini?v=0.86.4","/res/overlay/mpcoop.ini?v=0.86.4","/res/overlay/mpduel.ini?v=0.86.4","/res/overlay/mpfreeforallmd.ini?v=0.86.4","/res/overlay/mpmeat.ini?v=0.86.4","/res/overlay/mpmodes.ini?v=0.86.4","/res/overlay/mpmw.ini?v=0.86.4","/res/overlay/mpnaval.ini?v=0.86.4","/res/overlay/mpspecial.ini?v=0.86.4","/res/overlay/mpteammd.ini?v=0.86.4","/res/overlay/mpunholy.ini?v=0.86.4","/res/overlay/nodogengikills.ini?v=0.86.4","/res/overlay/ra2.csf?v=0.86.4","/res/overlay/rules.ini?v=0.86.4","/res/overlay/soundcd.ini?v=0.86.4","/res/overlay/ui.ini?v=0.86.4"];
 const RA2WEB_IMMUTABLE_PREFIXES = ["/js/"];
 const RA2WEB_STATIC_PREFIXES = ["/res/fonts/"];
-const RA2WEB_UPDATE_SENSITIVE_PATHS = new Set(["/config.ini","/servers.ini","/mods.ini","/res/mods.ini","/official-map-redirect.json","/old/versions.json","/version.json"]);
+const RA2WEB_UPDATE_SENSITIVE_PATHS = new Set(["/config.json","/servers.json","/mods.json","/official-map-redirect.json","/old/versions.json","/version.json"]);
 const RA2WEB_GAMERES_PREFIXES = ["/v2/","/map/","/mod/","/music/"];
 
 self.addEventListener("install", (event) => {

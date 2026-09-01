@@ -1,0 +1,46 @@
+{
+  "serversUrl": "servers.json",
+  "discordUrl": "https://qm.qq.com/q/8wt3F0yUbm",
+  "autoLoadGameRes": true,
+  "gameresBaseUrl": "//stdres.wangerhuoda.cn/",
+  "gameresBaseUrls": ["//wyhjres2.bun.sh.cn/"],
+  "campaignBaseUrl": "//stdres.wangerhuoda.cn/campaign/",
+  "campaignBaseUrls": ["//wyhjres2.bun.sh.cn/campaign/"],
+  "mapsBaseUrl": "//gmap.wangerhuoda.cn/map/",
+  "modsBaseUrl": "//gmap.wangerhuoda.cn/mod/",
+  "musicBaseUrl": "//stdres.wangerhuoda.cn/music/",
+  "musicBaseUrls": ["//wyhjres2.bun.sh.cn/music/"],
+  "gameResArchiveUrl": "https://download.ra2web.com/full-pack.7z",
+  "ladderRulesUrl": "//www.ra2web.com/ladder-rules.html",
+  "modSdkUrl": "https://github.com/ra2web/mod-sdk",
+  "donateUrl": "//ra2web.com/#donate",
+  "victoryShopUrl": "https://shop.k0s.cn",
+  "feedbackUrl": "https://feedback.ra2web.com",
+  "breakingNewsUrl": "/breaking-news.html",
+  "oldClientsBaseUrl": "/old/",
+  "quickMatchEnabled": true,
+  "botsEnabled": true,
+  "debugLogging": "wol",
+  "debugGameState": true,
+  "defaultLanguage": "zh-CN",
+  "forcedModId": "gonghui",
+  "viewport": {
+    "width": 1024,
+    "height": 768
+  },
+  "p2pCdnEnabled": false,
+  "p2pCdnTrackerUrl": "wss://gserv.gz.wangerhuoda.cn:38443/p2p-cdn",
+  "p2pCdnIceServers": ["stun:gserv.gz.wangerhuoda.cn:3478"],
+  "sentry": {
+    "dsn": "https://268e10e6b2c60224fa86d0910a033a6f@sentry.wangerhuoda.cn/1",
+    "incidentUrl": "https://telemetry.bj1.wangerhuoda.cn/client-incidents",
+    "env": "production",
+    "defaultIntegrations": true,
+    "autoSessionTracking": false,
+    "tracesSampleRate": 0.02,
+    "telemetrySampleRate": 0.02
+  },
+  "corsProxies": {
+    "archive.org": "https://game.chronodivide.com/cors-proxy/?url="
+  }
+}
