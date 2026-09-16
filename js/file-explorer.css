@@ -2,7 +2,7 @@
 .fe_fileexplorer_invisible { visibility: hidden; }
 .fe_fileexplorer_disabled { filter: grayscale(95%); opacity: 0.6; }
 
-.fe_fileexplorer_open_icon { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d3634901c'); width: 24px; height: 24px; background-position: -48px -96px; image-rendering: pixelated; }
+.fe_fileexplorer_open_icon { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d4181d6a0'); width: 24px; height: 24px; background-position: -48px -96px; image-rendering: pixelated; }
 
 .fe_fileexplorer_wrap { position: relative; font-size: 1.0em; user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; cursor: default; height: 100%; min-height: 9em; }
 .fe_fileexplorer_wrap .fe_fileexplorer_operation_in_progress { cursor: progress; }
@@ -20,20 +20,20 @@
 .fe_fileexplorer_wrap .fe_fileexplorer_navtools button { padding: 0; border: 0 none; box-sizing: border-box; height: 24px; background-color: transparent; outline: none; background-repeat: no-repeat; image-rendering: pixelated; }
 .fe_fileexplorer_wrap .fe_fileexplorer_navtools button.fe_fileexplorer_disabled { opacity: 0.4; }
 
-.fe_fileexplorer_wrap .fe_fileexplorer_navtool_back { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d3634901c'); width: 32px; background-position: -0px -0px; }
-.fe_fileexplorer_wrap .fe_fileexplorer_navtool_forward { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d3634901c'); width: 32px; background-position: -64px -0px; }
-.fe_fileexplorer_wrap .fe_fileexplorer_navtool_history { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d3634901c'); width: 18px; background-position: -84px -24px; }
-.fe_fileexplorer_wrap .fe_fileexplorer_navtool_up { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d3634901c'); width: 24px; background-position: -0px -24px; }
+.fe_fileexplorer_wrap .fe_fileexplorer_navtool_back { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d4181d6a0'); width: 32px; background-position: -0px -0px; }
+.fe_fileexplorer_wrap .fe_fileexplorer_navtool_forward { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d4181d6a0'); width: 32px; background-position: -64px -0px; }
+.fe_fileexplorer_wrap .fe_fileexplorer_navtool_history { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d4181d6a0'); width: 18px; background-position: -84px -24px; }
+.fe_fileexplorer_wrap .fe_fileexplorer_navtool_up { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d4181d6a0'); width: 24px; background-position: -0px -24px; }
 
-.fe_fileexplorer_wrap .fe_fileexplorer_navtool_back:not(.fe_fileexplorer_disabled):hover, .fe_fileexplorer_wrap .fe_fileexplorer_navtool_back:not(.fe_fileexplorer_disabled):focus { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d3634901c'); width: 32px; background-position: -32px -0px; }
-.fe_fileexplorer_wrap .fe_fileexplorer_navtool_forward:not(.fe_fileexplorer_disabled):hover, .fe_fileexplorer_wrap .fe_fileexplorer_navtool_forward:not(.fe_fileexplorer_disabled):focus { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d3634901c'); width: 32px; background-position: -96px -0px; }
-.fe_fileexplorer_wrap .fe_fileexplorer_navtool_history:not(.fe_fileexplorer_disabled):hover, .fe_fileexplorer_wrap .fe_fileexplorer_navtool_history:not(.fe_fileexplorer_disabled):focus { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d3634901c'); width: 18px; background-position: -102px -24px; }
-.fe_fileexplorer_wrap .fe_fileexplorer_navtool_up:not(.fe_fileexplorer_disabled):hover, .fe_fileexplorer_wrap .fe_fileexplorer_navtool_up:not(.fe_fileexplorer_disabled):focus { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d3634901c'); width: 24px; background-position: -24px -24px; }
+.fe_fileexplorer_wrap .fe_fileexplorer_navtool_back:not(.fe_fileexplorer_disabled):hover, .fe_fileexplorer_wrap .fe_fileexplorer_navtool_back:not(.fe_fileexplorer_disabled):focus { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d4181d6a0'); width: 32px; background-position: -32px -0px; }
+.fe_fileexplorer_wrap .fe_fileexplorer_navtool_forward:not(.fe_fileexplorer_disabled):hover, .fe_fileexplorer_wrap .fe_fileexplorer_navtool_forward:not(.fe_fileexplorer_disabled):focus { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d4181d6a0'); width: 32px; background-position: -96px -0px; }
+.fe_fileexplorer_wrap .fe_fileexplorer_navtool_history:not(.fe_fileexplorer_disabled):hover, .fe_fileexplorer_wrap .fe_fileexplorer_navtool_history:not(.fe_fileexplorer_disabled):focus { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d4181d6a0'); width: 18px; background-position: -102px -24px; }
+.fe_fileexplorer_wrap .fe_fileexplorer_navtool_up:not(.fe_fileexplorer_disabled):hover, .fe_fileexplorer_wrap .fe_fileexplorer_navtool_up:not(.fe_fileexplorer_disabled):focus { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d4181d6a0'); width: 24px; background-position: -24px -24px; }
 
 .fe_fileexplorer_wrap .fe_fileexplorer_path_wrap { display: flex; flex: 1; align-items: center; overflow: hidden; border: 1px solid #D9D9D9; margin-right: 12px; }
 
 .fe_fileexplorer_wrap .fe_fileexplorer_path_icon { height: 24px; }
-.fe_fileexplorer_wrap .fe_fileexplorer_path_icon_inner { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d3634901c'); width: 24px; height: 24px; margin-left: 2px; margin-right: 4px; background-position: -72px -96px; image-rendering: pixelated; }
+.fe_fileexplorer_wrap .fe_fileexplorer_path_icon_inner { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d4181d6a0'); width: 24px; height: 24px; margin-left: 2px; margin-right: 4px; background-position: -72px -96px; image-rendering: pixelated; }
 
 .fe_fileexplorer_wrap .fe_fileexplorer_path_segments_scroll_wrap { flex: 1; position: relative; overflow-x: scroll; box-sizing: border-box; scrollbar-width: none; -ms-overflow-style: none; }
 .fe_fileexplorer_wrap .fe_fileexplorer_path_segments_scroll_wrap::-webkit-scrollbar { height: 0px; background: transparent; }
@@ -44,13 +44,13 @@
 
 .fe_fileexplorer_wrap .fe_fileexplorer_path_segment_wrap { display: flex; border: 1px solid transparent; outline: none; }
 .fe_fileexplorer_wrap .fe_fileexplorer_path_segment_wrap::-moz-focus-inner { border: 0; }
-.fe_fileexplorer_wrap .fe_fileexplorer_path_segment_wrap .fe_fileexplorer_path_opts { padding: 0; background-repeat: no-repeat; background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d3634901c'); width: 18px; background-position: -48px -24px; image-rendering: pixelated; }
+.fe_fileexplorer_wrap .fe_fileexplorer_path_segment_wrap .fe_fileexplorer_path_opts { padding: 0; background-repeat: no-repeat; background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d4181d6a0'); width: 18px; background-position: -48px -24px; image-rendering: pixelated; }
 .fe_fileexplorer_wrap .fe_fileexplorer_path_segment_wrap:hover { border: 1px solid #CCE8FF; background-color: #E5F3FF; }
 .fe_fileexplorer_wrap .fe_fileexplorer_path_segment_wrap:hover .fe_fileexplorer_path_opts { padding: 0; border-left: 1px solid #CCE8FF; }
 .fe_fileexplorer_wrap .fe_fileexplorer_path_segment_wrap:focus, .fe_fileexplorer_wrap .fe_fileexplorer_path_segment_wrap.fe_fileexplorer_path_segment_wrap_focus { border: 1px solid #99D1FF; background-color: #CCE8FF; }
 .fe_fileexplorer_wrap .fe_fileexplorer_path_segment_wrap:focus .fe_fileexplorer_path_opts, .fe_fileexplorer_wrap .fe_fileexplorer_path_segment_wrap.fe_fileexplorer_path_segment_wrap_focus .fe_fileexplorer_path_opts { border-left: 1px solid #99D1FF; }
 .fe_fileexplorer_wrap .fe_fileexplorer_path_segment_wrap.fe_fileexplorer_path_segment_wrap_down .fe_fileexplorer_path_name { padding: calc(0.5em + 1px) calc(0.5em - 1px) calc(0.5em - 1px) calc(0.5em + 1px); }
-.fe_fileexplorer_wrap .fe_fileexplorer_path_segment_wrap.fe_fileexplorer_path_segment_wrap_down .fe_fileexplorer_path_opts { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d3634901c'); background-position: -84px -24px; }
+.fe_fileexplorer_wrap .fe_fileexplorer_path_segment_wrap.fe_fileexplorer_path_segment_wrap_down .fe_fileexplorer_path_opts { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d4181d6a0'); background-position: -84px -24px; }
 
 .fe_fileexplorer_wrap .fe_fileexplorer_path_segment_wrap.fe_fileexplorer_drag_hover { border: 1px solid #99D1FF; background-color: #CCE8FF; }
 
@@ -65,18 +65,18 @@
 .fe_fileexplorer_wrap .fe_fileexplorer_folder_tools button:not(.fe_fileexplorer_disabled):hover, .fe_fileexplorer_wrap .fe_fileexplorer_folder_tools button:not(.fe_fileexplorer_disabled):focus { border: 1px solid #99D1FF; background-color: #E5F3FF; }
 .fe_fileexplorer_wrap .fe_fileexplorer_folder_tool_separator { margin: 0 -0.1em 0.3em; border-top: 1px solid #DFE7F0; }
 
-.fe_fileexplorer_wrap .fe_fileexplorer_folder_tool_new_folder::before { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d3634901c'); background-position: -24px -144px; }
-.fe_fileexplorer_wrap .fe_fileexplorer_folder_tool_new_file::before { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d3634901c'); background-position: -0px -144px; }
-.fe_fileexplorer_wrap .fe_fileexplorer_folder_tool_upload::before { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d3634901c'); background-position: -96px -144px; }
-.fe_fileexplorer_wrap .fe_fileexplorer_folder_tool_download::before { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d3634901c'); background-position: -96px -120px; }
+.fe_fileexplorer_wrap .fe_fileexplorer_folder_tool_new_folder::before { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d4181d6a0'); background-position: -24px -144px; }
+.fe_fileexplorer_wrap .fe_fileexplorer_folder_tool_new_file::before { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d4181d6a0'); background-position: -0px -144px; }
+.fe_fileexplorer_wrap .fe_fileexplorer_folder_tool_upload::before { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d4181d6a0'); background-position: -96px -144px; }
+.fe_fileexplorer_wrap .fe_fileexplorer_folder_tool_download::before { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d4181d6a0'); background-position: -96px -120px; }
 
-.fe_fileexplorer_wrap .fe_fileexplorer_folder_tool_copy::before { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d3634901c'); background-position: -24px -120px; }
-.fe_fileexplorer_wrap .fe_fileexplorer_folder_tool_paste::before { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d3634901c'); background-position: -48px -144px; }
-.fe_fileexplorer_wrap .fe_fileexplorer_folder_tool_cut::before { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d3634901c'); background-position: -48px -120px; }
-.fe_fileexplorer_wrap .fe_fileexplorer_folder_tool_delete::before { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d3634901c'); background-position: -72px -120px; }
+.fe_fileexplorer_wrap .fe_fileexplorer_folder_tool_copy::before { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d4181d6a0'); background-position: -24px -120px; }
+.fe_fileexplorer_wrap .fe_fileexplorer_folder_tool_paste::before { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d4181d6a0'); background-position: -48px -144px; }
+.fe_fileexplorer_wrap .fe_fileexplorer_folder_tool_cut::before { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d4181d6a0'); background-position: -48px -120px; }
+.fe_fileexplorer_wrap .fe_fileexplorer_folder_tool_delete::before { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d4181d6a0'); background-position: -72px -120px; }
 
-.fe_fileexplorer_wrap .fe_fileexplorer_folder_tool_item_checkboxes::before { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d3634901c'); background-position: -72px -144px; }
-.fe_fileexplorer_wrap .fe_fileexplorer_show_item_checkboxes .fe_fileexplorer_folder_tool_item_checkboxes::before { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d3634901c'); background-position: -0px -120px; }
+.fe_fileexplorer_wrap .fe_fileexplorer_folder_tool_item_checkboxes::before { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d4181d6a0'); background-position: -72px -144px; }
+.fe_fileexplorer_wrap .fe_fileexplorer_show_item_checkboxes .fe_fileexplorer_folder_tool_item_checkboxes::before { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d4181d6a0'); background-position: -0px -120px; }
 
 .fe_fileexplorer_wrap .fe_fileexplorer_items_scroll_wrap { flex: 1; overflow-y: auto; box-sizing: border-box; outline: none; position: relative; }
 .fe_fileexplorer_wrap .fe_fileexplorer_items_scroll_wrap::-moz-focus-inner { border: 0; }
@@ -117,8 +117,8 @@
 .fe_fileexplorer_wrap .fe_fileexplorer_item_text { margin-top: 0.1em; font-size: 0.75em; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; word-wrap: break-word; overflow: hidden; }
 .fe_fileexplorer_wrap .fe_fileexplorer_item_text.fe_fileexplorer_invisible { color: transparent; }
 
-.fe_fileexplorer_wrap .fe_fileexplorer_item_icon_folder { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d3634901c'); background-position: -48px -48px; image-rendering: pixelated; }
-.fe_fileexplorer_wrap .fe_fileexplorer_item_icon_file { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d3634901c'); background-position: -0px -48px; image-rendering: pixelated; }
+.fe_fileexplorer_wrap .fe_fileexplorer_item_icon_folder { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d4181d6a0'); background-position: -48px -48px; image-rendering: pixelated; }
+.fe_fileexplorer_wrap .fe_fileexplorer_item_icon_file { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d4181d6a0'); background-position: -0px -48px; image-rendering: pixelated; }
 .fe_fileexplorer_wrap .fe_fileexplorer_item_icon_file:not(.fe_fileexplorer_item_icon_file_no_ext)::after { position: absolute; bottom: 10px; left: 0px; box-sizing: border-box; content: attr(data-ext); color: #FFFFFF; font-size: 11px; padding: 1px 3px; width: 36px; overflow: hidden; white-space: nowrap; background-color: #888888; text-transform: uppercase; }
 
 .fe_fileexplorer_wrap .fe_fileexplorer_item_icon_file:not(.fe_fileexplorer_item_icon_file_no_ext).fe_fileexplorer_item_icon_ext_a::after { background-color: #F03C3C; }
@@ -193,7 +193,7 @@
 .fe_fileexplorer_wrap .fe_fileexplorer_statusbar_wrap.fe_fileexplorer_statusbar_wrap_multiline .fe_fileexplorer_action_progress_msg_wrap:first-child { margin-left: 15px; border-left: 0 none; padding-left: 0; }
 .fe_fileexplorer_wrap .fe_fileexplorer_statusbar_wrap.fe_fileexplorer_statusbar_wrap_multiline .fe_fileexplorer_action_progress_msg_wrap_last { flex-grow: 1; }
 
-@font-face { font-family: 'fe_fileexplorer_actions'; src: url('fileexplorer_actions.woff?v=0.87.0-ra650aef-d3634901c') format('woff'); font-weight: normal; font-style: normal; font-display: block; }
+@font-face { font-family: 'fe_fileexplorer_actions'; src: url('fileexplorer_actions.woff?v=0.87.0-ra650aef-d4181d6a0') format('woff'); font-weight: normal; font-style: normal; font-display: block; }
 
 .fe_fileexplorer_wrap .fe_fileexplorer_action_progress_msg_icon { font-family: 'fe_fileexplorer_actions' !important; speak: none; font-weight: normal; font-variant: normal; text-transform: none; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; line-height: 1; }
 .fe_fileexplorer_wrap .fe_fileexplorer_action_progress_msg_icon.fe_fileexplorer_action_progress_msg_icon_uploads_in_progress::before { content: '\E900'; }
@@ -215,10 +215,10 @@
 .fe_fileexplorer_popup_wrap .fe_fileexplorer_popup_item_wrap.fe_fileexplorer_popup_item_disabled .fe_fileexplorer_popup_item_text { color: #6D6D6D; }
 .fe_fileexplorer_popup_wrap .fe_fileexplorer_popup_item_wrap.fe_fileexplorer_popup_item_disabled .fe_fileexplorer_popup_item_icon_inner { filter: grayscale(95%); opacity: 0.9; }
 
-.fe_fileexplorer_popup_wrap .fe_fileexplorer_popup_item_wrap:focus .fe_fileexplorer_popup_item_icon_back { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d3634901c'); background-position: -96px -48px; }
-.fe_fileexplorer_popup_wrap .fe_fileexplorer_popup_item_wrap:focus .fe_fileexplorer_popup_item_icon_forward { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d3634901c'); background-position: -24px -96px; }
-.fe_fileexplorer_popup_wrap .fe_fileexplorer_popup_item_icon_check { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d3634901c'); background-position: -0px -96px; }
-.fe_fileexplorer_popup_wrap .fe_fileexplorer_popup_item_icon_folder { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d3634901c'); background-position: -96px -96px; }
+.fe_fileexplorer_popup_wrap .fe_fileexplorer_popup_item_wrap:focus .fe_fileexplorer_popup_item_icon_back { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d4181d6a0'); background-position: -96px -48px; }
+.fe_fileexplorer_popup_wrap .fe_fileexplorer_popup_item_wrap:focus .fe_fileexplorer_popup_item_icon_forward { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d4181d6a0'); background-position: -24px -96px; }
+.fe_fileexplorer_popup_wrap .fe_fileexplorer_popup_item_icon_check { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d4181d6a0'); background-position: -0px -96px; }
+.fe_fileexplorer_popup_wrap .fe_fileexplorer_popup_item_icon_folder { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d4181d6a0'); background-position: -96px -96px; }
 
 .fe_fileexplorer_textarea { position: absolute; resize: none; border: 1px solid #000000; padding: 1px; font-family: inherit; font-size: 0.75em; overflow-y: auto; box-sizing: border-box; scrollbar-width: none; -ms-overflow-style: none; text-align: center; outline: none; z-index: 2; }
 .fe_fileexplorer_textarea::-webkit-scrollbar { width: 0px; height: 0px; background: transparent; }
@@ -227,8 +227,8 @@
 .fe_fileexplorer_floating_drag_icon_wrap { position: fixed; left: -9999px; padding: 1.5em; pointer-events: none; border: 1px solid rgba(151, 220, 252, 0.4); background-image: linear-gradient(rgba(227, 245, 252, 0.4), rgba(189, 231, 252, 0.4)); z-index: 100; -webkit-box-shadow: 5px 5px 4px -3px rgba(0, 0, 0, 0.3); -moz-box-shadow: 5px 5px 4px -3px rgba(0, 0, 0, 0.3); box-shadow: 5px 5px 4px -3px rgba(0, 0, 0, 0.3); user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; }
 .fe_fileexplorer_floating_drag_icon_wrap .fe_fileexplorer_floating_drag_icon_wrap_inner { position: relative; width: 48px; height: 48px; overflow: hidden; }
 .fe_fileexplorer_floating_drag_icon_wrap .fe_fileexplorer_item_icon { width: 48px; height: 48px; background-repeat: no-repeat; position: relative; opacity: 0.82; image-rendering: pixelated; }
-.fe_fileexplorer_floating_drag_icon_wrap .fe_fileexplorer_item_icon_folder { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d3634901c'); background-position: -48px -48px; image-rendering: pixelated; }
-.fe_fileexplorer_floating_drag_icon_wrap .fe_fileexplorer_item_icon_file { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d3634901c'); background-position: -0px -48px; image-rendering: pixelated; }
+.fe_fileexplorer_floating_drag_icon_wrap .fe_fileexplorer_item_icon_folder { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d4181d6a0'); background-position: -48px -48px; image-rendering: pixelated; }
+.fe_fileexplorer_floating_drag_icon_wrap .fe_fileexplorer_item_icon_file { background-image: url('fileexplorer_sprites.png?v=0.87.0-ra650aef-d4181d6a0'); background-position: -0px -48px; image-rendering: pixelated; }
 .fe_fileexplorer_floating_drag_icon_wrap .fe_fileexplorer_floating_drag_icon_wrap_inner[data-numitems]::after { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -30%); padding: 0.1em 0.3em; font-size: 0.75em; background-color: #0074CC; border: 1px solid #FFFFFF; color: #FFFFFF; content: attr(data-numitems); }
 
 .fe_fileexplorer_download_iframe_wrap { position: fixed; left: -9999px; border: 0 none; width: 1px; height: 1px; }
