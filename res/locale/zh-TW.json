@@ -438,11 +438,14 @@
   "ts:res_recovery_archive-download": "資源包下載失敗。可以重新下載，或選擇本機資源包。",
   "ts:res_recovery_wasm": "瀏覽器無法執行解壓縮工具。請選擇已解壓縮的遊戲資料夾，或開啟 WebAssembly 支援。",
   "ts:res_recovery_mod": "目前 MOD：%s。補充基礎資源後會繼續載入此 MOD。",
+  "ts:res_leave_mod": "看不懂，我不玩mod了",
   "ts:res_retry": "重試",
   "ts:res_use_cdn": "使用 CDN 資源",
   "ts:res_clear_cdn": "清空本機殘餘檔案，改用 CDN",
   "ts:res_clear_scope": "僅清理本瀏覽器已匯入的王二火大遊戲資源、舊選單影片與載入背景、遊戲下載快取。保留地圖、重播、MOD 資料夾、音樂和個人設定。",
   "ts:res_import_hint": "可以匯入完整的王二火大遊戲資源包，或選擇已解壓縮的遊戲資源資料夾。",
   "ts:res_reload_page": "重新載入頁面",
+  "ts:res_return_initial": "返回初始頁",
+  "ts:res_return_initial": "返回初始頁",
   "ts:res_site_failed": "站點資源載入失敗：%s。請重新載入頁面；匯入基礎遊戲資源無法修復此問題。仍失敗可前往 https://feedback.ra2web.com 回報。"
 }

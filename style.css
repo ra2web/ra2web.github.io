@@ -1864,8 +1864,8 @@ input[type="range"]:focus {
 
 #ra2web-root .game-res-box.message-box,
 #ra2web-root .patch-notes-box.message-box {
-    width: 640px;
-    height: 520px;
+    width: 720px;
+    height: 580px;
     text-align: center;
     /* Leave space for the disclaimer on low res */
     margin-top: -30px;
@@ -1874,12 +1874,14 @@ input[type="range"]:focus {
 #ra2web-root .game-res-box.message-box .message-box-content {
     padding: 30px;
     padding-top: 5px;
+    font-size: 16px;
+    line-height: 1.5;
 }
 
 #ra2web-root .game-res-box.message-box .message-box-content .title {
-    font-size: 15px;
+    font-size: 22px;
     text-align: center;
-    margin: 8px 0 15px 0;
+    margin: 8px 0 18px 0;
 }
 
 #ra2web-root .game-res-box.message-box .close-button {
@@ -1923,7 +1925,7 @@ input[type="range"]:focus {
 
 #ra2web-root .game-res-box.message-box .message-box-content .drop-container .desc {
     color: #777;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 #ra2web-root .game-res-box.message-box .message-box-content .browse-buttons {
@@ -1938,6 +1940,13 @@ input[type="range"]:focus {
 #ra2web-root .basic-error-box.message-box .message-box-footer .dialog-button {
     display: inline-block;
     margin: 0;
+    width: auto;
+    min-width: 168px;
+    min-height: 48px;
+    height: auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    line-height: 1.3;
     background: darkred;
     border: 1px red outset;
 }
@@ -1956,6 +1965,8 @@ input[type="range"]:focus {
     margin-left: 8px;
     flex-grow: 1;
     display: block;
+    min-height: 40px;
+    font-size: 16px;
     background: rgba(255, 255, 255, .1);
     border-color: #ccc;
     border-style: inset;
@@ -1970,7 +1981,7 @@ input[type="range"]:focus {
 }
 
 #ra2web-root .game-res-box.message-box .message-box-content em {
-    font-size: 11px;
+    font-size: 14px;
 }
 
 #ra2web-root .patch-notes-box.message-box .message-box-content {
@@ -3674,10 +3685,17 @@ input[type="range"]:focus {
 
 /* Resource recovery remains usable before game resource images are loaded. */
 #ra2web-root .game-res-box.message-box .message-box-content { max-height: 100%; overflow-y: auto; box-sizing: border-box; }
-#ra2web-root .game-res-box .recovery-reason { color: #ffdc73; white-space: pre-wrap; overflow-wrap: anywhere; }
-#ra2web-root .game-res-box .recovery-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
-#ra2web-root .game-res-box .recovery-actions .dialog-button { height: auto; min-height: 32px; white-space: normal; }
-#ra2web-root .game-res-box .recovery-cleanup-note { font-size: 12px; line-height: 1.5; color: #d0d0d0; }
-#ra2web-root .game-res-box .recovery-actions .clear-resources { width: auto; min-width: 220px; padding: 4px 12px; }
+#ra2web-root .game-res-box .recovery-reason { color: #ffdc73; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 16px; }
+#ra2web-root .game-res-box .mod-note { font-size: 16px; }
+#ra2web-root .game-res-box .leave-mod-row { margin: 20px 0 0; }
+#ra2web-root .game-res-box.message-box .message-box-content .leave-mod-row .leave-mod {
+    min-width: 280px;
+    min-height: 52px;
+    font-size: 18px;
+}
+#ra2web-root .game-res-box .recovery-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+#ra2web-root .game-res-box .recovery-actions .dialog-button { height: auto; min-height: 48px; white-space: normal; }
+#ra2web-root .game-res-box .recovery-cleanup-note { font-size: 14px; line-height: 1.5; color: #d0d0d0; }
+#ra2web-root .game-res-box .recovery-actions .clear-resources { width: auto; min-width: 240px; padding: 10px 16px; }
 #ra2web-root .game-res-box.message-box .message-box-content .drop-container { background-image: none; }
 #ra2web-root .game-res-box.message-box .message-box-content .browse-container p { margin: 10px 0; }

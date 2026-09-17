@@ -470,11 +470,13 @@
   "ts:res_recovery_archive-download": "资源包下载失败。可以重新下载，或选择本地资源包。",
   "ts:res_recovery_wasm": "浏览器无法运行解压工具。请选择已解压的游戏文件夹，或开启 WebAssembly 支持。",
   "ts:res_recovery_mod": "当前 MOD：%s。补充基础资源后会继续加载此 MOD。",
+  "ts:res_leave_mod": "看不懂，我不玩mod了",
   "ts:res_retry": "重试",
   "ts:res_use_cdn": "使用 CDN 资源",
   "ts:res_clear_cdn": "清空本地残余文件，改用 CDN",
   "ts:res_clear_scope": "仅清理本浏览器已导入的王二火大游戏资源、旧菜单视频与加载背景、游戏下载缓存。保留地图、回放、MOD 文件夹、音乐和个人设置。",
   "ts:res_import_hint": "可以导入完整的王二火大游戏资源包，或选择已解压的游戏资源文件夹。",
   "ts:res_reload_page": "重新加载页面",
+  "ts:res_return_initial": "返回初始页",
   "ts:res_site_failed": "站点资源加载失败：%s。请重新加载页面；导入基础游戏资源无法修复此问题。仍失败可前往 https://feedback.ra2web.com 反馈。"
 }

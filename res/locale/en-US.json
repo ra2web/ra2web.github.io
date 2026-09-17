@@ -431,11 +431,13 @@
   "ts:res_recovery_archive-download": "The resource archive download failed. Retry or select a local archive.",
   "ts:res_recovery_wasm": "This browser cannot run the archive extractor. Select an extracted game folder or enable WebAssembly.",
   "ts:res_recovery_mod": "Selected MOD: %s. Import the required base files to continue with this MOD.",
+  "ts:res_leave_mod": "I don't understand — leave this MOD",
   "ts:res_retry": "Retry",
   "ts:res_use_cdn": "Use CDN resources",
   "ts:res_clear_cdn": "Clear local remnants and use CDN",
   "ts:res_clear_scope": "Clears imported wangerhuoda game resources, the old menu video/splash, and game download cache in this browser. Maps, replays, MOD folders, music and preferences are kept.",
   "ts:res_import_hint": "Import a complete wangerhuoda game resource archive or select an extracted game resource folder.",
   "ts:res_reload_page": "Reload page",
+  "ts:res_return_initial": "Return to the start page",
   "ts:res_site_failed": "A site resource failed to load: %s. Reload the page; importing base game files cannot repair this resource. Report persistent failures at https://feedback.ra2web.com."
 }
