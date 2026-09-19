@@ -22,6 +22,18 @@ Commercial use is strictly prohibited unless written authorization is obtained f
 Commercial use includes, but is not limited to, paid usage, ad monetization, commercial hosting, licensing, commercial integration, commercial deployment services, or promotional/commercial campaigns.
 For commercial authorization, please contact the copyright holder first to obtain written permission.
 
+## 玩家战场控制台
+
+对局开始后，在浏览器开发者工具控制台使用 `window.werhd` 读取本地视野，并下发与鼠标相同的锁步指令。
+
+完整 API、返回值、枚举和示例见 [docs/player-console-api.md](docs/player-console-api.md)。
+
+```js
+werhd.help()
+const mcv = werhd.units('self').find((unit) => ['AMCV', 'SMCV', 'CMCV'].includes(unit.name))
+werhd.deploy([mcv.id])
+```
+
 ## 赞助商
 
 本项目的CDN加速和安全防护由腾讯EdgeOne赞助
