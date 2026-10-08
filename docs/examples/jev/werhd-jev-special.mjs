@@ -1,7 +1,9 @@
-import { isAirSupport } from './werhd-jev-strategy.mjs?v=8.3';
+import { isAirSupport } from './werhd-jev-strategy.mjs?v=8.8.15';
 // All tactical choices and spatial searches live in the ordinary player script.
 const distance = (a, b) => Math.hypot(a.rx - b.rx, a.ry - b.ry);
 const idle = (unit, memory, tick) => unit.isIdle && tick - (memory.specialOrders?.get(unit.id)?.tick ?? -10000) > 450;
+const friendlyOnBridge = (api, tile) => [...api.units('self'), ...api.units('allied')]
+  .some(u => u.onBridge && distance(u.tile, { rx: tile.x, ry: tile.y }) < 7);
 
 export function specialGroups(api, catalog, snapshot, memory, groups) {
   const { units, enemies, buildings, base } = snapshot.raw;
@@ -130,9 +132,11 @@ export function specialGroups(api, catalog, snapshot, memory, groups) {
   }
   for (const bridge of bridges.slice(0, 12)) {
     const tile = { rx: bridge.x, ry: bridge.y };
-    if (units.some((u) => u.onBridge && distance(u.tile, tile) < 7)) continue;
+    if (friendlyOnBridge(api, bridge) || memory.specialTasks?.some(t => t.bridge?.id === bridge.id)) continue;
     if (!enemies.some((e) => e.onBridge && distance(e.tile, tile) < 4 && distance(e.tile, base.tile) < 22)) continue;
-    const weapons = snapshot.raw.army.filter((u) => !u.onBridge && !u.isDeployed && distance(u.tile, tile) < 9).slice(0, 3);
+    const weapons = snapshot.raw.army.filter((u) => !u.onBridge && !u.isDeployed && distance(u.tile, tile) < 9
+      && tick >= (memory.bridgeRetryAfter?.get(`${bridge.id}:${u.name}`) ?? 0)
+      && tick - (memory.specialOrders?.get(u.id)?.tick ?? -10000) > 450).slice(0, 3);
     if (weapons.length)
       engineering(`demolish_${bridge.id}`, `Destroy bridge piece (${bridge.x},${bridge.y}) beneath visible attackers approaching our base; no friendly units are on the nearby bridge. Consider whether the loss of this route would trap our army.`,
         { type: 'special', kind: 'demolish_bridge', ids: weapons.map((u) => u.id),
@@ -207,6 +211,15 @@ export function executeSpecial(api, action) {
     return { accepted: true };
   }
   if (action.type !== 'special') return undefined;
+  if (action.kind === 'demolish_bridge') {
+    const tile = action.order.target;
+    const bridge = api.map.tile(tile.x, tile.y)?.bridge;
+    if (!bridge || !Number.isFinite(bridge.hitPoints)) return { accepted: false, reason: 'bridge_not_observable' };
+    if (friendlyOnBridge(api, tile)) return { accepted: false, reason: 'friendly_on_bridge' };
+    return { accepted: api.order(action.ids, action.order), ids: action.ids,
+      bridge: { ...bridge, x: tile.x, y: tile.y },
+      attackerNames: api.units('self').filter(u => action.ids.includes(u.id)).map(u => u.name) };
+  }
   if (action.targetId !== undefined && !api.unit(action.targetId)) return { accepted: false, reason: 'target_no_longer_visible' };
   if (action.kind === 'garrison') {
     const target = api.unit(action.targetId);
@@ -215,8 +228,11 @@ export function executeSpecial(api, action) {
   }
   if (action.kind === 'load') {
     const target = api.unit(action.targetId);
-    if (!target?.transport || target.transport.occupied >= target.transport.capacity)
+    if (!api.units('self').some(u => u.id === action.targetId) || !target?.transport || target.transport.occupied >= target.transport.capacity)
       return { accepted: false, reason: 'transport_changed' };
+    // Entry needs both participants: a previous squad order may already be moving the carrier.
+    if (!api.order([action.targetId], { type: api.OrderType.Stop }))
+      return { accepted: false, reason: 'transport_stop_rejected' };
   }
   if (['garrison', 'load', 'repair_bridge'].includes(action.kind)) {
     const deployed = api.units('self').filter((u) => action.ids.includes(u.id) && u.isDeployed).map((u) => u.id);
@@ -227,8 +243,17 @@ export function executeSpecial(api, action) {
 
 export function rememberSpecial(memory, action, execution, tick) {
   memory.specialTasks ??= [];
-  if (['garrison', 'load'].includes(action.kind)) memory.specialTasks.push({ action,
-    phase: execution.phase ?? 'entering', started: tick, submitted: tick });
+  memory.specialOrders ??= new Map();
+  if (action.kind === 'demolish_bridge' && execution.accepted && execution.bridge) {
+    memory.specialTasks.push({ action, bridge: execution.bridge, attackerNames: execution.attackerNames,
+      started: tick, lastProgress: tick, hitPoints: execution.bridge.hitPoints });
+    for (const id of action.ids) memory.specialOrders.set(id, { tick, kind: action.kind });
+  }
+  if (action.ids?.length && ['garrison', 'load'].includes(action.kind)) {
+    memory.specialTasks.push({ action, phase: execution.phase ?? 'entering', started: tick, submitted: tick });
+    for (const id of [...action.ids, ...(action.kind === 'load' ? [action.targetId] : [])])
+      memory.specialOrders.set(id, { tick, kind: action.kind });
+  }
 }
 
 // A multi-step player task; the engine still receives only ordinary independent commands.
@@ -238,12 +263,13 @@ export function maintainSpecial(api, memory, emit) {
   const tick = api.tick();
   memory.specialTasks = memory.specialTasks.filter((task) => {
     const { action } = task;
+    if (action.kind === 'demolish_bridge') return maintainDemolition(api, memory, task, own, tick, emit);
     const target = api.unit(action.targetId);
     const contained = action.kind === 'garrison' ? target?.garrison?.unitIds : target?.transport?.unitIds;
     const entered = action.ids.filter((id) => contained?.includes(id));
     const remaining = action.ids.filter((id) => !entered.includes(id) && own.has(id));
     const finish = (result) => {
-      for (const id of action.ids) memory.specialOrders.delete(id);
+      for (const id of [...action.ids, ...(action.kind === 'load' ? [action.targetId] : [])]) memory.specialOrders.delete(id);
       emit({ kind: result === 'completed' ? 'observed' : 'task', tick, task: action.kind,
         description: `${action.kind} ${result}: ${entered.length}/${action.ids.length}`,
         result, targetId: action.targetId, enteredIds: entered });
@@ -252,13 +278,61 @@ export function maintainSpecial(api, memory, emit) {
     if (entered.length === action.ids.length) return finish('completed');
     if (!target || !remaining.length || tick - task.started > 1200) return finish('incomplete');
     for (const id of remaining) memory.specialOrders.set(id, { tick, kind: action.kind });
+    if (action.kind === 'load') {
+      if (!own.has(target.id) || !target.transport || target.transport.occupied >= target.transport.capacity)
+        return finish('incomplete');
+      // Release a carrier taking damage so ordinary defense can react immediately.
+      if (task.carrierHealth !== undefined && target.hitPoints < task.carrierHealth) return finish('interrupted');
+      task.carrierHealth = target.hitPoints;
+      memory.specialOrders.set(target.id, { tick, kind: action.kind });
+    }
     if (task.phase === 'preparing') {
       if (remaining.some((id) => own.get(id).isDeployed) || tick - task.submitted < 20) return true;
       const execution = executeSpecial(api, { ...action, ids: remaining });
       if (!execution.accepted) return finish('rejected');
       task.phase = 'entering'; task.submitted = tick;
       emit({ kind: 'micro', tick, description: `${action.kind}: 姿态确认后进入目标`, targetId: action.targetId, ids: remaining });
+    } else if (tick - task.submitted >= 120 && remaining.some(id => own.get(id).isIdle)) {
+      const idleIds = remaining.filter(id => own.get(id).isIdle);
+      const execution = executeSpecial(api, { ...action, ids: idleIds });
+      if (!execution.accepted) return finish('rejected');
+      task.phase = execution.phase ?? 'entering'; task.submitted = tick;
+      emit({ kind: 'micro', tick, description: `${action.kind}: 空闲乘员重新进入目标`, targetId: action.targetId, ids: idleIds });
     }
     return true;
   });
+}
+
+function maintainDemolition(api, memory, task, own, tick, emit) {
+  const { action, bridge } = task;
+  const ids = action.ids.filter(id => own.has(id));
+  const tile = api.map.tile(bridge.x, bridge.y);
+  const current = tile?.bridge;
+  const finish = result => {
+    if (ids.length) api.order(ids, { type: api.OrderType.Stop });
+    for (const id of action.ids) memory.specialOrders.delete(id);
+    if (result === 'no_damage_progress') {
+      memory.bridgeRetryAfter ??= new Map();
+      for (const name of task.attackerNames) memory.bridgeRetryAfter.set(`${bridge.id}:${name}`, tick + 900);
+    }
+    emit({ kind: result === 'completed' ? 'observed' : 'task', tick, task: action.kind,
+      description: `demolish_bridge ${result}`, result, bridgeId: bridge.id, x: bridge.x, y: bridge.y,
+      initialHitPoints: bridge.hitPoints, lastHitPoints: current?.hitPoints ?? task.hitPoints });
+    return false;
+  };
+  if (!tile) return finish('lost_visibility');
+  if (!current) return finish('completed');
+  if (current.id !== bridge.id) return finish('bridge_changed');
+  if (!ids.length) return finish('units_lost');
+  if (friendlyOnBridge(api, bridge)) return finish('friendly_on_bridge');
+  if (current.hitPoints < task.hitPoints) {
+    task.hitPoints = current.hitPoints;
+    task.lastProgress = tick;
+  }
+  // AG/armor damage alone does not prove bridge damage (e.g. a non-wall-damaging warhead).
+  // Observe the public health result and release the force if this attempt makes no progress.
+  if (tick - task.lastProgress >= 300) return finish('no_damage_progress');
+  if (tick - task.started >= 1800) return finish('time_limit');
+  for (const id of ids) memory.specialOrders.set(id, { tick, kind: action.kind });
+  return true;
 }

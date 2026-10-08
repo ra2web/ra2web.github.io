@@ -2,6 +2,8 @@
 
 完整启动步骤、密钥配置、实验记录与限制见 [Jev 本地接入](../../jev-player-local.md)。
 
+优先验证环境是在线游戏 `https://staging.wangerhuoda.com/` 加本地用户脚本与本地 Jev 代理。无需启动本地游戏服或重新构建游戏；策略修正留在本目录，线上 API 缺口单独记录和讨论。需要验证其他在线域名时，通过 `JEV_GAME_ORIGIN` 明确指定允许来源。
+
 | 文件 | 用途 |
 | --- | --- |
 | [werhd-jev-player.mjs](werhd-jev-player.mjs) | 收集公开状态、请求模型、复查并执行动作 |

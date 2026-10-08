@@ -1,18 +1,26 @@
-import { specialGroups, executeSpecial, rememberSpecial, maintainSpecial } from "./werhd-jev-special.mjs?v=8.3";
-import { assessStrategy, investmentGroups, chooseBuildingSite } from "./werhd-jev-strategy.mjs?v=8.3";
-import { updateCamera } from "./werhd-jev-camera.mjs?v=8.3";
+import { specialGroups, executeSpecial, rememberSpecial, maintainSpecial } from "./werhd-jev-special.mjs?v=8.8.15";
+import { assessStrategy, investmentGroups, chooseBuildingSite, chooseRallySite, weaponEffectiveness, effectiveness, infantryProfile, scoutScore, currentWeapon as combatWeapon, activeWeapons, canFireAt, baseThreats, ATTACK_FORCE_SIZE, ATTACK_AA_ESCORTS, vehicleOptions } from "./werhd-jev-strategy.mjs?v=8.8.15";
+import { updateCamera } from "./werhd-jev-camera.mjs?v=8.8.15";
 import { refreshCatalog } from "./werhd-jev-catalog.mjs";
 // Ordinary page-side player: every observation and command uses window.werhd.
 // Start the local adapter, then import its /player.mjs from the game console.
 export const DEFAULT_BRIDGE = "http://127.0.0.1:5174";
 const distance = (a, b) => Math.hypot(a.rx - b.rx, a.ry - b.ry);
-const combatWeapon = (unit, catalog) => {
-  const deployed = unit.isDeployed && catalog[unit.name]?.deployer;
-  const rule = deployed ? catalog[unit.name]?.secondary : catalog[unit.name]?.weapon;
-  const actual = deployed ? unit.secondaryWeapon : unit.primaryWeapon;
-  return { ...rule, ...(actual ? { aa: actual.aa ?? rule?.aa, ag: actual.ag ?? rule?.ag, range: actual.maxRange ?? rule?.range } : {}) };
-};
 const round = (value) => Math.round(value * 100) / 100;
+
+// Score the weapon actually active in this posture, not a generic target-type bonus.
+// Mission preference is deliberately small so it cannot erase armor/air matchups.
+export function combatTargetScore(api, catalog, unit, target, missionTargetId) {
+  const power = Math.max(0, ...activeWeapons(unit, catalog)
+    .map(w => weaponEffectiveness(w, [target], catalog, api)));
+  if (!power) return 0;
+  const armed = activeWeapons(target, catalog).some(w => w.damage > 0);
+  const air = target.zone === (api.ZoneType?.Air ?? 1);
+  return power / Math.sqrt(Math.max(1, target.hitPoints ?? 100)) *
+    (armed ? 1.5 : 1) * (air ? 2 : 1) *
+    (target.id === missionTargetId ? 1.1 : 1) /
+    (1 + distance(unit.tile, target.tile) / 20);
+}
 
 export function collectState(api, catalog) {
   refreshCatalog(api, catalog);
@@ -76,9 +84,9 @@ export function collectState(api, catalog) {
       base: base ? { x: base.tile.rx, y: base.tile.ry } : null,
       ownArmyCount: army.length,
       deployedCombatCount: army.filter((u) => u.isDeployed).length,
-      antiAirCount: army.filter((u) => combatWeapon(u, catalog)?.aa).length,
+      antiAirCount: army.filter((u) => activeWeapons(u, catalog).some(w=>w.aa)).length,
       harvesters: units.filter((u) => catalog[u.name]?.harvester).length,
-      baseUnderAttack: nearby.some((u) => u.primaryWeapon),
+      baseUnderAttack: baseThreats(api, catalog, buildings, enemies).length > 0,
       visibleEnemyCount: enemies.length,
       visibleEnemies: enemies.slice(0, 24).map(unitSummary),
       army: army.slice(0, 24).map(unitSummary),
@@ -214,7 +222,8 @@ export function candidateGroups(api, catalog, snapshot, memory) {
   };
   assessStrategy(api, catalog, snapshot, memory);
   state.airThreatCount = enemies.filter((u) => u.zone === 1).length;
-  state.antiAirCount = army.filter((u) => combatWeapon(u, catalog)?.aa).length;
+  state.antiAirCount = army.filter((u) => activeWeapons(u, catalog).some(w=>w.aa)).length;
+  state.mobileAntiAirCount = army.filter(u=>u.type===api.ObjectType.Vehicle&&!catalog[u.name]?.naval&&catalog[u.name]?.category!=='AirPower'&&activeWeapons(u,catalog).some(w=>w.aa)).length;
   state.mission = memory.mission?.label ?? "待命";
   state.activeMission = memory.mission
     ? {
@@ -267,45 +276,15 @@ export function candidateGroups(api, catalog, snapshot, memory) {
   const vehicleType = api.QueueType?.Vehicles ?? 3;
   const train = group(
     "vehicles",
-    "Choose what the vehicle factory should produce next. Three ore miners are the economy target. Before there are 3 miners, buy a miner unless the base is under attack and needs a tank. After 3 miners, produce effective counters while preserving the strategy investment budget. Maintain 2 anti-air escort IFVs after 4 tanks, even before spotting aircraft. URGENT: when airThreatCount is positive and antiAirCount is below 3, build anti-air IFVs first; tanks cannot hit flying enemies. A completed queue should be refilled while affordable. Saving for the selected defensive or technology investment is intentional.",
+    "Choose what the vehicle factory should produce next. Three ore miners are the economy target. Before there are 3 miners, buy a miner unless the base is under attack and needs a tank. After 3 miners, produce effective counters while preserving the strategy investment budget. Maintain 2 mobile anti-air escorts after 4 tanks, even before spotting aircraft. Use mobileAntiAirCount: deployed infantry guarding the base are not mobile escorts. URGENT: when airThreatCount is positive and mobileAntiAirCount is below 3, build mobile anti-air first; tanks cannot hit flying enemies. A completed queue should be refilled while affordable. Saving for the selected defensive or technology investment is intentional.",
   );
   if (!queueOf(vehicleType)?.size && factories)
-    for (const item of api.production.available(vehicleType)) {
-      const r = catalog[item.name];
-      if (!r || r.naval || r.engineer || catalog[r.deploysInto]?.yard) continue;
-      const incomingMiners = state.queues.reduce(
-        (n, q) =>
-          n +
-          q.items
-            .filter(
-              (i) => catalog[i.name]?.refinery || catalog[i.name]?.harvester,
-            )
-            .reduce((t, i) => t + i.quantity, 0),
-        0,
-      );
-      const economic = r.harvester && miners + incomingMiners < 3;
-      const combat = !r.harvester && r.weapon?.damage > 0 && r.weapon.range >= 4;
-      if (!economic && !combat) continue;
-      if (
-        combat &&
-        state.airThreatCount > 0 &&
-        state.antiAirCount < 3 &&
-        !r.weapon.aa
-      )
-        continue;
-      if (
-        combat &&
-        r.weapon.aa &&
-        state.antiAirCount >= Math.max(2, state.airThreatCount)
-      )
-        continue;
-      if (combat && miners < 2 && !state.baseUnderAttack) continue;
-      if (economic && state.baseUnderAttack && state.mobileTankCount < 5)
-        continue;
+    for (const item of vehicleOptions(api,catalog,state)) {
+      const r = catalog[item.name], { economic, antiAir } = item;
       if (state.self.credits < Math.min(250, r.cost)) continue;
       train(
         `produce_${item.name}`,
-        `${economic ? "ECONOMY" : r.weapon.aa ? "ANTI-AIR" : "ARMY"}: produce ${r.label}; cost ${r.cost}; currently owned ${state.inventory[item.name]?.count ?? 0}; weapon damage ${r.weapon?.damage ?? 0}, range ${r.weapon?.range ?? 0}. ${economic ? "Needed to reach 3 miners." : "Reinforce the tank army."}`,
+        `${economic ? "ECONOMY" : antiAir ? "ANTI-AIR" : "ARMY"}: produce ${r.label}; cost ${r.cost}; currently owned ${state.inventory[item.name]?.count ?? 0}; weapons ${[r.weapon,r.secondary].filter(w=>w?.damage>0).map(w=>`damage ${w.damage}, range ${w.range}, air ${!!w.aa}, ground ${w.ag!==false}`).join("; ")}. ${economic ? "Needed to reach 3 miners." : "Reinforce the tank army."}`,
         {
           type: "produce",
           name: item.name,
@@ -321,30 +300,43 @@ export function candidateGroups(api, catalog, snapshot, memory) {
   const footCount = army.filter(
     (u) => u.type === api.ObjectType.Infantry,
   ).length;
+  const infantryOffers=api.production.available(infantryType).filter(i=>catalog[i.name]&&!catalog[i.name].engineer);
+  const preferredScout=[...infantryOffers].filter(i=>catalog[i.name].weapon?.damage>0)
+    .sort((a,b)=>scoutScore(catalog[b.name])-scoutScore(catalog[a.name]))[0];
+  const scoutUnits=army.filter(u=>u.type===api.ObjectType.Infantry).sort((a,b)=>scoutScore(catalog[b.name])-scoutScore(catalog[a.name]));
+  const bestScout=scoutUnits[0];
+  if(bestScout)memory.scoutId=bestScout.id;
+  const needsScout=!memory.enemyBuildings.size&&!state.baseUnderAttack&&preferredScout&&
+    !scoutUnits.some(u=>u.name===preferredScout.name)&&!state.queues.some(q=>q.items.some(i=>i.name===preferredScout.name));
+  const roles={antiInfantry:0,antiArmor:0};
+  for(const u of scoutUnits)if(u.id!==memory.scoutId&&catalog[u.name]?.weapon?.range>=3)roles[infantryProfile(catalog[u.name],api).role]++;
+  state.infantryRoles={...roles,targetAntiInfantry:3,targetAntiArmor:state.airThreatCount>0?3:2,preferredScout:preferredScout?.name,needsScout:!!needsScout};
   const foot = group(
     "infantry",
-    "Choose affordable defensive infantry. Maintain a small force of 4-6 infantry supporting the tank army; preserve funds for miners and tanks. Engineers are not combat infantry.",
+    "Choose infantry by role and cost effectiveness: maintain anti-infantry firepower plus limited anti-armor/anti-air support, not six copies of one specialist. Read the armor-adjusted normal/deployed scores; higher tech and raw damage do not imply better anti-infantry performance. Before the enemy base is found, train one affordable fast scout identified by speed and cost (often a dog); keep it mobile. Preserve funds for miners and tanks.",
   );
   if (
     !queueOf(infantryType)?.size &&
     barracks &&
-    footCount < 6 &&
-    (footCount < 1 || state.self.credits > 1000)
+    (footCount < 6 || needsScout) &&
+    (footCount < 1 || state.self.credits > 1000 || needsScout && state.self.credits >= catalog[preferredScout.name].cost)
   )
-    for (const item of api.production.available(infantryType)) {
+    for (const item of infantryOffers) {
       const r = catalog[item.name];
+      const isScout=needsScout&&item.name===preferredScout.name;
+      const profile=infantryProfile(r,api);
       if (
         !r ||
         r.engineer ||
         r.cost > 1500 ||
         r.weapon?.damage <= 0 ||
-        r.weapon?.range < 3 ||
+        (!isScout && (r.weapon?.range < 3 || roles[profile.role] >= (profile.role==='antiInfantry'?3:state.infantryRoles.targetAntiArmor))) ||
         r.cost > state.self.credits
       )
         continue;
       foot(
         `produce_${item.name}`,
-        `Produce ${r.label}, cost ${r.cost}; current infantry ${footCount}; range ${r.weapon.range}; armor ${r.armor}.`,
+        `${isScout?'SCOUT FIRST: one fast expendable scout to locate the enemy base':'COMBAT ROLE: '+profile.role}. Produce ${r.label}, cost ${r.cost}; speed ${r.speed??0}; current role counts ${JSON.stringify(roles)}. Armor-adjusted anti-infantry score normal ${round(profile.normalInfantry)}, deployed ${round(profile.deployedInfantry)}; best anti-armor ${round(profile.antiArmor)}. Anti-infantry score per 100 credits ${round(profile.antiInfantry/r.cost*100)}. Deployment can reduce damage against infantry.`,
         {
           type: "produce",
           name: item.name,
@@ -354,9 +346,12 @@ export function candidateGroups(api, catalog, snapshot, memory) {
         },
       );
     }
+  if(needsScout) {
+    groups.infantry.instructions+=` SCOUT FIRST: prefer ${preferredScout.name} before adding another slow combat specialist while the enemy base is unknown.`;
+  }
   const posture = group(
     "deployment",
-    "Choose deployment posture for reversible combat units such as GI. Deploy when visible enemies are within the stronger deployed weapon range, or when idle GI are holding base defense. Deployment improves firepower but sacrifices mobility. Keep the designated scout mobile. Stay deployed while holding a defensive position. Undeploy to follow a movement mission when no enemy is in the unit deployed weapon range. Fighting elsewhere on the map is not a reason to remain immobile at an obsolete position. This is separate from deploying a construction vehicle. Never toggle a unit already in the desired state.",
+    "Choose deployment posture using armor-adjusted damage against nearby visible targets. Deployment is not always stronger: anti-armor missiles can perform worse against infantry than the mobile weapon. Prefer the better stance for the actual target; reserve deployed anti-armor/AA units for those threats. Keep the scout mobile. Undeploy to follow a mission when no useful target is in range. Never toggle a unit already in the desired state.",
   );
   const deployable = army.filter(
     (u) =>
@@ -375,6 +370,10 @@ export function candidateGroups(api, catalog, snapshot, memory) {
   const needsMovement = (u) =>
     memory.mission?.ids.includes(u.id) &&
     Math.hypot(u.tile.rx - memory.mission.x, u.tile.ry - memory.mission.y) > 4;
+  const nearbyTargets=u=>enemies.filter(e=>distance(u.tile,e.tile)<=Math.max(catalog[u.name]?.weapon?.range??0,catalog[u.name]?.secondary?.range??0));
+  const stanceScores=u=>{const targets=nearbyTargets(u),r=catalog[u.name];
+    const score=w=>{if(!targets.length)return weaponEffectiveness(w,[],catalog,api);const reachable=targets.filter(e=>distance(u.tile,e.tile)<=(w?.range??0)&&distance(u.tile,e.tile)>=(w?.minRange??0));return reachable.length?weaponEffectiveness(w,reachable,catalog,api):0;};
+    return {targets,normal:score(r.weapon),deployed:score(r.secondary)};};
   state.deployment = deployable.map((u) => {
     const r = catalog[u.name];
     return {
@@ -385,6 +384,7 @@ export function candidateGroups(api, catalog, snapshot, memory) {
       needsMovement: !!needsMovement(u),
       normal: r.weapon,
       deployedWeapon: r.secondary,
+      matchup:{normal:round(stanceScores(u).normal),deployed:round(stanceScores(u).deployed)},
       nearestEnemy: enemies.length
         ? round(Math.min(...enemies.map((e) => distance(u.tile, e.tile))))
         : null,
@@ -393,6 +393,8 @@ export function candidateGroups(api, catalog, snapshot, memory) {
   const toDeploy = deployable.filter(
     (u) =>
       !u.isDeployed &&
+      (u.id !== scoutId || nearbyTargets(u).length && !memory.mission?.ids.includes(u.id)) &&
+      (!nearbyTargets(u).length || stanceScores(u).deployed >= stanceScores(u).normal) &&
       (holdingBase(u) ||
         enemies.some(
           (e) =>
@@ -404,8 +406,8 @@ export function candidateGroups(api, catalog, snapshot, memory) {
   const toUndeploy = deployable.filter(
     (u) =>
       u.isDeployed &&
-      needsMovement(u) &&
-      !enemies.some((e) => api.inRange(u.id, e.id, "current")),
+      ((needsMovement(u) && !enemies.some((e) => api.inRange(u.id, e.id, "current"))) ||
+        nearbyTargets(u).some(e=>distance(u.tile,e.tile)<=(catalog[u.name]?.weapon?.range??0)) && stanceScores(u).normal>stanceScores(u).deployed*1.25),
   );
   if (toDeploy.length)
     posture(
@@ -416,7 +418,7 @@ export function candidateGroups(api, catalog, snapshot, memory) {
   if (toUndeploy.length)
     posture(
       "undeploy_mobile",
-      `Undeploy ${toUndeploy.length} units: these units cannot currently shoot an enemy, and their active movement mission leads elsewhere. Restore mobility to join the fight instead of holding an obsolete position.`,
+      `Undeploy ${toUndeploy.length} units: the normal weapon is stronger against nearby target armor, or the movement mission needs mobility without an in-range target. See per-unit matchup scores.`,
       {
         type: "set_deployed",
         deployed: false,
@@ -439,12 +441,16 @@ export function candidateGroups(api, catalog, snapshot, memory) {
     if (api.map.visible(known.x, known.y) && !enemies.some((e) => e.id === id))
       memory.enemyBuildings.delete(id);
   state.knownEnemyBuildings = [...memory.enemyBuildings.values()].map(({name,x,y,tick})=>({name,x,y,lastSeenTick:tick}));
-  const tanks = army.filter((u) => u.type === api.ObjectType.Vehicle);
-  const active = tanks.length >= 4 ? tanks : army;
+  const tanks = army.filter((u) => u.type === api.ObjectType.Vehicle&&!catalog[u.name]?.naval&&catalog[u.name]?.category!=='AirPower');
+  const support = army.filter(u=>u.type===api.ObjectType.Infantry&&u.id!==memory.scoutId&&
+    api.tick()-(memory.specialOrders?.get(u.id)?.tick??-10000)>450);
+  const active = [...tanks,...support];
+  const rallySite=chooseRallySite(api,catalog,units,base);
   const tactics = group(
     "tactics",
-    "Choose the combat mission to win by destroying the enemy base. Protect the base from nearby attackers, then press the enemy base with at least 8 ground combat vehicles while production builds toward the force goal. Use numerical strength and health already computed in state. Keep a useful active attack; do not oscillate between attack and retreat. When the enemy base is unknown, advance through a supplied visible frontier to scout it.",
+    `Choose the combat mission to win by destroying the enemy base. Protect the base from nearby attackers, then press the enemy base with at least ${ATTACK_FORCE_SIZE} ground combat vehicles while production builds toward the force goal. Use numerical strength and health already computed in state. Keep a useful active attack; do not oscillate between attack and retreat. When the enemy base is unknown, advance through a supplied visible frontier to scout it. Combat orders use existing units and cost zero credits. Production savings and current credits do not restrict these actions. If a force is ready but still rallying, choose a supplied attack mission instead of continuing to wait.`,
   );
+  groups.tactics.criteria.wait = "Keep an active useful combat mission, or wait when no suitable mission is supplied. Do not keep rallying after the force is ready and an attack target is supplied. Credit balance is irrelevant to movement and attack orders.";
   state.combat = {
     tanks: tanks.length,
     army: army.length,
@@ -452,41 +458,41 @@ export function candidateGroups(api, catalog, snapshot, memory) {
     health: state.averageArmyHealth,
     baseThreat: state.baseUnderAttack,
   };
-  const threatening = enemies.filter(
-    (e) =>
-      e.primaryWeapon && buildings.some((b) => distance(e.tile, b.tile) < 20),
-  );
+  const threatening = baseThreats(api, catalog, buildings, enemies).sort((a,b) =>
+    Number(buildings.some(u=>canFireAt(api,catalog,b,u))) - Number(buildings.some(u=>canFireAt(api,catalog,a,u))) ||
+    (combatWeapon(b,catalog).range??0)-(combatWeapon(a,catalog).range??0));
   if (active.length) {
     const ids = active.map((u) => u.id);
     const committedAttack =
       memory.mission?.mode === "attack" && tanks.length >= 4;
     const ready =
-      (tanks.length >= 8 || committedAttack) &&
-      (state.airThreatCount === 0 || state.antiAirCount >= 2);
-    if (!ready && !threatening.length && base && memory.enemyBuildings.size)
+      (tanks.length >= ATTACK_FORCE_SIZE || committedAttack) &&
+      (state.airThreatCount === 0 || state.mobileAntiAirCount >= ATTACK_AA_ESCORTS);
+    if (!ready && !threatening.length && rallySite && memory.enemyBuildings.size)
       tactics(
         "assemble_force",
-        `Gather ${ids.length} troops near our base and accumulate 8 armored vehicles plus 2 anti-air vehicles if air threats exist. Do not feed reinforcements into the enemy base one at a time.`,
+        `Gather ${ids.length} troops near our base and accumulate ${ATTACK_FORCE_SIZE} ground combat vehicles including 2 anti-air escorts if air threats exist. Do not feed reinforcements into the enemy base one at a time.`,
         {
           type: "mission",
           mode: "rally",
           label: "集结装甲编队",
           ids,
-          x: base.tile.rx + 7,
-          y: base.tile.ry + 7,
+          x: rallySite.x,
+          y: rallySite.y,
         },
       );
     if (threatening.length)
       tactics(
         "defend_base",
-        `URGENT: defend against ${threatening.length} visible attackers with ${ids.length} units. ${state.strategy.suppressed ? "Hold near the core and supporting defenses; stop feeding units into a superior enemy." : "Intercept the approaching enemy."}`,
+        `URGENT: intercept ${threatening.length} visible base threats. Priority target #${threatening[0].id}, range ${combatWeapon(threatening[0],catalog).range}. Attack the hostile units directly; remaining at a rally point outside weapon range does not defend the base. Use compatible mobile counters, undeploy when movement is required, and stop chasing after targets leave the base area.`,
         {
           type: "mission",
           mode: "defend",
           label: "保卫基地",
           ids,
-          x: state.strategy.suppressed ? Math.round(base.tile.rx + (threatening[0].tile.rx - base.tile.rx) * 0.25) : threatening[0].tile.rx,
-          y: state.strategy.suppressed ? Math.round(base.tile.ry + (threatening[0].tile.ry - base.tile.ry) * 0.25) : threatening[0].tile.ry,
+          targetId: threatening[0].id,
+          x: threatening[0].tile.rx,
+          y: threatening[0].tile.ry,
         },
       );
     const targets = enemies
@@ -495,7 +501,7 @@ export function candidateGroups(api, catalog, snapshot, memory) {
         (a, b) =>
           Number(!!catalog[b.name]?.yard) - Number(!!catalog[a.name]?.yard),
       );
-    if (ready)
+    if (ready && !threatening.length)
       for (const enemy of targets.slice(0, 2))
         tactics(
           `assault_${enemy.id}`,
@@ -510,7 +516,7 @@ export function candidateGroups(api, catalog, snapshot, memory) {
             y: enemy.tile.ry,
           },
         );
-    if (!targets.length && ready && memory.enemyBuildings.size) {
+    if (!targets.length && ready && !threatening.length && memory.enemyBuildings.size) {
       const known = [...memory.enemyBuildings.values()][0];
       tactics(
         "assault_known_base",
@@ -525,8 +531,11 @@ export function candidateGroups(api, catalog, snapshot, memory) {
         },
       );
     }
-    if (ready && enemies.some((e) => e.primaryWeapon) && !threatening.length) {
-      const e = enemies.find((e) => e.primaryWeapon);
+    const mobileEnemy = enemies.filter(e=>e.primaryWeapon && e.type!==api.ObjectType.Building && e.zone!==(api.ZoneType?.Air??1))
+      .map(e=>({enemy:e,score:active.reduce((sum,u)=>sum+combatTargetScore(api,catalog,u,e),0)}))
+      .filter(e=>e.score>0).sort((a,b)=>b.score-a.score)[0]?.enemy;
+    if (ready && mobileEnemy && !threatening.length) {
+      const e = mobileEnemy;
       tactics(
         "engage_visible",
         `Engage visible enemy units with ${ids.length} troops; health ${(state.averageArmyHealth * 100).toFixed(0)}%.`,
@@ -535,12 +544,13 @@ export function candidateGroups(api, catalog, snapshot, memory) {
           mode: "attack",
           label: "迎击可见敌军",
           ids,
+          targetId: e.id,
           x: e.tile.rx,
           y: e.tile.ry,
         },
       );
     }
-    if (state.averageArmyHealth < 0.35 && !state.baseUnderAttack && base)
+    if (state.averageArmyHealth < 0.35 && !state.baseUnderAttack && rallySite)
       tactics(
         "regroup",
         `Health is low; fall back to base and rebuild force.`,
@@ -549,8 +559,8 @@ export function candidateGroups(api, catalog, snapshot, memory) {
           mode: "retreat",
           label: "撤回整补",
           ids,
-          x: base.tile.rx + 4,
-          y: base.tile.ry + 4,
+          x: rallySite.x,
+          y: rallySite.y,
         },
       );
   }
@@ -574,7 +584,7 @@ export function candidateGroups(api, catalog, snapshot, memory) {
   if (shouldExplore && army.length) {
     const scout =
       army.find((u) => u.id === memory.scoutId) ??
-      army.find((u) => u.type === api.ObjectType.Infantry) ??
+      bestScout ??
       army[0];
     memory.scoutId = scout.id;
     if (!memory.points || api.tick() - (memory.pointsAt ?? -10000) > 120) {
@@ -583,7 +593,7 @@ export function candidateGroups(api, catalog, snapshot, memory) {
     }
     const mobilize =
       tanks.length >= 8 &&
-      (state.airThreatCount === 0 || state.antiAirCount >= 2);
+      (state.airThreatCount === 0 || state.mobileAntiAirCount >= ATTACK_AA_ESCORTS);
     groups.scouting.criteria.wait =
       "Wait only if a scout is already moving or the enemy base has already been discovered. With idle troops and an unknown enemy base, choose one of the frontiers.";
     for (const p of memory.points.slice(0, 2))
@@ -654,6 +664,24 @@ export function executeCandidate(api, action, catalog) {
     return { accepted: true };
   }
   if (action.type === "mission") {
+    if (action.mode === "defend") {
+      const own = api.units('self');
+      const threats = baseThreats(api, catalog, own.filter(u=>u.type===api.ObjectType.Building), api.units('enemy'));
+      threats.sort((a,b)=>Number(b.id===action.targetId)-Number(a.id===action.targetId));
+      if (!threats.length) return { accepted: false, reason: 'base_threat_changed' };
+      const ids = [], undeployIds = [];
+      for (const id of action.ids) {
+        const u = own.find(u=>u.id===id);
+        const compatible = threats.filter(e=>effectiveness(catalog[u.name],[e],catalog,api)>0);
+        const target = compatible.find(e=>canFireAt(api,catalog,u,e)) ?? compatible[0];
+        if (!target) continue;
+        ids.push(id);
+        if (u.isDeployed && !threats.some(e=>canFireAt(api,catalog,u,e))) undeployIds.push(id);
+        else api.attack([id],target.id);
+      }
+      if (undeployIds.length) api.deploy(undeployIds);
+      return { accepted: ids.length > 0, ids, undeployIds, reason: ids.length ? undefined : 'no_compatible_defender' };
+    }
     if (action.mode !== "retreat") {
       const own = api.units("self"),
         enemies = api.units("enemy");
@@ -750,7 +778,7 @@ export function findVisibleOre(api, origin) {
   return undefined;
 }
 
-function maintainBattle(api, catalog, memory, emit) {
+export function maintainBattle(api, catalog, memory, emit) {
   maintainSpecial(api, memory, emit);
   const tick = api.tick(),
     own = api.units("self"),
@@ -764,6 +792,9 @@ function maintainBattle(api, catalog, memory, emit) {
       u.primaryWeapon,
   );
   const living = new Set(own.map((u) => u.id));
+  const mission = memory.mission;
+  const defending = mission?.mode === 'defend';
+  const defenseThreats = defending ? baseThreats(api, catalog, own.filter(u=>u.type===api.ObjectType.Building), enemies) : [];
   memory.deploymentStates ??= new Map();
   for (const u of mobile)
     if (typeof u.isDeployed === "boolean") {
@@ -791,6 +822,21 @@ function maintainBattle(api, catalog, memory, emit) {
   }
   if (tick - memory.lastMaintenance >= 60) {
     memory.lastMaintenance = tick;
+    const buildings=own.filter(u=>u.type===api.ObjectType.Building);
+    const base=buildings.find(u=>catalog[u.name]?.yard)??buildings[0];
+    const exits=buildings.filter(b=>catalog[b.name]?.refinery||catalog[b.name]?.factory==='UnitType');
+    const clearing=mobile.filter(u=>u.type===api.ObjectType.Vehicle&&u.isIdle&&!u.isDeployed&&
+      !(defending && defenseThreats.length && mission.ids.includes(u.id))&&
+      !enemies.some(e=>distance(e.tile,u.tile)<10)&&exits.some(b=>distance(u.tile,b.tile)<6)&&
+      tick-(memory.orders.get(u.id)?.tick??-10000)>150);
+    if(clearing.length) {
+      const site=chooseRallySite(api,catalog,own,base);
+      if(site) {
+        api.move(clearing.map(u=>u.id),site.x,site.y);
+        for(const u of clearing)memory.orders.set(u.id,{tick});
+        emit({kind:'micro',tick,description:`让 ${clearing.length} 辆闲置战车离开矿场 / 工厂通道`,ids:clearing.map(u=>u.id),target:{x:site.x,y:site.y}});
+      }
+    }
     const idleMiners = own.filter(
       (u) => catalog[u.name]?.harvester && u.isIdle,
     );
@@ -817,29 +863,46 @@ function maintainBattle(api, catalog, memory, emit) {
       }
     }
   }
-  const mission = memory.mission;
   // Mechanics: focus on a reachable in-range enemy, without replacing the model's macro mission.
   let issued = 0;
   for (const u of mobile) {
     if (tick - (memory.postureOrders?.get(u.id) ?? -1000) < 20) continue;
     const last = memory.orders.get(u.id);
     if (last && tick - last.tick < 18) continue;
+    if (defending && mission.ids.includes(u.id)) {
+      const targets = defenseThreats.filter(e=>effectiveness(catalog[u.name],[e],catalog,api)>0)
+        .sort((a,b)=>Number(b.id===mission.targetId)-Number(a.id===mission.targetId) ||
+          (combatWeapon(b,catalog).range??0)-(combatWeapon(a,catalog).range??0));
+      const target = targets.find(e=>canFireAt(api,catalog,u,e)) ?? targets[0];
+      if (target) {
+        if (u.isDeployed && !canFireAt(api,catalog,u,target)) {
+          if (tick-(memory.postureOrders?.get(u.id)??-1000)>150) {
+            api.deploy([u.id]);
+            memory.postureOrders ??= new Map();
+            memory.postureOrders.set(u.id,tick);
+            emit({kind:'micro',tick,description:`收起 #${u.id} 以接敌，目标 #${target.id}`,ids:[u.id],targetId:target.id});
+          }
+        } else if (last?.defenseTargetId!==target.id || u.isIdle || tick-last.tick>150) {
+          api.attack([u.id],target.id);
+          memory.orders.set(u.id,{tick,targetId:target.id,defenseTargetId:target.id});
+          emit({kind:'micro',tick,description:`基地接敌 #${u.id} → #${target.id}`,ids:[u.id],targetId:target.id,inRange:canFireAt(api,catalog,u,target)});
+        }
+      } else if (last?.defenseTargetId) {
+        const base=own.find(b=>catalog[b.name]?.yard)??own.find(b=>b.type===api.ObjectType.Building);
+        const site=chooseRallySite(api,catalog,own,base);
+        if(site)api.move([u.id],site.x,site.y);
+        memory.orders.set(u.id,{tick});
+      }
+      continue;
+    }
     const current = enemies.find((e) => e.id === last?.targetId);
-    const canHit = (e) => e.zone !== 1 || combatWeapon(u, catalog)?.aa;
+    const canHit = (e) => e.zone !== 1 || activeWeapons(u, catalog).some(w=>w.aa);
     const options = enemies.filter(
       (e) =>
-        canHit(e) && distance(u.tile, e.tile) < 10 && api.inRange(u.id, e.id, "current"),
+        canHit(e) && canFireAt(api, catalog, u, e),
     );
-    options.sort((a, b) => {
-      const score = (e) =>
-        (e.primaryWeapon ? 80 : 0) +
-        (e.type === api.ObjectType.Vehicle ? 30 : 0) +
-        (e.zone === 1 && combatWeapon(u, catalog)?.aa ? 100 : 0) +
-        (e.id === mission?.targetId ? 80 : 0) -
-        (e.hitPoints ?? 1000) * 0.1 -
-        distance(u.tile, e.tile) * 3;
-      return score(b) - score(a);
-    });
+    options.sort((a,b) => combatTargetScore(api,catalog,u,b,mission?.targetId) -
+      combatTargetScore(api,catalog,u,a,mission?.targetId));
     if (current && options[0]?.id === current.id && !u.isIdle) continue;
     if (options.length) {
       api.attack([u.id], options[0].id);
@@ -852,12 +915,14 @@ function maintainBattle(api, catalog, memory, emit) {
       (!last || tick - last.tick > 90)
     ) {
       if (Math.hypot(u.tile.rx - mission.x, u.tile.ry - mission.y) > 3) {
-        api[mission.mode === "retreat" ? "move" : "attackMove"](
-          [u.id],
-          mission.x,
-          mission.y,
-        );
-        memory.orders.set(u.id, { tick });
+        const target = mission.mode === 'attack' && enemies.find(e=>e.id===mission.targetId);
+        if (target && effectiveness(catalog[u.name],[target],catalog,api)>0) {
+          api.attack([u.id],target.id);
+          memory.orders.set(u.id,{tick,targetId:target.id});
+        } else {
+          api[mission.mode === "retreat" ? "move" : "attackMove"]([u.id],mission.x,mission.y);
+          memory.orders.set(u.id,{tick});
+        }
         issued++;
       }
     }
@@ -1059,6 +1124,8 @@ export async function attachJevPlayer(api, options = {}) {
           if (
             old &&
             old.mode === action.mode &&
+            old.targetId === action.targetId &&
+            old.ids.length === action.ids.length && action.ids.every(id=>old.ids.includes(id)) &&
             Math.hypot(old.x - action.x, old.y - action.y) < 5 &&
             api.tick() - old.since < 180
           ) {
@@ -1086,6 +1153,7 @@ export async function attachJevPlayer(api, options = {}) {
           if (action.type === "set_deployed")
             for (const unitId of execution.ids ?? [])
               memory.postureOrders.set(unitId, api.tick());
+          for (const unitId of execution.undeployIds ?? []) memory.postureOrders.set(unitId, api.tick());
           if (action.type === "mission") {
             memory.mission = {
               ...action,
@@ -1112,11 +1180,14 @@ export async function attachJevPlayer(api, options = {}) {
         });
       }
     } catch (e) {
+      if (/outside a running battle/.test(e.message)) {
+        stop("battle_ended");
+        return;
+      }
       if (status.running) {
         status.failures++;
         emit({ kind: "error", message: e.message });
       }
-      if (/outside a running battle/.test(e.message)) stop("battle_ended");
       if (status.failures >= 5) stop("repeated_errors");
     } finally {
       status.busy = false;
@@ -1124,7 +1195,7 @@ export async function attachJevPlayer(api, options = {}) {
         decisionTimer = setTimeout(decide, options.intervalMs ?? 600);
     }
   };
-  emit({ kind: "start", tick: api.tick(), maxDecisions, policy: "v8.3-recovery-naval" });
+  emit({ kind: "start", tick: api.tick(), maxDecisions, policy: "v8.8.15-tactics-wait" });
   if (!options.disableMicro) microTimer = setTimeout(micro, 0);
   decisionTimer = setTimeout(decide, 0);
   return { status, stop, catalog, memory, setAutoCamera: (enabled) => { memory.autoCamera = !!enabled; } };
