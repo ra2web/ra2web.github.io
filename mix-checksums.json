@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "ra2": {
+    "ra2.mix": ["E7BA3BE", "5DC70844", "7917A5B6", "D48F0E34"],
+    "multi.mix": ["984EFDB6", "3CDB648F"]
+  },
+  "yr": {
+    "ra2md.mix": ["49A9E8EA"],
+    "multimd.mix": ["743DA541"],
+    "expandmd01.mix": ["F3D92D6C"]
+  }
+}
