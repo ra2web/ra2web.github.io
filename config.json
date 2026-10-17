@@ -17,6 +17,7 @@
   "victoryShopUrl": "https://shop.k0s.cn",
   "feedbackUrl": "https://feedback.ra2web.com",
   "breakingNewsUrl": "/breaking-news.html",
+  "patchNotesUrl": "/breaking-news.html",
   "oldClientsBaseUrl": "/old/",
   "quickMatchEnabled": true,
   "botsEnabled": true,

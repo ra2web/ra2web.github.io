@@ -901,10 +901,34 @@ input[type="range"]:focus {
     width: 410px;
 }
 
-#ra2web-root .gamebrowser-wrapper .players-list {
-    height: 242px;
+#ra2web-root .gamebrowser-wrapper .players-column {
     width: 180px;
     margin-left: 10px;
+}
+
+#ra2web-root .gamebrowser-wrapper .players-search {
+    width: 100%;
+    height: 26px;
+    margin: 0 0 4px;
+    box-sizing: border-box;
+    background: transparent;
+    border: 1px solid red;
+    color: yellow;
+    padding-left: 4px;
+    border-radius: 0;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+#ra2web-root .gamebrowser-wrapper .players-search::placeholder {
+    color: gray;
+}
+
+#ra2web-root .gamebrowser-wrapper .players-list {
+    height: 212px;
+    width: 100%;
+    margin-left: 0;
+    box-sizing: border-box;
 }
 
 #ra2web-root .gamebrowser-wrapper .games-header {
@@ -1004,7 +1028,7 @@ input[type="range"]:focus {
 #ra2web-root .players-list .player.disabled {
     color: #888;
     opacity: 0.75;
-    cursor: default;
+    cursor: pointer;
 }
 
 #ra2web-root .players-list .player .channel-op-indicator {
@@ -1026,6 +1050,7 @@ input[type="range"]:focus {
 
 #ra2web-root .players-list .player.menu-open {
     overflow: visible;
+    z-index: 30;
 }
 
 #ra2web-root .players-list .player .player-name-wrapper {
@@ -1047,7 +1072,7 @@ input[type="range"]:focus {
     position: absolute;
     top: 100%;
     left: 0;
-    z-index: 10;
+    z-index: 30;
     min-width: 80px;
     background: rgba(0, 0, 0, .85);
     user-select: none;
@@ -1992,6 +2017,76 @@ input[type="range"]:focus {
 
 #ra2web-root .patch-notes-box.message-box .message-box-content iframe {
     padding: 0;
+}
+
+#ra2web-root .update-notes-box.message-box {
+    width: 720px;
+    height: 580px;
+    text-align: left;
+    margin-top: -30px;
+    background: rgba(255, 255, 255, .1);
+    border: 2px #8d8d8d outset;
+}
+
+#ra2web-root .update-notes-box.message-box .message-box-content {
+    height: calc(100% - 88px);
+    padding: 28px 32px 12px;
+    box-sizing: border-box;
+    text-align: left;
+    overflow: auto;
+}
+
+#ra2web-root .update-notes-box.message-box .message-box-footer {
+    padding: 16px 24px 22px;
+}
+
+#ra2web-root .update-notes-box.message-box .message-box-footer .dialog-button {
+    width: 196px;
+    height: 40px;
+    margin-top: 0;
+    background-size: 588px 40px;
+    background-position: 0 0;
+    font-size: 18px;
+    line-height: 40px;
+}
+
+#ra2web-root .update-notes-box.message-box .message-box-footer .dialog-button:hover:not(:disabled) {
+    background-position: -196px 0;
+}
+
+#ra2web-root .update-notes-box.message-box .message-box-footer .dialog-button:active:not(:disabled) {
+    background-position: -392px 0;
+}
+
+#ra2web-root .update-notes-version {
+    color: #ffe14a;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: left;
+    margin-bottom: 18px;
+    text-shadow: 0 2px 0 #000, 0 0 10px rgba(0, 0, 0, 0.9);
+}
+
+#ra2web-root .update-notes-item {
+    margin: 0 0 16px;
+}
+
+#ra2web-root .update-notes-item-title {
+    color: #fff200;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 4px;
+    text-shadow: 0 1px 0 #000;
+}
+
+#ra2web-root .update-notes-item-text {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.55;
+    text-shadow: 0 1px 0 #000;
 }
 
 #ra2web-root .score-wrapper {
