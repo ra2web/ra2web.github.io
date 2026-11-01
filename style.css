@@ -906,7 +906,8 @@ input[type="range"]:focus {
     margin-left: 10px;
 }
 
-#ra2web-root .gamebrowser-wrapper .players-search {
+#ra2web-root .gamebrowser-wrapper .players-search,
+#ra2web-root .qm-form .players-search {
     width: 100%;
     height: 26px;
     margin: 0 0 4px;
@@ -920,7 +921,8 @@ input[type="range"]:focus {
     appearance: none;
 }
 
-#ra2web-root .gamebrowser-wrapper .players-search::placeholder {
+#ra2web-root .gamebrowser-wrapper .players-search::placeholder,
+#ra2web-root .qm-form .players-search::placeholder {
     color: gray;
 }
 
@@ -1358,13 +1360,14 @@ input[type="range"]:focus {
     position: absolute;
     top: 94px;
     left: 20px;
-    color: black;
+    color: #f2f2f2;
+    text-shadow: 0 1px 2px #000;
     text-transform: uppercase;
 }
 
 #ra2web-root .loading-screen .briefing-text {
     position: absolute;
-    top: 170px;
+    top: 220px;
     left: 20px;
     background: rgba(0, 0, 0, .5);
     padding: 3px;
@@ -1393,7 +1396,9 @@ input[type="range"]:focus {
 
 #ra2web-root .loading-screen .player-status {
     margin-top: 3px;
-    display: flex;
+    display: grid;
+    grid-template-columns: max-content max-content 98px minmax(0, 1fr);
+    column-gap: 6px;
     align-items: center;
 }
 
@@ -1445,19 +1450,102 @@ input[type="range"]:focus {
     font-weight: bold;
 }
 
-#ra2web-root .loading-screen .player-team {
-    margin-right: 10px;
-    min-width: 40px;
+#ra2web-root .loading-screen .loading-map-legacy-mask {
+    position: absolute;
+    background: #080a0e;
+    pointer-events: none;
+}
+
+#ra2web-root .loading-screen .loading-map-preview {
+    position: absolute;
+    box-sizing: border-box;
+    padding: 4px;
+    border: 1px solid currentColor;
+    background: #080a0e;
+    overflow: hidden;
+}
+
+#ra2web-root .loading-screen .loading-map-preview img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#ra2web-root .loading-screen .player-team,
+#ra2web-root .loading-screen .player-position {
+    display: flex;
+    align-items: center;
+    column-gap: 2px;
     color: white;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+#ra2web-root .loading-screen .player-field-label {
+    white-space: normal;
+}
+
+#ra2web-root .loading-screen .player-field-value {
+    flex: 0 0 2ch;
+    text-align: center;
+}
+
+#ra2web-root .loading-screen .player-progress {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 34px;
+    column-gap: 4px;
+    align-items: center;
+}
+
+#ra2web-root .loading-screen .player-progress progress {
+    width: 100%;
+    min-width: 0;
+}
+
+#ra2web-root .loading-screen .player-progress-value {
+    font-size: 12px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
 }
 
 #ra2web-root .loading-screen .player-name {
-    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
     font-weight: bold;
 }
 
-#ra2web-root .loading-screen .player-country-icon {
-    margin-left: 10px;
+#ra2web-root .loading-screen .player-display-name {
+    flex: 0 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#ra2web-root .loading-screen .player-rank {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 3px;
+    color: #e6e6e6;
+    font-size: 12px;
+}
+
+#ra2web-root .loading-screen .player-rank .rank-indicator {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+}
+
+#ra2web-root .loading-screen .player-rank .rank-indicator img {
+    display: block;
+    max-width: 16px;
+    max-height: 16px;
 }
 
 #ra2web-root .opts {
@@ -3117,11 +3205,26 @@ input[type="range"]:focus {
     flex-grow: 1;
 }
 
-#ra2web-root .qm-form .qm-bottom .players-list {
-    height: auto;
+#ra2web-root .qm-form .qm-bottom .players-column {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
     width: 190px;
-    box-sizing: border-box;
+    min-height: 0;
     margin-left: 10px;
+}
+
+#ra2web-root .qm-form .qm-bottom .players-search {
+    flex-shrink: 0;
+}
+
+#ra2web-root .qm-form .qm-bottom .players-list {
+    flex: 1;
+    min-height: 0;
+    height: auto;
+    width: 100%;
+    box-sizing: border-box;
+    margin-left: 0;
 }
 
 #ra2web-root .ladder {

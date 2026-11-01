@@ -447,5 +447,9 @@
   "ts:res_reload_page": "重新載入頁面",
   "ts:res_return_initial": "返回初始頁",
   "ts:res_return_initial": "返回初始頁",
-  "ts:res_site_failed": "站點資源載入失敗：%s。請重新載入頁面；匯入基礎遊戲資源無法修復此問題。仍失敗可前往 https://feedback.ra2web.com 回報。"
+  "ts:res_site_failed": "站點資源載入失敗：%s。請重新載入頁面；匯入基礎遊戲資源無法修復此問題。仍失敗可前往 https://feedback.ra2web.com 回報。",
+  "GUI:LoadingTeamNo": "隊伍%s",
+  "GUI:LoadingTeamUnknown": "隊伍 --",
+  "GUI:LoadingPositionNo": "位置%s",
+  "GUI:LoadingPositionUnknown": "位置 --"
 }

@@ -1,5 +1,5 @@
 ;(function () {
-    const actual = "0.87.1-rfdc007c-dc33de918";
+    const actual = "0.87.2-r2ac47a5-dae8f32b6";
     const url = new URL(import.meta.url);
     const requested = url.searchParams.get('v');
     const page = typeof window !== 'undefined' && window.__ra2webStartupDiagnostic?.snapshot().assetVersion;

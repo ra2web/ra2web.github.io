@@ -478,5 +478,9 @@
   "ts:res_import_hint": "可以导入完整的王二火大游戏资源包，或选择已解压的游戏资源文件夹。",
   "ts:res_reload_page": "重新加载页面",
   "ts:res_return_initial": "返回初始页",
-  "ts:res_site_failed": "站点资源加载失败：%s。请重新加载页面；导入基础游戏资源无法修复此问题。仍失败可前往 https://feedback.ra2web.com 反馈。"
+  "ts:res_site_failed": "站点资源加载失败：%s。请重新加载页面；导入基础游戏资源无法修复此问题。仍失败可前往 https://feedback.ra2web.com 反馈。",
+  "GUI:LoadingTeamNo": "队伍%s",
+  "GUI:LoadingTeamUnknown": "队伍 --",
+  "GUI:LoadingPositionNo": "位置%s",
+  "GUI:LoadingPositionUnknown": "位置 --"
 }

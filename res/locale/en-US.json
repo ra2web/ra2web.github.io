@@ -439,5 +439,9 @@
   "ts:res_import_hint": "Import a complete wangerhuoda game resource archive or select an extracted game resource folder.",
   "ts:res_reload_page": "Reload page",
   "ts:res_return_initial": "Return to the start page",
-  "ts:res_site_failed": "A site resource failed to load: %s. Reload the page; importing base game files cannot repair this resource. Report persistent failures at https://feedback.ra2web.com."
+  "ts:res_site_failed": "A site resource failed to load: %s. Reload the page; importing base game files cannot repair this resource. Report persistent failures at https://feedback.ra2web.com.",
+  "GUI:LoadingTeamNo": "Team %s",
+  "GUI:LoadingTeamUnknown": "Team --",
+  "GUI:LoadingPositionNo": "Position %s",
+  "GUI:LoadingPositionUnknown": "Position --"
 }
