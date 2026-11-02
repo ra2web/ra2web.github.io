@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "runtimeNaming": "fixed-version-query",
   "appVersion": "0.87.2",
-  "assetVersion": "0.87.2-r2ac47a5-dd07cf2b4",
+  "assetVersion": "0.87.2-r2ac47a5-d5c811b90",
   "runtimeVersions": {
     "js/vendor.js": "2ddb39d8eec1dd688a616b852dc50a9bf86bbe6ab7a8f5a6b16bf666054aa310"
   },
@@ -54,8 +54,8 @@
     "file-explorer.css": {
       "fileName": "file-explorer.css",
       "bytes": 35527,
-      "sha256": "2c4b263fbf06883a953c382efcc843ef0945ec1e4c440cd324f996ecdb6ad939",
-      "integrity": "sha384-u2D78eFQLEqRjF5pJnljp2BlngZSKTYA29kNx4Ux+94ogL8o6PxlhT7ozc1sZ2ip"
+      "sha256": "b360a002ca3f83a66463993f8c3ada190e6c6d1091bb0d56a09c06eadb7f878e",
+      "integrity": "sha384-l7rlQEtUFOLrybAOnGkX8gs8+IhZC7OBKDa6T3mewfAVAuBkq/WRNbBMDneGPt9Y"
     }
   },
   "files": {
@@ -131,8 +131,8 @@
     },
     "index.html": {
       "bytes": 27917,
-      "sha256": "b7ee566a69e7a0871ae1dafa7f48f2d1c91a262658dee8ac7701c187bb57ab3c",
-      "integrity": "sha384-IHghJZiDj9xkQKX6p8h12rGkfxKMPHSURpBrS1MzGUd3Aaf3aJ5A6mr1rSGP95Ip"
+      "sha256": "a1fd915d0f39dda578784780266c8e686357c0a41eaa53da4b94e8e066e4bdb3",
+      "integrity": "sha384-EVzA4srWqWehlFlO9Gk9Q8gB/c4Cm8JYL+1wSy4boN5E+pdKBjnsQwMzWg6xwvCv"
     },
     "js/7zz.wasm": {
       "bytes": 1651931,
@@ -145,24 +145,24 @@
       "integrity": "sha384-sySuK8z3Su51RuorsADXnjAJUgv56Xyx16mBj8BpLJ2yJIX5G9MoP887ubEWXlvj"
     },
     "js/app.js": {
-      "bytes": 2893262,
-      "sha256": "d3e5e8c861fd2a5ee4fdca88c74201ec38d3c38db0f317600eb800286688f743",
-      "integrity": "sha384-9GuFgOM8AVzSY06W/C3KG1DtjX7HNcsWqkpC5aOo6zCISXCv6STJKAy2T3OGq4At"
+      "bytes": 2901231,
+      "sha256": "801d72774b2e9ac75eedddec8698dbfc561c1279dc618bf48344fb21a6d7a2f2",
+      "integrity": "sha384-b0DVMVNhfvJ4ioFvlwbKAstWNzDoAVmELsxaADJz+aTQV/nnXh2+cofxtZOvy+31"
     },
     "js/bot1.js": {
       "bytes": 58529,
-      "sha256": "83dd69f6f48eae0732c6d8a49c4207d4c6eba253ff0cae3986cb8a7759eed674",
-      "integrity": "sha384-MtnhMu/VFvl6rXRYHY5e6uu+Lmw9BZuPyc7+Y0+CDJH2k8U1UHJrGBgPbDUSL7UE"
+      "sha256": "2679152568b6a77290a94892735998576f9a757fc88bbd6ef63c204972e661e0",
+      "integrity": "sha384-6+xqZ8kEvOjVw6zRVJKIlhwLFhK6VZCJdzDsVQLWDz3RKRP7QqGqmBSq8HJ09Yow"
     },
     "js/bot2.js": {
       "bytes": 93414,
-      "sha256": "2499458d60cebfe8acfaaf35c92e3755d937f711503073c82f4f3adbb53ccd99",
-      "integrity": "sha384-zQqIh9mdnHmsrbaMbYHblYmjNf/wAqsM4TyQEdndNBJro+MV6+Z9Lj8e8Ai98vUX"
+      "sha256": "2d5fdc9fb990d54dd2ddc26d9df04438f5a14be1ac2d2166ecc218b80e273ff5",
+      "integrity": "sha384-iUiib4SDbQ6VjjLflaAxykbpwD8KgQVLKB/DzAxGajSYeyeeymcf2oSxTCJljEeL"
     },
     "js/bot3.js": {
       "bytes": 863219,
-      "sha256": "02bb6240df1ae3900c96d204b782ef0550141906970f97db537b905179a88eeb",
-      "integrity": "sha384-KTdhBZf+HsFNIs5O0aQZElUnUcJpr+fNNPpjIS9+r7s0TwQ1m1hcSVVfuTwTreCZ"
+      "sha256": "079cb70d7947dd33207cd19ceede5f6bf3e67017199b708876eeba314cb3de74",
+      "integrity": "sha384-A435TRMZ/BEszjxD8z4Dk4jK8FnLPPkg1NyrVqBoNb+M/wHmQ9GYprb9HEqNc8vb"
     },
     "js/ffmpeg-core.js": {
       "bytes": 70209,
@@ -176,18 +176,18 @@
     },
     "js/ffmpeg.js": {
       "bytes": 21246,
-      "sha256": "cd67c0e9129ad66f9a8fdfbdfc97409ad9152afb6f86f6ef35a78c168e0cd3ec",
-      "integrity": "sha384-N+kjyC7DotR9Oin3NGm0iLcypLn6pGLGTvAXZPk+oKeollpOBOpil+H/Il1ZmgGF"
+      "sha256": "207aab8daf4398edd8c5b2f2128bd2a6e35339f20ae2a857d9dbd4afb605a184",
+      "integrity": "sha384-YqMCqN7JAgLMLTa3CRkWg1sbclaWQBYDmNCpi3bZzENILhig9VVpiArcVHk9elFi"
     },
     "js/file-explorer.css": {
       "bytes": 35527,
-      "sha256": "2c4b263fbf06883a953c382efcc843ef0945ec1e4c440cd324f996ecdb6ad939",
-      "integrity": "sha384-u2D78eFQLEqRjF5pJnljp2BlngZSKTYA29kNx4Ux+94ogL8o6PxlhT7ozc1sZ2ip"
+      "sha256": "b360a002ca3f83a66463993f8c3ada190e6c6d1091bb0d56a09c06eadb7f878e",
+      "integrity": "sha384-l7rlQEtUFOLrybAOnGkX8gs8+IhZC7OBKDa6T3mewfAVAuBkq/WRNbBMDneGPt9Y"
     },
     "js/file-explorer.js": {
       "bytes": 111455,
-      "sha256": "2f0bc7b7b453a27727bd209ecf38a744e467f62642b2f3383cb458c0e6d6868d",
-      "integrity": "sha384-IPuFpbCkrwMdXEKwOUA2FTQSwOJt5gz2WQi1C2kvLW96GjuGMNBQa0h/GLh7B0Kw"
+      "sha256": "32c4af4d282f4bc2079138076083108917da3cbbc8e7ea42ded27548ceb5071d",
+      "integrity": "sha384-7qgtk9YZaRWRhBmbWF6USeeGLDv4oxdsiRU9DyGxBXoCVJ1td+XrsO9g3aMomvDm"
     },
     "js/fileexplorer_actions.woff": {
       "bytes": 1,
@@ -201,13 +201,13 @@
     },
     "js/race-core.js": {
       "bytes": 49501,
-      "sha256": "9b9d15dc02e658373bf953affe0afa0992b8e383f986354e74080225caca477f",
-      "integrity": "sha384-5XkR0OKXKjnm4LLpqwFQ6OjQXwpENaHn40hJEIb/cf6SfzzR9ZnNCFY/us6xpmJg"
+      "sha256": "c476928fbef0dcfccdffdbc79e1ac9ec420eb094f06c3210438819660c4fc0d1",
+      "integrity": "sha384-clfnBdcR1y8hKKhQ5zsi47E+p0Q+PVcn6MiGCayZiYUn8nBz5vCjG3Mj5vMzqrH3"
     },
     "js/race-ui.js": {
       "bytes": 149697,
-      "sha256": "1c3379e75030b922736a59ea27e2bee53ab1a1210080682e46fdbb3f39562d82",
-      "integrity": "sha384-kXFe5eTtk9wF3JBqW9PPReXKVE00wFLUiek3RROXDDqgstdVU3FUhUPljjaHQQfV"
+      "sha256": "3f289f174f069903b4d975926962e725b2ddb6176ab1507d42c401336035bd10",
+      "integrity": "sha384-Rba5GmwZKmY+OIjKCNKsKbxelot3UTM3rPhKFXdUk1m663dcMwl1npOSpIH6ExHS"
     },
     "js/vendor.js": {
       "bytes": 1255878,
@@ -216,13 +216,13 @@
     },
     "js/watchdog.js": {
       "bytes": 2162,
-      "sha256": "c8d5da6bfb1dbf99ca36352cf2fa3617cacd323c0af317cffebf4b50beb1eb56",
-      "integrity": "sha384-HN0Z9dRzMdfiN458FKEjZ+KMUfaaRyrGA/nUUXtfIzrvCDYk7im6ed2GllQ/GTSX"
+      "sha256": "56b7b1785af1cb5d4d6c183ae174fabc561a07ec6a861a6c35fa32ca53d090dd",
+      "integrity": "sha384-7tSojEgm+BSrduWkZiScZ2QnIQJCuBxTv/YVkN94wiAtzBjwF5LucYYBcdx7QiTz"
     },
     "js/worker.js": {
       "bytes": 637843,
-      "sha256": "a4e7ba749786be7463fbd70e363d28b72eea93e18e055986c1c715fae13af44e",
-      "integrity": "sha384-lPWrRQvzEYA+8drUkrjVHmSdgF0gKHkrlBe2m28tWzAuohvjkALxYuPwJwLSIkFJ"
+      "sha256": "825bf1477cad9bbcfb8484c421bcb0872b50928306b4a0f93998e1dba079bb9e",
+      "integrity": "sha384-kxiuAiIvjCu4lRfgR7ISMsvWlQMlhKeU1x/kmxHEyxw1ZoBtrXGhhOl0V4giKNmk"
     },
     "manifest.webmanifest": {
       "bytes": 741,
