@@ -1391,13 +1391,20 @@ input[type="range"]:focus {
     left: 20px;
     background: rgba(0, 0, 0, .5);
     padding: 3px;
-    width: 400px;
+    width: max-content;
+    max-width: calc(100% - 46px);
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
 }
 
 #ra2web-root .loading-screen .player-status {
     margin-top: 3px;
     display: grid;
-    grid-template-columns: max-content max-content 98px minmax(0, 1fr);
+    grid-template-columns: max-content max-content 60px 34px 32px 18px max-content;
+    width: max-content;
+    overflow: visible;
+    white-space: nowrap;
     column-gap: 6px;
     align-items: center;
 }
@@ -1492,47 +1499,63 @@ input[type="range"]:focus {
 }
 
 #ra2web-root .loading-screen .player-progress {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 34px;
-    column-gap: 4px;
+    display: flex;
     align-items: center;
 }
 
 #ra2web-root .loading-screen .player-progress progress {
-    width: 100%;
-    min-width: 0;
+    width: 60px;
+    min-width: 60px;
 }
 
 #ra2web-root .loading-screen .player-progress-value {
     font-size: 12px;
     text-align: right;
+    white-space: nowrap;
     font-variant-numeric: tabular-nums;
 }
 
-#ra2web-root .loading-screen .player-name {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    min-width: 0;
-    overflow: hidden;
+#ra2web-root .loading-screen .player-name,
+#ra2web-root .loading-screen .player-display-name {
+    display: inline-block;
+    width: max-content;
+    min-width: max-content;
+    max-width: none;
+    overflow: visible;
     white-space: nowrap;
+    text-overflow: clip;
     font-weight: bold;
 }
 
-#ra2web-root .loading-screen .player-display-name {
-    flex: 0 1 auto;
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
+#ra2web-root .loading-screen .player-country,
+#ra2web-root .loading-screen .player-rank-slot,
 #ra2web-root .loading-screen .player-rank {
     display: inline-flex;
-    flex: 0 0 auto;
     align-items: center;
-    gap: 3px;
-    color: #e6e6e6;
-    font-size: 12px;
+    justify-content: center;
+    height: 18px;
+    overflow: hidden;
+}
+
+#ra2web-root .loading-screen .player-country {
+    width: 32px;
+}
+
+#ra2web-root .loading-screen .player-country .player-country-icon {
+    width: 32px;
+    height: 18px;
+}
+
+#ra2web-root .loading-screen .player-country img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#ra2web-root .loading-screen .player-rank-slot,
+#ra2web-root .loading-screen .player-rank {
+    width: 18px;
 }
 
 #ra2web-root .loading-screen .player-rank .rank-indicator {
