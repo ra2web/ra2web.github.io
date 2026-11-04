@@ -1,11 +1,14 @@
 ;(function () {
-    const actual = "2ddb39d8eec1dd688a616b852dc50a9bf86bbe6ab7a8f5a6b16bf666054aa310";
+    const actual = "d04a5e6829cb25a3b550d8eba70f04ca3595561b79215637b48825a9e46f1c69";
     const url = new URL(import.meta.url);
     const requested = url.searchParams.get('v');
     const page = undefined;
     if (requested !== actual || (page && page !== actual)) {
       const detail = { expected: page || requested, actual, url: url.href };
       if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('ra2web:runtime-build-mismatch', { detail }));
+      else if (typeof DedicatedWorkerGlobalScope !== 'undefined' && globalThis instanceof DedicatedWorkerGlobalScope) {
+        try { globalThis.postMessage({ type: 'RA2WEB_RUNTIME_VERSION_MISMATCH', ...detail }); } catch {}
+      }
       const error = new Error('客户端构建不一致，请重新加载');
       error.name = 'ClientBuildMismatchError';
       Object.assign(error, detail);

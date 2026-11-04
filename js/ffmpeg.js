@@ -1,11 +1,14 @@
 ;(function () {
-    const actual = "0.87.2-r52ca926";
+    const actual = "0.87.2-r891c205";
     const url = new URL(import.meta.url);
     const requested = url.searchParams.get('v');
     const page = typeof window !== 'undefined' && window.__ra2webStartupDiagnostic?.snapshot().assetVersion;
     if (requested !== actual || (page && page !== actual)) {
       const detail = { expected: page || requested, actual, url: url.href };
       if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('ra2web:runtime-build-mismatch', { detail }));
+      else if (typeof DedicatedWorkerGlobalScope !== 'undefined' && globalThis instanceof DedicatedWorkerGlobalScope) {
+        try { globalThis.postMessage({ type: 'RA2WEB_RUNTIME_VERSION_MISMATCH', ...detail }); } catch {}
+      }
       const error = new Error('客户端构建不一致，请重新加载');
       error.name = 'ClientBuildMismatchError';
       Object.assign(error, detail);
