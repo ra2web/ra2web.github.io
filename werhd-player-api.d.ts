@@ -303,6 +303,12 @@ export interface PlayerConsoleRule {
   airportBound: boolean;
   gunner: boolean;
   c4: boolean;
+  capturable: boolean;
+  /** Already-loaded NeedsEngineer flag. The client uses it for tech-structure announcements. */
+  techBuilding: boolean;
+  insignificant: boolean;
+  /** Player-facing name when the string table can resolve UIName; otherwise that key or the ini name. */
+  displayName: string;
 }
 
 
@@ -383,5 +389,57 @@ export interface PlayerConsolePublicApi {
   unit(id: number): PlayerConsoleUnit | undefined;
   units(relation?: PlayerConsoleUnitRelation): PlayerConsoleUnit[];
   weaponVs(attackerId: number, targetId: number, mode?: 'primary' | 'current'): PlayerConsoleWeaponVs | undefined;
+  /** Loaded map identity. Briefing is only the text already resolved for this battle. */
+  missionInfo(): PlayerConsoleMissionInfo;
+  /** Most recent command decision made before the lockstep queue. */
+  lastCommand(): PlayerConsoleCommandResult | undefined;
 }
-declare global { interface Window { werhd?: PlayerConsolePublicApi } }
+
+
+export type PlayerConsoleRejectReason =
+  | 'observer-or-defeated'
+  | 'invalid-order'
+  | 'no-units'
+  | 'unit-missing'
+  | 'not-owned'
+  | 'target-missing'
+  | 'target-hidden'
+  | 'invalid-tile'
+  | 'cannot-place';
+
+
+export interface PlayerConsoleCommandResult {
+  accepted: boolean;
+  reason?: PlayerConsoleRejectReason;
+}
+
+
+export interface PlayerConsoleMissionInfo {
+  mapName: string;
+  gameMode?: number;
+  campaign: boolean;
+  missionId?: string;
+  briefing?: string;
+}
+
+
+export type WerhdClientPhase = 'boot' | 'menu' | 'loading' | 'briefing' | 'inGame' | 'paused' | 'score';
+
+export type WerhdGameOutcome = 'victory' | 'defeat' | 'quit' | 'disconnect';
+
+
+export type WerhdClientEvent =
+  | { seq: number; type: 'gameEnd'; battleId?: string; outcome: WerhdGameOutcome }
+  | { seq: number; type: 'message'; battleId?: string; channel: 'eva' | 'screen'; key?: string; text: string };
+
+
+export interface WerhdClientPublicApi {
+  readonly version: string;
+  readonly capabilities: readonly string[];
+  readonly phase: WerhdClientPhase;
+  readonly battleId?: string;
+  readonly mission?: PlayerConsoleMissionInfo;
+  on(handler: (event: WerhdClientEvent) => void): () => void;
+  since(seq: number): WerhdClientEvent[];
+}
+declare global { interface Window { werhd?: PlayerConsolePublicApi; werhdClient?: WerhdClientPublicApi } }
