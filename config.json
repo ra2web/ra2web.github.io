@@ -1,4 +1,5 @@
 {
+  "stallReconnectEnabled": false,
   "serversUrl": "servers.json",
   "discordUrl": "https://qm.qq.com/q/8wt3F0yUbm",
   "autoLoadGameRes": true,
