@@ -2,7 +2,7 @@
   "regions": [
     {
       "id": "CHN2",
-      "label": "张三大区",
+      "label": "大中华区(GCHN)",
       "available": true,
       "gameVersion": "0.87",
       "wolUrl": "wss://wol.bj1.k0s.cn/wol",
@@ -14,7 +14,7 @@
     },
     {
       "id": "ENGGER",
-      "label": "English German Region",
+      "label": "欧洲大区(EGGER)",
       "available": true,
       "gameVersion": "0.87",
       "wolUrl": "wss://wol.flkf.k0s.cn/wol",
