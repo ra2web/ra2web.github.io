@@ -27,7 +27,7 @@
     },
     {
       "id": "ASIA",
-      "label": "东南北亚大区",
+      "label": "东南北亚大区（SENA）",
       "available": true,
       "gameVersion": "0.87",
       "wolUrl": "wss://wol.qiancaoyun.com/wol",
