@@ -19,7 +19,7 @@
     <script id="startup-load-check-bootstrap">/* Kept as an inline, ES5 script: it must run even if the module graph cannot. */
 (function () {
   'use strict';
-  var config = {"assetVersion":"0.87.3-rea0ef5d","scriptRoots":[],"scriptPaths":["js/app.js","js/bot1.js","js/bot2.js","js/bot3.js","js/ffmpeg-core.js","js/ffmpeg.js","js/file-explorer.js","js/race-core.js","js/race-ui.js","js/vendor.js","js/watchdog.js","js/worker.js"],"endpoint":"https://telemetry.bj1.wangerhuoda.cn/client-incidents","successSampleRate":0.02};
+  var config = {"assetVersion":"0.87.3-r901ab71","scriptRoots":[],"scriptPaths":["js/app.js","js/bot1.js","js/bot2.js","js/bot3.js","js/ffmpeg-core.js","js/ffmpeg.js","js/file-explorer.js","js/race-core.js","js/race-ui.js","js/vendor.js","js/watchdog.js","js/worker.js"],"endpoint":"https://telemetry.bj1.wangerhuoda.cn/client-incidents","successSampleRate":0.02};
   var startedAt = Date.now();
   var diagnosticId = startedAt.toString(36) + '-' + Math.random().toString(36).slice(2, 10);
   var active = true;
@@ -33,6 +33,11 @@
   var elements = {};
   var errors = [];
   var observations = [];
+  var probes = [];
+  var pendingProbes = 0;
+  var failedAt = 0;
+  var entryHooks = {};
+  var controller = null;
   var phases = [];
   var phase = 'entry';
   var progressValue = 15;
@@ -118,6 +123,86 @@
     if (slow) flushObservation();
   }
 
+  function base64(buffer) {
+    var bytes = new Uint8Array(buffer);
+    var text = '';
+    for (var i = 0; i < bytes.length; i++) text += String.fromCharCode(bytes[i]);
+    return btoa(text);
+  }
+
+  function addProbe(record) {
+    if (!record || probes.length >= 6) return;
+    record.url = safeUrl(record.url);
+    record.phase = phase;
+    probes.push(record);
+  }
+
+  // What does this exact URL answer right now? One bounded request separates
+  // "nothing arrived" from "an error page / another build's bytes arrived".
+  function probe(resourceUrl, integrity) {
+    var url = safeUrl(resourceUrl);
+    if (!window.fetch || !resourceUrl || probes.length >= 6 || probes.some(function (item) { return item.url === url; })) return;
+    var record = { url: url, phase: phase, status: null, bytes: null, contentType: '', digest: integrity ? 'unknown' : 'not-checked', error: '', elapsedMs: null };
+    var began = Date.now();
+    var done = false;
+    var aborter = window.AbortController ? new AbortController() : null;
+    probes.push(record);
+    pendingProbes++;
+    function finish() {
+      if (done) return;
+      done = true;
+      clearTimeout(timer);
+      record.elapsedMs = Date.now() - began;
+      pendingProbes--;
+    }
+    var timer = setTimeout(function () {
+      record.error = record.error || 'probe timed out';
+      finish();
+      if (aborter) aborter.abort();
+    }, 4000);
+    try {
+      fetch(resourceUrl, aborter ? { cache: 'no-store', signal: aborter.signal } : { cache: 'no-store' }).then(function (response) {
+        record.status = response.status;
+        record.contentType = String(response.headers.get('Content-Type') || '').slice(0, 80);
+        return response.arrayBuffer();
+      }).then(function (buffer) {
+        if (done) return;
+        record.bytes = buffer.byteLength;
+        if (!integrity || !window.crypto || !crypto.subtle) return;
+        return crypto.subtle.digest('SHA-384', buffer).then(function (hash) {
+          record.digest = 'sha384-' + base64(hash) === integrity ? 'match' : 'mismatch';
+        });
+      }).catch(function (error) {
+        if (!done) record.error = errorMessage(error) || 'probe failed';
+      }).then(finish);
+    } catch (error) {
+      record.error = errorMessage(error) || 'probe unavailable';
+      finish();
+    }
+  }
+
+  function serviceWorkerInfo() {
+    var container = navigator.serviceWorker;
+    return {
+      supported: !!container,
+      controlled: !!(container && container.controller),
+      version: controller && typeof controller.version === 'string' ? controller.version : null,
+      cacheProtocol: controller && typeof controller.cacheProtocol === 'number' ? controller.cacheProtocol : null
+    };
+  }
+
+  function connectionInfo() {
+    var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    if (!connection) return null;
+    return {
+      type: connection.type || null,
+      effectiveType: connection.effectiveType || null,
+      downlink: typeof connection.downlink === 'number' ? connection.downlink : null,
+      rtt: typeof connection.rtt === 'number' ? connection.rtt : null,
+      saveData: connection.saveData === true
+    };
+  }
+
   function resourceTimings() {
     if (!window.performance || !performance.getEntriesByType) return [];
     return performance.getEntriesByType('resource').filter(function (entry) {
@@ -152,6 +237,9 @@
       visibilityState: document.visibilityState || 'unknown',
       errors: errors.slice(),
       observations: observations.slice(),
+      probes: probes.slice(),
+      serviceWorker: serviceWorkerInfo(),
+      connection: connectionInfo(),
       phases: phases.slice(),
       resources: resourceTimings(),
       uploadStatus: uploadStatus
@@ -203,6 +291,12 @@
 
   function flushFailure() {
     if (reportedFailure || !failed || uiReady) return;
+    // A running probe is bounded to four seconds; its answer belongs in the report.
+    if (pendingProbes > 0 && Date.now() - failedAt < 4500) {
+      clearTimeout(reportTimer);
+      reportTimer = setTimeout(flushFailure, 200);
+      return;
+    }
     reportedFailure = true;
     clearTimeout(reportTimer);
     report('failed');
@@ -227,6 +321,7 @@
     var record = addRecord(errors, kind || 'initialization', reason, resourceUrl, 'client', event);
     if (!failed) {
       failed = true;
+      failedAt = Date.now();
       clearTimeout(slowTimer);
       statusText = message || '客户端未能继续加载';
       detailText = record.message;
@@ -242,6 +337,11 @@
     if (tag === 'SCRIPT' || (tag === 'LINK' && /^(modulepreload|stylesheet)$/.test(target.rel))) {
       var resourceUrl = target.src || target.href;
       if ((tag === 'SCRIPT' || target.rel === 'modulepreload') && isClientScript(resourceUrl)) {
+        // The entry loader may spend its single automatic reload on this failure.
+        try {
+          if (entryHooks.recover && entryHooks.recover(resourceUrl)) return;
+        } catch (error) {}
+        probe(resourceUrl, target.integrity);
         fail('启动脚本或依赖加载失败', null, resourceUrl, 'resource');
       } else if (!/\/toy-sdk\.js(?:[?#]|$)/.test(String(resourceUrl || ''))) {
         observe('resource', null, resourceUrl, 'noncritical-resource');
@@ -277,6 +377,9 @@
     if (!active) return;
     uiReady = true;
     clearTimeout(reportTimer);
+    try {
+      if (entryHooks.ready) entryHooks.ready();
+    } catch (error) {}
     if (failed || observations.length || Math.random() < config.successSampleRate) report('ready');
     active = false;
     clearTimeout(slowTimer);
@@ -316,6 +419,12 @@
     mount: mount,
     ready: ready,
     fail: fail,
+    // Recoveries (a retry or an automatic reload that saved this startup) are
+    // observations: the session is reported in full even though it succeeded.
+    observe: observe,
+    addProbe: addProbe,
+    setEntryHooks: function (hooks) { entryHooks = hooks || {}; },
+    setController: function (info) { controller = info || null; },
     setPhase: function (message, description, value) {
       if (!active || failed) return;
       phase = message;
@@ -364,8 +473,8 @@
     <link rel="manifest" href="./manifest.webmanifest" />
     <link rel="icon" href="./favicon.ico" />
     <link rel="apple-touch-icon" href="./res/pwa/icon-192.png" />
-    <link href="./res/fonts/fonts.css?v=0.87.3-rea0ef5d" rel="stylesheet" />
-    <link rel="stylesheet" href="./style.css?v=0.87.3-rea0ef5d" type="text/css" />
+    <link href="./res/fonts/fonts.css?v=0.87.3-r901ab71" rel="stylesheet" />
+    <link rel="stylesheet" href="./style.css?v=0.87.3-r901ab71" type="text/css" />
     <style>
       #ra2web-root {
         position: relative;
@@ -520,10 +629,39 @@
     <script>
       window.__ra2webTransportMode = 'websocket-only';
     </script>
-    <script type="application/ra2web-entry" id="ra2web-module-entry" crossorigin src="./js/app.js?v=0.87.3-rea0ef5d" integrity="sha384-RVYnGfznw79yYwAI8az2IBK1abkpfFc4weZ9WsxNz9FOXmQXj0q/srM3aH6gx8Id"></script><script>(function () {
-  var config = {"assetVersion":"0.87.3-rea0ef5d","vendorVersion":"d04a5e6829cb25a3b550d8eba70f04ca3595561b79215637b48825a9e46f1c69","vendorIntegrity":"sha384-btAdUhYJkWHrMTXLzrTwglwcKtQigMMnkSvZQ7HaEcQ0VlptYVTWZIY1hfaWg8BI","vendorUrl":"./js/vendor.js?v=d04a5e6829cb25a3b550d8eba70f04ca3595561b79215637b48825a9e46f1c69"};
+    <script type="application/ra2web-entry" id="ra2web-module-entry" crossorigin src="./js/app.js?v=0.87.3-r901ab71" integrity="sha384-hSK0KzGheE1U72mx8RoVFyEtuAT36/aPhqfchmBl17AIe4mRa047slrXk/1IqtSj"></script><script>(function () {
+  var config = {"assetVersion":"0.87.3-r901ab71","vendorVersion":"d04a5e6829cb25a3b550d8eba70f04ca3595561b79215637b48825a9e46f1c69","vendorIntegrity":"sha384-btAdUhYJkWHrMTXLzrTwglwcKtQigMMnkSvZQ7HaEcQ0VlptYVTWZIY1hfaWg8BI","vendorUrl":"./js/vendor.js?v=d04a5e6829cb25a3b550d8eba70f04ca3595561b79215637b48825a9e46f1c69","downloadIdleTimeoutMs":30000,"versionProbeTimeoutMs":5000};
+  var check = window.__ra2webStartupLoadCheck;
   var entry = document.getElementById('ra2web-module-entry');
+  var appUrl = new URL(entry.getAttribute('src'), location.href).href;
+  var appIntegrity = entry.getAttribute('integrity');
   var vendorUrl = new URL(config.vendorUrl, location.href).href;
+  var files = [
+    { name: 'vendor.js', url: vendorUrl, integrity: config.vendorIntegrity },
+    { name: 'app.js', url: appUrl, integrity: appIntegrity }
+  ];
+  var RELOAD_KEY = 'ra2web-entry-reload';
+  var HEAL_KEY = 'ra2web-entry-heal';
+  var MAX_ATTEMPTS = 3;
+  var BACKOFF_MS = [500, 1500];
+  var allowReload = true;
+  var reloading = false;
+
+  function stored(key) {
+    try { return sessionStorage.getItem(key); } catch (error) { return null; }
+  }
+  function store(key, value) {
+    try {
+      sessionStorage.setItem(key, value);
+      return sessionStorage.getItem(key) === value;
+    } catch (error) { return false; }
+  }
+  function forget(key) {
+    try { sessionStorage.removeItem(key); } catch (error) {}
+  }
+  function observe(kind, message, url) {
+    if (check && check.observe) check.observe(kind, message, url || '', 'client-recovery');
+  }
 
   function start() {
     var preload = document.createElement('link');
@@ -540,6 +678,29 @@
     document.head.appendChild(script);
   }
 
+  // The module graph failed although its files had just been received and
+  // verified (or could not be prewarmed at all). Reload once; the marker stays
+  // until a startup succeeds, so a persistent failure is shown, not looped.
+  function recoverEntry() {
+    if (reloading) return true;
+    if (!allowReload || stored(RELOAD_KEY) || !store(RELOAD_KEY, config.assetVersion)) return false;
+    reloading = true;
+    location.reload();
+    return true;
+  }
+
+  if (check && check.setEntryHooks) {
+    check.setEntryHooks({
+      recover: recoverEntry,
+      ready: function () { forget(RELOAD_KEY); forget(HEAL_KEY); }
+    });
+  }
+  if (stored(RELOAD_KEY)) observe('entry-reload', 'Startup continued after one automatic reload', appUrl);
+  if (stored(HEAL_KEY) === config.assetVersion) {
+    forget(HEAL_KEY);
+    observe('stale-shell-recovered', 'Stale entry page replaced by published build ' + config.assetVersion, appUrl);
+  }
+
   function controllerInfo() {
     var controller = navigator.serviceWorker && navigator.serviceWorker.controller;
     if (!controller || location.pathname.indexOf('/old/') === 0) return Promise.resolve(null);
@@ -552,6 +713,9 @@
         resolve(event.data);
       };
       controller.postMessage({ type: 'RA2WEB_GET_VERSION' }, [channel.port2]);
+    }).then(function (info) {
+      if (check && check.setController) check.setController(info);
+      return info;
     });
   }
 
@@ -565,29 +729,289 @@
         if (cached) return;
         var compatibleUrl = new URL(vendorUrl);
         compatibleUrl.searchParams.set('v', config.assetVersion);
-        return fetch(compatibleUrl.href, { cache: 'no-cache', integrity: config.vendorIntegrity }).then(function (response) {
-          if (!response.ok) throw new Error('Dependency migration failed: HTTP ' + response.status);
-          // A cached network Response retains its original URL. Clear that URL
-          // after integrity verification so import.meta.url uses the canonical
-          // dependency request, not the temporary application-version alias.
-          return cache.put(vendorUrl, new Response(response.body, {
+        // Native fetch SRI withholds the response until its whole body arrives.
+        // Receive the plain stream instead, then store only manually verified
+        // bytes. Native modulepreload/script SRI remains unchanged in start().
+        return receive({ name: 'vendor.js', url: compatibleUrl.href, integrity: config.vendorIntegrity }, 'no-cache', function (response, buffer) {
+          // Clear the alias URL so import.meta.url uses the canonical request.
+          return cache.put(vendorUrl, new Response(buffer, {
             status: response.status, statusText: response.statusText, headers: response.headers
           }));
+        }).then(function (outcome) {
+          if (outcome.kind) throw new Error('Dependency migration failed: ' + outcome.kind + ': ' + outcome.message);
         });
       });
     });
   }
 
+  function digestOf(buffer) {
+    return crypto.subtle.digest('SHA-384', buffer).then(function (hash) {
+      var bytes = new Uint8Array(hash);
+      var text = '';
+      for (var i = 0; i < bytes.length; i++) text += String.fromCharCode(bytes[i]);
+      return 'sha384-' + btoa(text);
+    });
+  }
+
+  function timeoutValue(value, fallback) {
+    return typeof value === 'number' && isFinite(value) && value > 0 ? value : fallback;
+  }
+
+  // One timer checks the last real activity; receiving each chunk does not
+  // allocate a timer. The consumer can stop the clock once the body is done.
+  function watchedFetch(url, options, timeoutMs, consume) {
+    return new Promise(function (resolve, reject) {
+      var aborter = window.AbortController ? new AbortController() : null;
+      var reader = null;
+      var body = null;
+      var finished = false;
+      var lastActivity = Date.now();
+      var timer = null;
+      if (aborter) options.signal = aborter.signal;
+      function ignore() {}
+      function releaseReader() {
+        if (reader && reader.releaseLock) {
+          try { reader.releaseLock(); } catch (error) {}
+        }
+      }
+      function stopClock() {
+        clearTimeout(timer);
+        timer = null;
+      }
+      function cancelBody(value) {
+        try {
+          var work = value && value.cancel && value.cancel();
+          if (work && work.catch) work.catch(ignore);
+        } catch (error) {}
+      }
+      function finish(error, value, rejected) {
+        if (finished) return;
+        finished = true;
+        stopClock();
+        releaseReader();
+        if (rejected) reject(error);
+        else resolve(value);
+      }
+      function expired() {
+        if (finished) return;
+        var remaining = timeoutMs - (Date.now() - lastActivity);
+        if (remaining > 0) {
+          timer = setTimeout(expired, remaining);
+          return;
+        }
+        var error = new Error('Entry request stalled for ' + timeoutMs + 'ms');
+        error.kind = 'stall';
+        // Reject independently of cancel(): a broken transport may never settle
+        // its read/cancel promise. Late callbacks cannot start another attempt.
+        finished = true;
+        stopClock();
+        if (aborter) aborter.abort();
+        cancelBody(reader || body);
+        releaseReader();
+        reject(error);
+      }
+      timer = setTimeout(expired, timeoutMs);
+      Promise.resolve().then(function () {
+        return fetch(url, options);
+      }).then(function (response) {
+        if (finished) {
+          cancelBody(response.body);
+          return;
+        }
+        body = response.body;
+        return consume(response, {
+          setReader: function (value) { reader = value; },
+          progress: function (bytes) { if (bytes > 0) lastActivity = Date.now(); },
+          stopClock: stopClock
+        });
+      }).then(function (value) { finish(null, value, false); }, function (error) { finish(error, undefined, true); });
+    });
+  }
+
+  function readEntryBody(response, watch) {
+    if (!response.body || typeof response.body.getReader !== 'function') {
+      // Older WebKit exposes only a buffered body. Its progress is unknowable:
+      // keep the previous arrayBuffer semantics, not a whole-file idle limit.
+      watch.stopClock();
+      return response.arrayBuffer();
+    }
+    var reader = response.body.getReader();
+    var chunks = [];
+    var length = 0;
+    watch.setReader(reader);
+    function next() {
+      return reader.read().then(function (part) {
+        if (part.done) {
+          watch.stopClock();
+          var bytes = new Uint8Array(length);
+          var offset = 0;
+          chunks.forEach(function (chunk) { bytes.set(chunk, offset); offset += chunk.byteLength; });
+          return bytes.buffer;
+        }
+        if (part.value && part.value.byteLength > 0) {
+          watch.progress(part.value.byteLength);
+          chunks.push(part.value);
+          length += part.value.byteLength;
+        }
+        return next();
+      });
+    }
+    return next();
+  }
+
+  // Receive one entry file and compare it with the digest declared by this
+  // page. A plain request is used (no `integrity` option), so a wrong body is
+  // told apart from a failed transfer. The verified bytes stay in the HTTP or
+  // service-worker cache, where the module loader finds them.
+  function receive(file, cacheMode, onVerified) {
+    var outcome = { name: file.name, url: file.url, integrity: file.integrity, kind: '', status: null, bytes: null, message: '' };
+    return watchedFetch(file.url, { cache: cacheMode, credentials: 'same-origin' }, timeoutValue(config.downloadIdleTimeoutMs, 30000), function (response, watch) {
+      outcome.status = response.status;
+      if (!response.ok) {
+        outcome.kind = 'status';
+        outcome.message = 'HTTP ' + response.status;
+        return outcome;
+      }
+      var received;
+      return readEntryBody(response, watch).then(function (buffer) {
+        received = buffer;
+        outcome.bytes = buffer.byteLength;
+        return digestOf(buffer);
+      }).then(function (actual) {
+        if (actual !== file.integrity) {
+          outcome.kind = 'digest';
+          outcome.message = '摘要不符：收到 ' + outcome.bytes + ' 字节，与本页声明的文件不一致';
+        } else if (onVerified) return Promise.resolve(onVerified(response, received)).then(function () { return outcome; });
+        return outcome;
+      });
+    }).catch(function (error) {
+      outcome.kind = error && error.kind === 'stall' ? 'stall' : outcome.status ? 'stream' : 'network';
+      outcome.message = String((error && error.message) || error || 'request failed');
+      return outcome;
+    });
+  }
+
+  // Null when the manifest cannot be read: an unknown release proves nothing.
+  function publishedVersion() {
+    var versionUrl = new URL('../version.json', appUrl);
+    versionUrl.searchParams.set('check', String(Date.now()));
+    // Metadata is optional. Its total budget includes the JSON body, and an
+    // unknown version keeps the existing entry retry/native-loader behavior.
+    return watchedFetch(versionUrl.href, { cache: 'no-store' }, timeoutValue(config.versionProbeTimeoutMs, 5000), function (response) {
+      return response.ok ? response.json() : null;
+    }).then(function (manifest) {
+      return manifest && typeof manifest.assetVersion === 'string' && manifest.assetVersion ? manifest.assetVersion : null;
+    }).catch(function () { return null; });
+  }
+
+  function sleep(ms) {
+    return new Promise(function (resolve) { setTimeout(resolve, Math.round(ms * (0.8 + Math.random() * 0.4))); });
+  }
+
+  function prewarm() {
+    var pending = files.slice();
+    var reloadMode = {};
+    var failures = [];
+    var attempt = 0;
+    function round() {
+      attempt++;
+      return Promise.all(pending.map(function (file) {
+        return receive(file, reloadMode[file.url] ? 'reload' : 'default');
+      })).then(function (outcomes) {
+        var failed = outcomes.filter(function (outcome) { return outcome.kind; });
+        if (!failed.length) return { ok: true, failures: failures };
+        failed.forEach(function (outcome) {
+          failures.push({ attempt: attempt, name: outcome.name, kind: outcome.kind, status: outcome.status, bytes: outcome.bytes, message: outcome.message });
+        });
+        return publishedVersion().then(function (published) {
+          if (published && published !== config.assetVersion) {
+            // This page belongs to a replaced release: its files are gone.
+            var page = new URL(location.href);
+            if (page.searchParams.get('clientBuild') === published) {
+              return { ok: false, stale: true, outcome: failed[0], failures: failures };
+            }
+            store(HEAL_KEY, published);
+            page.searchParams.set('clientBuild', published);
+            location.replace(page.href);
+            return new Promise(function () {});
+          }
+          // The release is confirmed current and a cache-bypassing request
+          // still returned other bytes: repeating it cannot help.
+          var conclusive = failed.filter(function (outcome) {
+            return outcome.kind === 'digest' && published && reloadMode[outcome.url];
+          })[0];
+          var exhaustedStall = attempt >= MAX_ATTEMPTS && failed.filter(function (outcome) {
+            return outcome.kind === 'stall';
+          })[0];
+          if (conclusive || attempt >= MAX_ATTEMPTS) {
+            return { ok: false, outcome: exhaustedStall || conclusive || failed[0], exhaustedStall: !!exhaustedStall, conclusive: !!conclusive, failures: failures };
+          }
+          failed.forEach(function (outcome) {
+            if (outcome.kind === 'digest' || outcome.kind === 'status') reloadMode[outcome.url] = true;
+          });
+          pending = files.filter(function (file) {
+            return failed.some(function (outcome) { return outcome.url === file.url; });
+          });
+          return sleep(BACKOFF_MS[Math.min(attempt - 1, BACKOFF_MS.length - 1)]).then(round);
+        });
+      });
+    }
+    return round();
+  }
+
+  function finish(result) {
+    if (result.ok) {
+      if (result.failures.length) {
+        var last = result.failures[result.failures.length - 1];
+        observe('retry-recovered', 'Entry files recovered after ' + result.failures.length + ' failed request(s); last: ' + last.name + ' ' + last.message, appUrl);
+      }
+      start();
+      return;
+    }
+    var outcome = result.outcome;
+    if (check && check.addProbe) {
+      check.addProbe({
+        url: outcome.url, status: outcome.status, bytes: outcome.bytes, contentType: '',
+        digest: outcome.kind === 'digest' ? 'mismatch' : 'not-checked',
+        error: outcome.kind + ': ' + outcome.message, elapsedMs: null,
+        attempts: result.failures.slice(-8)
+      });
+    }
+    if (result.stale) {
+      check.fail('客户端已更新，请重新加载', new Error('Published client build mismatch'), outcome.url, 'resource');
+    } else if (result.exhaustedStall) {
+      // Repeatedly stalled bytes are already proven unavailable. A native
+      // module request cannot observe their progress and could hang again.
+      allowReload = false;
+      check.fail('启动文件下载停滞', new Error(outcome.name + ' ' + outcome.message), outcome.url, 'resource');
+    } else if (result.conclusive) {
+      check.fail('启动文件校验未通过', new Error(outcome.name + ' ' + outcome.message), outcome.url, 'resource');
+    } else {
+      // Three prewarm attempts failed in transit. Leave the final verdict to
+      // the browser's own loader, exactly as before prewarming existed, and do
+      // not spend another automatic reload on it.
+      allowReload = false;
+      observe('entry-prewarm-failed', outcome.name + ' ' + outcome.kind + ': ' + outcome.message, outcome.url);
+      start();
+    }
+  }
+
+  var canPrewarm = !!(window.fetch && window.Promise && window.crypto && crypto.subtle && window.btoa);
   var ready = document.readyState !== 'loading' ? Promise.resolve() : new Promise(function (resolve) {
     document.addEventListener('DOMContentLoaded', resolve, { once: true });
   });
-  Promise.all([ready, controllerInfo().then(prepareLegacyController)]).then(start, function (error) {
-    window.__ra2webStartupLoadCheck.fail('启动依赖加载失败', error, vendorUrl, 'resource');
+  Promise.all([ready, controllerInfo().then(prepareLegacyController)]).then(function () {
+    // Without Web Crypto (insecure origin) the browser's own SRI check and the
+    // single automatic reload remain.
+    if (!canPrewarm) return start();
+    return prewarm().then(finish);
+  }).catch(function (error) {
+    check.fail('启动依赖加载失败', error, vendorUrl, 'resource');
   });
 })();
 </script>
     
-    <link rel="stylesheet" crossorigin href="./js/app.css?v=0.87.3-rea0ef5d">
+    <link rel="stylesheet" crossorigin href="./js/app.css?v=0.87.3-r901ab71">
   </head>
   <body class="no-js">
     <div id="ra2web-root">
@@ -611,7 +1035,7 @@
               正在检测客户端配置、界面资源和游戏资源清单。
             </p>
             <div class="startup-load-check-progress-meta">
-              <span>加载版本：<strong id="startup-load-check-version">0.87.3-rea0ef5d</strong></span>
+              <span>加载版本：<strong id="startup-load-check-version">0.87.3-r901ab71</strong></span>
               <span>启动进度</span>
             </div>
             <div
