@@ -13,19 +13,6 @@
       "mapTransferUrl": "https://wol.bj1.wangerhuoda.cn/map-transfer"
     },
     {
-      "id": "ENGGER",
-      "label": "欧洲大区(EGGER)",
-      "available": true,
-      "gameVersion": "0.87",
-      "wolUrl": "wss://wol.flkf.k0s.cn/wol",
-      "webTransportWolUrl": "https://wol.flkf.k0s.cn/wol-webtransport",
-      "apiRegUrl": "https://wol.flkf.k0s.cn/register",
-      "clientIncidentUrl": "https://telemetry.bj1.k0s.cn/client-incidents",
-      "wladderUrl": "https://wol.flkf.k0s.cn/ladder",
-      "wgameresUrl": "https://wol.flkf.k0s.cn/wgameres",
-      "mapTransferUrl": "https://wol.flkf.k0s.cn/map-transfer"
-    },
-    {
       "id": "ASIA",
       "label": "东南北亚大区(SENA)",
       "available": true,
