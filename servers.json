@@ -24,6 +24,17 @@
       "wladderUrl": "https://wol.flkf.k0s.cn/ladder",
       "wgameresUrl": "https://wol.flkf.k0s.cn/wgameres",
       "mapTransferUrl": "https://wol.flkf.k0s.cn/map-transfer"
+    },
+    {
+      "id": "ASIA",
+      "label": "东南北亚大区",
+      "available": true,
+      "gameVersion": "0.87",
+      "wolUrl": "wss://wol.qiancaoyun.com/wol",
+      "apiRegUrl": "https://wol.qiancaoyun.com/register",
+      "wladderUrl": "https://wol.qiancaoyun.com/ladder",
+      "wgameresUrl": "https://wol.qiancaoyun.com/wgameres",
+      "mapTransferUrl": "https://wol.qiancaoyun.com/map-transfer"
     }
   ]
 }
