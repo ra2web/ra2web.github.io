@@ -68,9 +68,9 @@
       "integrity": "sha384-y1AshWepaZCvshK9ubE8Y6n6ms7jALdoHrQNKOWZtqwnwP8Fh1v57d5/DcfD9Yc8"
     },
     "breaking-news.html": {
-      "bytes": 329,
-      "sha256": "a06b5678faf1131b5b54e7a382724aa9a4afc9117be84dc05b9e49419b136bea",
-      "integrity": "sha384-1u0jFBxElTCxVJX58eXzaCW7wNwpl9spH2xX5r0bNxfNk2onZkbq7GYgwgV2TpAB"
+      "bytes": 498,
+      "sha256": "dfc8168576231749bdf17f696d3c507f9be9e954b5daf718b4b354566694de03",
+      "integrity": "sha384-uqNxZzmTaoxwHY9rvWLsYFBdIJD71GFRnxaT/7p9VupcXoVIrHagdTe+dXfjtmtp"
     },
     "docs/examples/README.md": {
       "bytes": 1060,
