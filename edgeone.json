@@ -1,4 +1,5 @@
 {
+  "buildCommand": "node .github/build-edgeone-static.cjs",
   "headers": [
     {
       "source": "/",

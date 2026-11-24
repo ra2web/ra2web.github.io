@@ -1,0 +1,81 @@
+name: Deploy Shanghai static origin
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: shanghai-static-origin
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: github.repository == 'huangkaoya/ra2web.github.io' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out current main
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: main
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Export static files and their Git checksums
+        shell: bash
+        run: |
+          set -euo pipefail
+          payload_dir="$RUNNER_TEMP/ra2web-origin-payload"
+          mkdir -p "$payload_dir/site"
+          revision=$(git rev-parse HEAD)
+          git archive --format=tar "$revision" | tar -xf - -C "$payload_dir/site"
+          git ls-tree -rz --full-tree "$revision" > "$payload_dir/git-tree"
+          printf 'ORIGIN_REVISION=%s\n' "$revision" >> "$GITHUB_ENV"
+
+      - name: Push and atomically publish verified files
+        shell: bash
+        env:
+          ORIGIN_SSH_KEY: ${{ secrets.SHANGHAI_ORIGIN_SSH_KEY }}
+        run: |
+          set -euo pipefail
+          test -n "$ORIGIN_SSH_KEY"
+          key_path="$RUNNER_TEMP/shanghai-origin-key"
+          hosts_path="$RUNNER_TEMP/shanghai-origin-known-hosts"
+          config_path="$RUNNER_TEMP/shanghai-origin-ssh-config"
+          trap 'rm -f "$key_path" "$hosts_path" "$config_path"' EXIT
+          umask 077
+          printf '%s\n' "$ORIGIN_SSH_KEY" > "$key_path"
+          printf '%s\n' '124.222.237.47 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC3QUYAe7QL5haRmWD5QjrZwB2rZsmCAeHJdNO/z500q' > "$hosts_path"
+          cat > "$config_path" <<EOF
+          Host shanghai-origin
+            HostName 124.222.237.47
+            User ra2web-static
+            IdentityFile "$key_path"
+            UserKnownHostsFile "$hosts_path"
+            IdentitiesOnly yes
+            BatchMode yes
+            StrictHostKeyChecking yes
+            ConnectTimeout 20
+            ServerAliveInterval 15
+            ServerAliveCountMax 4
+          EOF
+          rsync --archive --delete --checksum --compress --no-owner --no-group \
+            -e "ssh -T -F $config_path" \
+            "$RUNNER_TEMP/ra2web-origin-payload/" shanghai-origin:./
+          ssh -T -F "$config_path" shanghai-origin "publish $ORIGIN_REVISION"
+
+      - name: Verify the public HTTP origin
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --silent --show-error --retry 3 --connect-timeout 10 --max-time 30 \
+            http://124.222.237.47/__origin_health
+          curl --fail --silent --show-error --retry 3 --connect-timeout 10 --max-time 30 \
+            http://124.222.237.47/version.json -o "$RUNNER_TEMP/origin-version.json"
+          cmp version.json "$RUNNER_TEMP/origin-version.json"
+          printf 'Published commit `%s` to [Shanghai HTTP origin](http://124.222.237.47/).\n' \
+            "$ORIGIN_REVISION" >> "$GITHUB_STEP_SUMMARY"
