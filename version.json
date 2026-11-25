@@ -384,8 +384,8 @@
     },
     "res/locale/zh-CN.json": {
       "bytes": 31766,
-      "sha256": "159d611ed02cb1a90dbd96f703cabab2ddca6f0d75cc338fce2667da0363f64c",
-      "integrity": "sha384-ZgHVs2UYWsOotrY7l1noWAHiwuCE6PEWI569rAbrktl0qqJUJlwBQKbvtCSRBJ6y"
+      "sha256": "467a54fc3ca7c79d9f3de2ab84edc3b5dbb6b42690cef2077c098f2e621d1a9d",
+      "integrity": "sha384-Rp4KwVtEOg8guXnZrYr9uBi7GCyN463r2n1r8OC+YDjaFLOoXfqR/Hs34U9KeI3t"
     },
     "res/locale/zh-TW.json": {
       "bytes": 30309,
@@ -509,8 +509,8 @@
     },
     "res/overlay/ra2.csf": {
       "bytes": 285395,
-      "sha256": "f31c1438da541b49bfc98cac9bca9d3afe7ea3627d6b384a888ffb3bcc69e6c5",
-      "integrity": "sha384-nMhYe124OW9gvtdhSdi4HWO7JMZeetq/kQSg1dnMozzyDD347wTYV+a8vgeL7CmB"
+      "sha256": "326751793437acae10cb85c6c61bcbcb5e51d96b2a8455a838de21a4ff25382a",
+      "integrity": "sha384-SN4oNkzORhr6Yzw8b31uwWw/lbbD8V0AavBdlVUqgS37/WsCeY3PIv73BNBVV1ie"
     },
     "res/overlay/rules.ini": {
       "bytes": 401517,
